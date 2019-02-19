@@ -1,0 +1,108 @@
+.cs {
+    color: burlywood;
+}
+
+.test-panel {
+    background-color: blue;
+}
+
+.overlap {
+    position: absolute; 
+    z-index: 10;
+}
+
+.over {
+    display: block;
+    z-index: 30;
+}
+
+.under {
+    display: block;
+    z-index: 20;
+}
+
+.box-label {
+    margin: 0px !important;
+    padding: 0px !important;
+}
+
+.th-vert {
+    text-align: right;
+    border-right: solid;
+    border-right-width: 1px;
+    border-right-color: #dee2e6;
+    width: 20%;
+}
+
+@media (max-width: 600px) {
+    .tablet-desktop-size {
+        display: none;
+    }
+}
+
+@media (min-width: 601px) {
+    .mobile-size {
+        display: none;
+    }
+}
+
+.week-hidden {
+    visibility: hidden;
+}
+
+.week {
+    margin: 0px !important
+}
+
+input[type="text"] {
+    background-color: #F5F8FA;
+}
+
+.week-button {
+    border-width: 0px;
+    background-color: #F5F8FA;    
+}
+
+tr {
+    height: 30px !important;
+}
+
+td {
+    padding: 0px !important;
+    vertical-align: middle !important;
+}
+
+.total {
+    vertical-align: middle;
+    padding-left: 12px !important;
+    font-weight: bold;
+}
+
+.panel-data {
+    padding: 0px !important;
+}
+
+.info-card {
+    background-color: #28B473;
+}
+
+.data-div {
+    padding: 15px;
+}
+
+.data-div h4 {
+    color: #fff !important;
+}
+
+.cell-input {
+    max-width: 170px;
+    border-radius: 0px;
+    margin: 0px;
+    border: none;
+    box-shadow: none;
+}
+
+::placeholder {
+    color: #636B6F !important;
+    opacity: 1 !important;
+}
