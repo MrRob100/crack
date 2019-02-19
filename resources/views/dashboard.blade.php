@@ -185,9 +185,6 @@ function calcNarrow() {
     dsp_total = dsp_mon + dsp_tue + dsp_wed + dsp_thur + dsp_fri + dsp_sat + dsp_sun;
     itk_total = itk_mon + itk_tue + itk_wed + itk_thur + itk_fri + itk_sat + itk_sun;
 
-    console.log('dsp_total: ',dsp_total);
-    console.log('itk_total: ',itk_total);
-
     gp_currency = itk_total - dsp_total;
     gp_percent = (gp_currency / itk_total) * 100;
 
@@ -255,10 +252,8 @@ function widthCondition() {
             $("#itk_"+ element +"_n_cell").text("");
             $("#itk_"+ element +"_n_cell").text($(".itk" + element).text());
         });
-
     }
 }
-
 
 </script>
 
