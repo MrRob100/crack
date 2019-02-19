@@ -47,7 +47,7 @@
                 <td contenteditable="true" id="itk_sat_w_cell" class="cell-data cell-wide itksat">{{ $itk_sat }}</td>
                 <td contenteditable="true" id="itk_sun_w_cell" class="cell-data cell-wide itksun">{{ $itk_sun }}</td>
                 <td>
-                    <h4 id="itk_total_w" class="cell-wide"></h4>
+                    <h4 id="itk_total_w" class="cell-wide itk_total"></h4>
                 </td>
             </tr>
             <tr>

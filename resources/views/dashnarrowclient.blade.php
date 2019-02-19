@@ -38,7 +38,7 @@
                 <tr>
                 <th scope="row">Sat</th>
                 <td contenteditable="true" id="dsp_sat_n_cell" class="cell-data dspsat">{{ $dsp_sat }}</td>
-                <td contenteditable="true" id="itk_sat_n_cell" class="cell-data itksun">{{ $itk_sat }}</td>
+                <td contenteditable="true" id="itk_sat_n_cell" class="cell-data itksat">{{ $itk_sat }}</td>
                 </tr>
                 <tr>
                 <th scope="row">Sun</th>
@@ -48,7 +48,7 @@
                 <tr>
                 <th scope="row">Total</th>
                 <td id="dsp_total_n" class="cell-data dsp_total"></td>
-                <td id="itk_total_n" class="cell-data"></td>
+                <td id="itk_total_n" class="cell-data itk_total"></td>
                 </tr>
             </tbody>
             </table>

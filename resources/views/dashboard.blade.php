@@ -147,12 +147,15 @@ function calcWide() {
     dsp_total = dsp_mon + dsp_tue + dsp_wed + dsp_thur + dsp_fri + dsp_sat + dsp_sun;
     itk_total = itk_mon + itk_tue + itk_wed + itk_thur + itk_fri + itk_sat + itk_sun;
 
+    console.log('dsp_total: ',dsp_total);
+    console.log('itk_total: ',itk_total);
+
     gp_currency = itk_total - dsp_total;
     gp_percent = (gp_currency / itk_total) * 100;
 
     $('.dsp_total').text(dsp_total);
+    $('.itk_total').text(itk_total);
 
-    $('#itk_total_w').text(itk_total);
     $('#gp_currency').text("£" + gp_currency);
     $('#gp_percent').text(gp_percent + "%");
 }
@@ -198,6 +201,18 @@ function widthCondition() {
             $("#itk_"+ element +"_w_cell").text($(".itk" + element).text());
         });
 
+        // $("#dsp_sat_w_cell").text("");
+        // $("#dsp_sat_w_cell").text($(".dsp" + element).text());
+
+        // $("#itk_sat_w_cell").text("");
+        // $("#itk_sat_w_cell").text($(".dsp" + element).text());
+
+        // $("#dsp_sun_w_cell").text("");
+        // $("#dsp_sun_w_cell").text($(".dsp" + element).text());
+
+        // $("#itk_sun_w_cell").text("");
+        // $("#itk_sun_w_cell").text($(".dsp" + element).text());
+
     }
     else 
     {
@@ -210,6 +225,19 @@ function widthCondition() {
             $("#itk_"+ element +"_n_cell").text("");
             $("#itk_"+ element +"_n_cell").text($(".itk" + element).text());
         });
+
+        // $("#dsp_sat_n_cell").text("");
+        // $("#dsp_sat_n_cell").text($(".dsp" + element).text());
+
+        // $("#itk_sat_n_cell").text("");
+        // $("#itk_sat_n_cell").text($(".dsp" + element).text());
+
+        // $("#dsp_sun_n_cell").text("");
+        // $("#dsp_sun_n_cell").text($(".dsp" + element).text());
+
+        // $("#itk_sun_n_cell").text("");
+        // $("#itk_sun_n_cell").text($(".dsp" + element).text());
+
     }
 }
 
