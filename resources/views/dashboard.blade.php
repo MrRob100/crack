@@ -160,13 +160,44 @@ function calcWide() {
     $('#gp_percent').text(gp_percent + "%");
 }
 
+function calcNarrow() {
+
+    dsp_mon = parseFloat($('#dsp_mon_n_cell').text());
+    itk_mon = parseFloat($('#itk_mon_n_cell').text());
+    dsp_tue = parseFloat($('#dsp_tue_n_cell').text());
+    itk_tue = parseFloat($('#itk_tue_n_cell').text());
+    dsp_wed = parseFloat($('#dsp_wed_n_cell').text());
+    itk_wed = parseFloat($('#itk_wed_n_cell').text());
+    dsp_thur = parseFloat($('#dsp_thur_n_cell').text());
+    itk_thur = parseFloat($('#itk_thur_n_cell').text());
+    dsp_fri = parseFloat($('#dsp_fri_n_cell').text());
+    itk_fri = parseFloat($('#itk_fri_n_cell').text());
+    dsp_sat = parseFloat($('#dsp_sat_n_cell').text());
+    itk_sat = parseFloat($('#itk_sat_n_cell').text());
+    dsp_sun = parseFloat($('#dsp_sun_n_cell').text());
+    itk_sun = parseFloat($('#itk_sun_n_cell').text());
+
+    dsp_total = dsp_mon + dsp_tue + dsp_wed + dsp_thur + dsp_fri + dsp_sat + dsp_sun;
+    itk_total = itk_mon + itk_tue + itk_wed + itk_thur + itk_fri + itk_sat + itk_sun;
+
+    console.log('dsp_total: ',dsp_total);
+    console.log('itk_total: ',itk_total);
+
+    gp_currency = itk_total - dsp_total;
+    gp_percent = (gp_currency / itk_total) * 100;
+
+    $('.dsp_total').text(dsp_total);
+    $('.itk_total').text(itk_total);
+
+    $('#gp_currency').text("£" + gp_currency);
+    $('#gp_percent').text(gp_percent + "%");
+}
+
 $(document).ready(function () {
-    calcWide();
     widthCondition();
 });
 
 $(document).click(function () {
-    calcWide();
     widthCondition();
 });
 
@@ -191,6 +222,9 @@ function widthCondition() {
 
     if ($(window).width() < 585) 
     {
+        //Narrow
+        calcNarrow();
+
         days.forEach(element => {
             $("#dsp_"+ element +"_w_cell").text("");
             $("#dsp_"+ element +"_w_cell").text($(".dsp" + element).text());
@@ -201,21 +235,12 @@ function widthCondition() {
             $("#itk_"+ element +"_w_cell").text($(".itk" + element).text());
         });
 
-        // $("#dsp_sat_w_cell").text("");
-        // $("#dsp_sat_w_cell").text($(".dsp" + element).text());
-
-        // $("#itk_sat_w_cell").text("");
-        // $("#itk_sat_w_cell").text($(".dsp" + element).text());
-
-        // $("#dsp_sun_w_cell").text("");
-        // $("#dsp_sun_w_cell").text($(".dsp" + element).text());
-
-        // $("#itk_sun_w_cell").text("");
-        // $("#itk_sun_w_cell").text($(".dsp" + element).text());
-
     }
     else 
     {
+        //Wide
+        calcWide();
+
         days.forEach(element => {
             $("#dsp_"+ element +"_n_cell").text("");
             $("#dsp_"+ element +"_n_cell").text($(".dsp" + element).text());
@@ -225,18 +250,6 @@ function widthCondition() {
             $("#itk_"+ element +"_n_cell").text("");
             $("#itk_"+ element +"_n_cell").text($(".itk" + element).text());
         });
-
-        // $("#dsp_sat_n_cell").text("");
-        // $("#dsp_sat_n_cell").text($(".dsp" + element).text());
-
-        // $("#itk_sat_n_cell").text("");
-        // $("#itk_sat_n_cell").text($(".dsp" + element).text());
-
-        // $("#dsp_sun_n_cell").text("");
-        // $("#dsp_sun_n_cell").text($(".dsp" + element).text());
-
-        // $("#itk_sun_n_cell").text("");
-        // $("#itk_sun_n_cell").text($(".dsp" + element).text());
 
     }
 }
