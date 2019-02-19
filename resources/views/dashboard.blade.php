@@ -47,20 +47,25 @@
 <!-- Mobile -->
 @include('dashnarrowclient')
 
-<div class="col-12">
-    <div class="panel panel-default info-card">
-        <div class="panel-body panel-data">
-            <div class="col-6 mx-auto data-div">
-                <h4>GP - Week</h4>
-                <h4 id="gp_currency"></h4>
-                <h4 id="gp_percent"></h4>
-                <hr>
-                <h4>Budget - Rest of Week:</h4>
-                <h4 id="remaining_budget" class="th-vert"></h4>
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-default info-card">
+            <div class="panel-body panel-data">
+                <div class="col-6 mx-auto data-div">
+                    <h4>GP - Week</h4>
+                    <h4 id="gp_currency"></h4>
+                    <h4 id="gp_percent"></h4>
+                    <hr>
+                    <h4>Budget - Rest of Week:</h4>
+                    <h4 id="remaining_budget" class="th-vert"></h4>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+@include('graph')
+
 <h4 class="week-hidden week-mon-hidden">{{ $mon_unix }}</h4>
 <h4 class="week-hidden week-sun-hidden">{{ $sun_unix }}</h4>
 
@@ -254,13 +259,6 @@ function widthCondition() {
     }
 }
 
-
-//IF SCREEN WIDE A->B 
-//#dsp_mon_w_cell -> .dspMon
-
-
-//IF SCREEN NARROW B->A
-//#dsp_mon_n_cell -> .dspMon
 
 </script>
 
