@@ -12,38 +12,38 @@
             <tbody>
                 <tr>
                 <th scope="row">Mon</th>
-                <td contenteditable="true" id="dsp_mon_n_cell" class="cell-data dspMon">{{ $dsp_mon }}</td>
-                <td contenteditable="true" id="itk_mon_n_cell" class="cell-data itkMon">{{ $itk_mon }}</td>
+                <td contenteditable="true" id="dsp_mon_n_cell" class="cell-data dspmon">{{ $dsp_mon }}</td>
+                <td contenteditable="true" id="itk_mon_n_cell" class="cell-data itkmon">{{ $itk_mon }}</td>
                 </tr>
                 <tr>
                 <th scope="row">Tue</th>
-                <td contenteditable="true" id="dsp_tue_n_cell" class="cell-data dspTue">{{ $dsp_tue }}</td>
-                <td contenteditable="true" id="itk_tue_n_cell" class="cell-data itkTue">{{ $itk_tue }}</td>
+                <td contenteditable="true" id="dsp_tue_n_cell" class="cell-data dsptue">{{ $dsp_tue }}</td>
+                <td contenteditable="true" id="itk_tue_n_cell" class="cell-data itktue">{{ $itk_tue }}</td>
                 </tr>
                 <tr>
                 <th scope="row">Wed</th>
-                <td contenteditable="true" id="dsp_wed_n_cell" class="cell-data dspWed">{{ $dsp_wed }}</td>
-                <td contenteditable="true" id="itk_wed_n_cell" class="cell-data itkWed">{{ $itk_wed }}</td>
+                <td contenteditable="true" id="dsp_wed_n_cell" class="cell-data dspwed">{{ $dsp_wed }}</td>
+                <td contenteditable="true" id="itk_wed_n_cell" class="cell-data itkwed">{{ $itk_wed }}</td>
                 </tr>
                 <tr>
                 <th scope="row">Thur</th>
-                <td contenteditable="true" id="dsp_thur_n_cell" class="cell-data dspThur">{{ $dsp_thur }}</td>
-                <td contenteditable="true" id="itk_thur_n_cell" class="cell-data itkThur">{{ $itk_thur }}</td>
+                <td contenteditable="true" id="dsp_thur_n_cell" class="cell-data dspthur">{{ $dsp_thur }}</td>
+                <td contenteditable="true" id="itk_thur_n_cell" class="cell-data itkthur">{{ $itk_thur }}</td>
                 </tr>
                 <tr>
                 <th scope="row">Fri</th>
-                <td contenteditable="true" id="dsp_fri_n_cell" class="cell-data dspFri">{{ $dsp_fri }}</td>
-                <td contenteditable="true" id="itk_fri_n_cell" class="cell-data itkFri">{{ $itk_fri }}</td>
+                <td contenteditable="true" id="dsp_fri_n_cell" class="cell-data dspfri">{{ $dsp_fri }}</td>
+                <td contenteditable="true" id="itk_fri_n_cell" class="cell-data itkfri">{{ $itk_fri }}</td>
                 </tr>
                 <tr>
                 <th scope="row">Sat</th>
-                <td contenteditable="true" id="dsp_sat_n_cell" class="cell-data dspSat">{{ $dsp_sat }}</td>
-                <td contenteditable="true" id="itk_sat_n_cell" class="cell-data itkSun">{{ $itk_sat }}</td>
+                <td contenteditable="true" id="dsp_sat_n_cell" class="cell-data dspsat">{{ $dsp_sat }}</td>
+                <td contenteditable="true" id="itk_sat_n_cell" class="cell-data itksun">{{ $itk_sat }}</td>
                 </tr>
                 <tr>
                 <th scope="row">Sun</th>
-                <td contenteditable="true" id="dsp_sun_n_cell" class="cell-data dspSun">{{ $dsp_sun }}</td>
-                <td contenteditable="true" id="itk_sun_n_cell" class="cell-data itkSun">{{ $itk_sun }}</td>
+                <td contenteditable="true" id="dsp_sun_n_cell" class="cell-data dspsun">{{ $dsp_sun }}</td>
+                <td contenteditable="true" id="itk_sun_n_cell" class="cell-data itksun">{{ $itk_sun }}</td>
                 </tr>
                 <tr>
                 <th scope="row">Total</th>

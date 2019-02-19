@@ -2,6 +2,8 @@
 
 @section('content')
 
+<script type="text/javascript" src="js/data.js"></script>
+
 <form id="week_select" action="dashboard" method="get" enctype="multipart/form-data">
     @csrf
     <input type="hidden" id="input_mon" name="input_mon">
@@ -150,8 +152,6 @@ function calcWide() {
 
     $('.dsp_total').text(dsp_total);
 
-    console.log($('.dspMon').text());
-
     $('#itk_total_w').text(itk_total);
     $('#gp_currency').text("£" + gp_currency);
     $('#gp_percent').text(gp_percent + "%");
@@ -166,7 +166,6 @@ $(document).click(function () {
     calcWide();
     widthCondition();
 });
-
 
 //select on click
 $('.cell-data').on('focus', function() {
@@ -187,20 +186,40 @@ $('.cell-data').on('focus', function() {
 
 function widthCondition() {
 
-    if ($(window).width() < 585) {
-    console.log('Narrow');
+    if ($(window).width() < 585) 
+    {
+        days.forEach(element => {
+            $("#dsp_"+ element +"_w_cell").text("");
+            $("#dsp_"+ element +"_w_cell").text($(".dsp" + element).text());
+        });
+
+        days.forEach(element => {
+            $("#itk_"+ element +"_w_cell").text("");
+            $("#itk_"+ element +"_w_cell").text($(".itk" + element).text());
+        });
+
     }
-    else {
-    console.log('Wide');
+    else 
+    {
+        days.forEach(element => {
+            $("#dsp_"+ element +"_n_cell").text("");
+            $("#dsp_"+ element +"_n_cell").text($(".dsp" + element).text());
+        });
+
+        days.forEach(element => {
+            $("#itk_"+ element +"_n_cell").text("");
+            $("#itk_"+ element +"_n_cell").text($(".itk" + element).text());
+        });
     }
 }
 
+
 //IF SCREEN WIDE A->B 
-//dsp_mon_w_cell -> dspMon
+//#dsp_mon_w_cell -> .dspMon
 
 
 //IF SCREEN NARROW B->A
-//dsp_mon_n_cell -> dspMon
+//#dsp_mon_n_cell -> .dspMon
 
 </script>
 

@@ -26,26 +26,26 @@
             </tr>
             <tr>
                 <th class="th-vert">Stock Purchase (£)</th>
-                <td contenteditable="true" id="dsp_mon_w_cell" class="cell-data cell-wide dspMon">{{ $dsp_mon }}</td>
-                <td contenteditable="true" id="dsp_tue_w_cell" class="cell-data cell-wide dspTue">{{ $dsp_tue }}</td>
-                <td contenteditable="true" id="dsp_wed_w_cell" class="cell-data cell-wide dspWed">{{ $dsp_wed }}</td>
-                <td contenteditable="true" id="dsp_thur_w_cell" class="cell-data cell-wide dspThur">{{ $dsp_thur }}</td>
-                <td contenteditable="true" id="dsp_fri_w_cell" class="cell-data cell-wide dspFri">{{ $dsp_fri }}</td>
-                <td contenteditable="true" id="dsp_sat_w_cell" class="cell-data cell-wide dspSat">{{ $dsp_sat }}</td>
-                <td contenteditable="true" id="dsp_sun_w_cell" class="cell-data cell-wide dspSun">{{ $dsp_sun }}</td>
+                <td contenteditable="true" id="dsp_mon_w_cell" class="cell-data cell-wide dspmon">{{ $dsp_mon }}</td>
+                <td contenteditable="true" id="dsp_tue_w_cell" class="cell-data cell-wide dsptue">{{ $dsp_tue }}</td>
+                <td contenteditable="true" id="dsp_wed_w_cell" class="cell-data cell-wide dspwed">{{ $dsp_wed }}</td>
+                <td contenteditable="true" id="dsp_thur_w_cell" class="cell-data cell-wide dspthur">{{ $dsp_thur }}</td>
+                <td contenteditable="true" id="dsp_fri_w_cell" class="cell-data cell-wide dspfri">{{ $dsp_fri }}</td>
+                <td contenteditable="true" id="dsp_sat_w_cell" class="cell-data cell-wide dspsat">{{ $dsp_sat }}</td>
+                <td contenteditable="true" id="dsp_sun_w_cell" class="cell-data cell-wide dspsun">{{ $dsp_sun }}</td>
                 <td>
                     <h4 id="dsp_total_w" class="cell-wide dsp_total"></h4>
                 </td>
             </tr>
             <tr>
                 <th class="th-vert">Intake (£)</th>
-                <td contenteditable="true" id="itk_mon_w_cell" class="cell-data cell-wide itkMon">{{ $itk_mon }}</td>
-                <td contenteditable="true" id="itk_tue_w_cell" class="cell-data cell-wide itkTue">{{ $itk_tue }}</td>
-                <td contenteditable="true" id="itk_wed_w_cell" class="cell-data cell-wide itkWed">{{ $itk_wed }}</td>
-                <td contenteditable="true" id="itk_thur_w_cell" class="cell-data cell-wide itkThur">{{ $itk_thur }}</td>
-                <td contenteditable="true" id="itk_fri_w_cell" class="cell-data cell-wide itkFri">{{ $itk_fri }}</td>
-                <td contenteditable="true" id="itk_sat_w_cell" class="cell-data cell-wide itkSat">{{ $itk_sat }}</td>
-                <td contenteditable="true" id="itk_sun_w_cell" class="cell-data cell-wide itkSun">{{ $itk_sun }}</td>
+                <td contenteditable="true" id="itk_mon_w_cell" class="cell-data cell-wide itkmon">{{ $itk_mon }}</td>
+                <td contenteditable="true" id="itk_tue_w_cell" class="cell-data cell-wide itktue">{{ $itk_tue }}</td>
+                <td contenteditable="true" id="itk_wed_w_cell" class="cell-data cell-wide itkwed">{{ $itk_wed }}</td>
+                <td contenteditable="true" id="itk_thur_w_cell" class="cell-data cell-wide itkthur">{{ $itk_thur }}</td>
+                <td contenteditable="true" id="itk_fri_w_cell" class="cell-data cell-wide itkfri">{{ $itk_fri }}</td>
+                <td contenteditable="true" id="itk_sat_w_cell" class="cell-data cell-wide itksat">{{ $itk_sat }}</td>
+                <td contenteditable="true" id="itk_sun_w_cell" class="cell-data cell-wide itksun">{{ $itk_sun }}</td>
                 <td>
                     <h4 id="itk_total_w" class="cell-wide"></h4>
                 </td>
