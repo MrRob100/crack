@@ -63,7 +63,7 @@
         </div>
     </div>
 </div>
-
+<br>
 @include('graph')
 
 <h4 class="week-hidden week-mon-hidden">{{ $mon_unix }}</h4>
