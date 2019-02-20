@@ -7,11 +7,6 @@ function setChart() {
 
     limitVal = (Math.ceil(maxVal/100)) * 100;
 
-    console.log('maxVal:', maxVal);
-    console.log('limitVal:', limitVal);
-
-
-
     var windowWidth = $(window).width();
 
     if (windowWidth < 585) {
@@ -49,6 +44,18 @@ function setChart() {
     satPointX = saturdayStartOffset + halfDayWidth;
     sunPointX = sundayStartOffset + halfDayWidth;
 
+    //gridlines
+    nGridlines = limitVal / 100;
+    gridlineSpace = areaHeight / nGridlines;
+    n = 0;
+    for (n = 0; n < nGridlines; n++) {
+        y = areaOffsetY + (n * gridlineSpace);
+        $('.graph-canvas').append('<svg><line class="gridline" x1="' + areaOffsetX + '" x2="' + (areaOffsetX + (dayWidth * 7)) + '" y1="' + y + '" y2="' + y + '" /></svg>')
+        //console.log('n = ', n);
+    }
+
+    // $('.graph-canvas').append('<svg><line x1="50" y1="50" x2="200" y2="200" stroke="red" stroke-width="2" /></svg>');
+
     $('.axis').attr('stroke', 'black'); //set color of axes
     $('.axis').attr('stroke-width', 1.5); //set stroke width of axes
     $('.point').attr('r', 3); //set radius of point
@@ -61,6 +68,9 @@ function setChart() {
 
     $('.connecting-line-itk').attr('stroke', '#51B474');
     $('.connecting-line-itk').attr('stroke-width', 1.5);
+
+    $('.gridline').attr('stroke', '#777');
+    $('.gridline').attr('stroke-width', 1);
 
     $('.graph-canvas').attr('width', width);
     $('.graph-canvas').attr('height', height);

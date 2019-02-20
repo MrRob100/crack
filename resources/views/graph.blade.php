@@ -5,6 +5,7 @@
             <rect class="inner-rect"/>
             <line class="x-axis axis" />
             <line class="y-axis axis" />
+            {{-- <line x1="50" y1="50" x2="200" y2="200" stroke="red" stroke-width="2" /> --}}
             <circle class="dsp-mon-point dsp-point point" cx="50" cy="50" r="5" stroke="black" stroke-width="0" />
             <circle class="dsp-tue-point dsp-point point" cx="50" cy="50" r="5" stroke="black" stroke-width="0" />
             <circle class="dsp-wed-point dsp-point point" cx="50" cy="50" r="5" stroke="black" stroke-width="0" />
