@@ -346,55 +346,50 @@ function setChart() {
     // 0 -> interceptOffsetY
     // Max -> areaOffsetY
 
-    //svgRange = 160 aka interceptOffsetY - areaOffsetY 
-    svgRange = interceptOffsetY - areaOffsetY; 
+    // //svgRange = 160 aka interceptOffsetY - areaOffsetY 
+    // svgRange = interceptOffsetY - areaOffsetY; 
 
-    //dataRange = 244 limitval 
-    dataRange = limitVal; 
+    // //dataRange = 244 limitval 
+    // dataRange = limitVal; 
 
-    //svgRange / dataRange = scaleFactor
-    scaleFactor = svgRange / dataRange;
+    // //svgRange / dataRange = scaleFactor
+    // scaleFactor = svgRange / dataRange;
 
-    //DATAIN * scaleFactor = suitable in magnitude aka scaled data from 0 to 160
-    dspMonMag = dsp_mon * scaleFactor;
+    scaleFactor = (interceptOffsetY - areaOffsetY) / limitVal;
 
-    // - it. now from 0 to - 160
-    dspMonSigned = - dspMonMag;
+    dspMonAfloat = (-(dsp_mon * scaleFactor)) + interceptOffsetY;
+    dspTueAfloat = (-(dsp_tue * scaleFactor)) + interceptOffsetY;
+    dspWedAfloat = (-(dsp_wed * scaleFactor)) + interceptOffsetY;
+    dspThurAfloat = (-(dsp_thur * scaleFactor)) + interceptOffsetY;
+    dspFriAfloat = (-(dsp_fri * scaleFactor)) + interceptOffsetY;
+    dspSatAfloat = (-(dsp_sat * scaleFactor)) + interceptOffsetY;
+    dspSunAfloat = (-(dsp_sun * scaleFactor)) + interceptOffsetY;
 
-    // + 180 (interceptOffsetY) so that max is 20
-    dspMonAfloat = dspMonSigned + interceptOffsetY;
 
-    //want limitVal to be areaOffsetY
-    console.log('limitval: ', limitVal);
-    console.log('maxval: ', maxVal);
-    console.log('minval', 0);
-    console.log('areaOffsetY: ', areaOffsetY);
-    console.log('interceptOffsetY: ', interceptOffsetY);
 
     $('.dsp-mon-point').attr('cx', monPointX);
     $('.dsp-mon-point').attr('cy', dspMonAfloat);
 
     $('.dsp-tue-point').attr('cx', tuePointX);
-    $('.dsp-tue-point').attr('cy', interceptOffsetY);
+    $('.dsp-tue-point').attr('cy', dspTueAfloat);
 
     $('.dsp-wed-point').attr('cx', wedPointX);
-    $('.dsp-wed-point').attr('cy', interceptOffsetY);
+    $('.dsp-wed-point').attr('cy', dspWedAfloat);
 
     $('.dsp-thur-point').attr('cx', thurPointX);
-    $('.dsp-thur-point').attr('cy', interceptOffsetY);
+    $('.dsp-thur-point').attr('cy', dspThurAfloat);
 
     $('.dsp-fri-point').attr('cx', friPointX);
-    $('.dsp-fri-point').attr('cy', interceptOffsetY);
+    $('.dsp-fri-point').attr('cy', dspFriAfloat);
 
     $('.dsp-sat-point').attr('cx', satPointX);
-    $('.dsp-sat-point').attr('cy', interceptOffsetY);
+    $('.dsp-sat-point').attr('cy', dspSatAfloat);
 
     $('.dsp-sun-point').attr('cx', sunPointX);
-    $('.dsp-sun-point').attr('cy', interceptOffsetY);
+    $('.dsp-sun-point').attr('cy', dspSunAfloat);
 
 }
 
-//dynamic variable R&D
 
 </script>
 
