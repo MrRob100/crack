@@ -319,9 +319,17 @@ function setChart() {
     sunPointX = sundayStartOffset + halfDayWidth;
 
     $('.axis').attr('stroke', 'black'); //set color of axes
-    $('.axis').attr('stroke-width', 1.5); //set color of axes
-    $('.point').attr('r', 4); //set radius of point
+    $('.axis').attr('stroke-width', 1.5); //set stroke width of axes
+    $('.point').attr('r', 3); //set radius of point
     $('.dsp-point').attr('fill', 'blue'); //set color of dsp points
+    $('.itk-point').attr('fill', '#57B474'); //set color of itk points
+
+    //set connecting line style
+    $('.connecting-line-dsp').attr('stroke', 'blue'); 
+    $('.connecting-line-dsp').attr('stroke-width', 1.5); 
+
+    $('.connecting-line-itk').attr('stroke', '#51B474'); 
+    $('.connecting-line-itk').attr('stroke-width', 1.5); 
 
     $('.graph-canvas').attr('width', width);
     $('.graph-canvas').attr('height', height);
@@ -342,19 +350,6 @@ function setChart() {
     $('.x-axis').attr('y1', interceptOffsetY);
     $('.x-axis').attr('y2', interceptOffsetY);
 
-    //point heights
-    // 0 -> interceptOffsetY
-    // Max -> areaOffsetY
-
-    // //svgRange = 160 aka interceptOffsetY - areaOffsetY 
-    // svgRange = interceptOffsetY - areaOffsetY; 
-
-    // //dataRange = 244 limitval 
-    // dataRange = limitVal; 
-
-    // //svgRange / dataRange = scaleFactor
-    // scaleFactor = svgRange / dataRange;
-
     scaleFactor = (interceptOffsetY - areaOffsetY) / limitVal;
 
     dspMonAfloat = (-(dsp_mon * scaleFactor)) + interceptOffsetY;
@@ -365,8 +360,15 @@ function setChart() {
     dspSatAfloat = (-(dsp_sat * scaleFactor)) + interceptOffsetY;
     dspSunAfloat = (-(dsp_sun * scaleFactor)) + interceptOffsetY;
 
+    itkMonAfloat = (-(itk_mon * scaleFactor)) + interceptOffsetY;
+    itkTueAfloat = (-(itk_tue * scaleFactor)) + interceptOffsetY;
+    itkWedAfloat = (-(itk_wed * scaleFactor)) + interceptOffsetY;
+    itkThurAfloat = (-(itk_thur * scaleFactor)) + interceptOffsetY;
+    itkFriAfloat = (-(itk_fri * scaleFactor)) + interceptOffsetY;
+    itkSatAfloat = (-(itk_sat * scaleFactor)) + interceptOffsetY;
+    itkSunAfloat = (-(itk_sun * scaleFactor)) + interceptOffsetY;
 
-
+    //dsp points
     $('.dsp-mon-point').attr('cx', monPointX);
     $('.dsp-mon-point').attr('cy', dspMonAfloat);
 
@@ -387,6 +389,92 @@ function setChart() {
 
     $('.dsp-sun-point').attr('cx', sunPointX);
     $('.dsp-sun-point').attr('cy', dspSunAfloat);
+    
+    //dsp connecting lines
+    $('.dsp-mon-tue').attr('x1', monPointX);
+    $('.dsp-mon-tue').attr('x2', tuePointX);
+    $('.dsp-mon-tue').attr('y1', dspMonAfloat);
+    $('.dsp-mon-tue').attr('y2', dspTueAfloat);
+
+    $('.dsp-tue-wed').attr('x1', tuePointX);
+    $('.dsp-tue-wed').attr('x2', wedPointX);
+    $('.dsp-tue-wed').attr('y1', dspTueAfloat);
+    $('.dsp-tue-wed').attr('y2', dspWedAfloat);
+
+    $('.dsp-wed-thur').attr('x1', wedPointX);
+    $('.dsp-wed-thur').attr('x2', thurPointX);
+    $('.dsp-wed-thur').attr('y1', dspWedAfloat);
+    $('.dsp-wed-thur').attr('y2', dspThurAfloat);
+
+    $('.dsp-thur-fri').attr('x1', thurPointX);
+    $('.dsp-thur-fri').attr('x2', friPointX);
+    $('.dsp-thur-fri').attr('y1', dspThurAfloat);
+    $('.dsp-thur-fri').attr('y2', dspFriAfloat);
+
+    $('.dsp-fri-sat').attr('x1', friPointX);
+    $('.dsp-fri-sat').attr('x2', satPointX);
+    $('.dsp-fri-sat').attr('y1', dspFriAfloat);
+    $('.dsp-fri-sat').attr('y2', dspSatAfloat);
+
+    $('.dsp-sat-sun').attr('x1', satPointX);
+    $('.dsp-sat-sun').attr('x2', sunPointX);
+    $('.dsp-sat-sun').attr('y1', dspSatAfloat);
+    $('.dsp-sat-sun').attr('y2', dspSunAfloat);
+
+    //itk points
+    $('.itk-mon-point').attr('cx', monPointX);
+    $('.itk-mon-point').attr('cy', itkMonAfloat);
+
+    $('.itk-tue-point').attr('cx', tuePointX);
+    $('.itk-tue-point').attr('cy', itkTueAfloat);
+
+    $('.itk-wed-point').attr('cx', wedPointX);
+    $('.itk-wed-point').attr('cy', itkWedAfloat);
+
+    $('.itk-thur-point').attr('cx', thurPointX);
+    $('.itk-thur-point').attr('cy', itkThurAfloat);
+
+    $('.itk-fri-point').attr('cx', friPointX);
+    $('.itk-fri-point').attr('cy', itkFriAfloat);
+
+    $('.itk-sat-point').attr('cx', satPointX);
+    $('.itk-sat-point').attr('cy', itkSatAfloat);
+
+    $('.itk-sun-point').attr('cx', sunPointX);
+    $('.itk-sun-point').attr('cy', itkSunAfloat);
+    
+    //itk connecting lines
+    $('.itk-mon-tue').attr('x1', monPointX);
+    $('.itk-mon-tue').attr('x2', tuePointX);
+    $('.itk-mon-tue').attr('y1', itkMonAfloat);
+    $('.itk-mon-tue').attr('y2', itkTueAfloat);
+
+    $('.itk-tue-wed').attr('x1', tuePointX);
+    $('.itk-tue-wed').attr('x2', wedPointX);
+    $('.itk-tue-wed').attr('y1', itkTueAfloat);
+    $('.itk-tue-wed').attr('y2', itkWedAfloat);
+
+    $('.itk-wed-thur').attr('x1', wedPointX);
+    $('.itk-wed-thur').attr('x2', thurPointX);
+    $('.itk-wed-thur').attr('y1', itkWedAfloat);
+    $('.itk-wed-thur').attr('y2', itkThurAfloat);
+
+    $('.itk-thur-fri').attr('x1', thurPointX);
+    $('.itk-thur-fri').attr('x2', friPointX);
+    $('.itk-thur-fri').attr('y1', itkThurAfloat);
+    $('.itk-thur-fri').attr('y2', itkFriAfloat);
+
+    $('.itk-fri-sat').attr('x1', friPointX);
+    $('.itk-fri-sat').attr('x2', satPointX);
+    $('.itk-fri-sat').attr('y1', itkFriAfloat);
+    $('.itk-fri-sat').attr('y2', itkSatAfloat);
+
+    $('.itk-sat-sun').attr('x1', satPointX);
+    $('.itk-sat-sun').attr('x2', sunPointX);
+    $('.itk-sat-sun').attr('y1', itkSatAfloat);
+    $('.itk-sat-sun').attr('y2', itkSunAfloat);
+
+
 
 }
 
