@@ -184,7 +184,6 @@ class DashboardController extends Controller
         $the_sun = date('d-m-y', $sun_unix);
         }
         else
-
         {
         //current week
         $mon_unix = strtotime("monday this week");
@@ -281,6 +280,7 @@ class DashboardController extends Controller
                 {                    
                     //update db
                     DB::table('gp')->where('day', $day)->where('unique_week_id', $uwid)->update(['daily_stock_purchase' => $dsp]);
+                    //dd($uwid, $dsp);
                 }    
             }
             

@@ -55,8 +55,8 @@
             <div class="row">
                 <form id="fields_form_narrow" action="dashboard-update" method="get" enctype="multipart/form-data">
                     @csrf
-                    <input value="sunwide" type="hidden" id="input_sun_hidden_update" name="input_sun_hidden_update_n">
-                    <input value="monwide" type="hidden" id="input_mon_hidden_update" name="input_mon_hidden_update_n">
+                    <input value="monwide" type="hidden" id="input_mon_hidden_update_n" name="input_mon_hidden_update">
+                    <input value="sunwide" type="hidden" id="input_sun_hidden_update_n" name="input_sun_hidden_update">
                     <input type="hidden" name="dsp_mon" id="dsp_mon_n" class="dsp_mon">
                     <input type="hidden" name="dsp_tue" id="dsp_tue_n" class="dsp_tue">
                     <input type="hidden" name="dsp_wed" id="dsp_wed_n" class="dsp_wed">

@@ -110,8 +110,8 @@
     <div class="row">
         <form id="fields_form_narrow" action="dashboard-update" method="get" enctype="multipart/form-data">
             @csrf
-            <input value="sunwide" type="hidden" id="input_sun_hidden_update_w" name="input_sun_hidden_update">
             <input value="monwide" type="hidden" id="input_mon_hidden_update_w" name="input_mon_hidden_update">
+            <input value="sunwide" type="hidden" id="input_sun_hidden_update_w" name="input_sun_hidden_update">
             <input type="hidden" name="dsp_mon" id="dsp_mon_w">
             <input type="hidden" name="dsp_tue" id="dsp_tue_w">
             <input type="hidden" name="dsp_wed" id="dsp_wed_w">
