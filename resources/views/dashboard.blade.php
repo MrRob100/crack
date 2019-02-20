@@ -181,7 +181,7 @@ function calcWide() {
     $('#gp_percent').text(gp_percent + "%");
 
     //CALL GRAPH FUNCTION AND PASS IN VALUES
-
+    setChart();
 }
 
 function calcNarrow() {
@@ -214,6 +214,7 @@ function calcNarrow() {
     $('#gp_percent').text(gp_percent + "%");
 
     //CALL GRAPH FUNCTION AND PASS IN VALUES
+    setChart(dsp_mon);
 }
 
 function widthCondition() {
@@ -251,7 +252,6 @@ function widthCondition() {
             $("#itk_"+ element +"_n_cell").text($(".itk" + element).text());
         });
     }
-    setChart(windowWidth);
 }
 
 $(document).ready(function () {
@@ -269,7 +269,9 @@ $(document).click(function () {
 //append lines
 // $('.graph-canvas').append('<svg height="210" width="500"><line x1="0" y1="0" x2="200" y2="200" style="stroke:rgb(255,0,0);stroke-width:2" /></svg>');
 
-function setChart(windowWidth) {
+function setChart() {
+
+    var windowWidth = $(window).width(); 
 
     if (windowWidth < 585) 
     {
