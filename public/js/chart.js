@@ -45,6 +45,8 @@ function setChart() {
     sunPointX = sundayStartOffset + halfDayWidth;
 
     //gridlines
+
+    $('.gridline').hide();
     nGridlines = limitVal / 100;
     gridlineSpace = areaHeight / nGridlines;
     n = 0;
@@ -70,7 +72,7 @@ function setChart() {
     $('.connecting-line-itk').attr('stroke-width', 1.5);
 
     $('.gridline').attr('stroke', '#777');
-    $('.gridline').attr('stroke-width', 1);
+    $('.gridline').attr('stroke-width', 0.7);
 
     $('.graph-canvas').attr('width', width);
     $('.graph-canvas').attr('height', height);
