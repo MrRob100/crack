@@ -361,8 +361,8 @@ function setChart() {
     // - it. now from 0 to - 160
     dspMonSigned = - dspMonMag;
 
-    // + 180 so that max is 20
-    dspMonAfloat = dspMonSigned + 180;
+    // + 180 (interceptOffsetY) so that max is 20
+    dspMonAfloat = dspMonSigned + interceptOffsetY;
 
     //want limitVal to be areaOffsetY
     console.log('limitval: ', limitVal);
@@ -393,6 +393,8 @@ function setChart() {
     $('.dsp-sun-point').attr('cy', interceptOffsetY);
 
 }
+
+//dynamic variable R&D
 
 </script>
 
