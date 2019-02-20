@@ -214,7 +214,7 @@ function calcNarrow() {
     $('#gp_percent').text(gp_percent + "%");
 
     //CALL GRAPH FUNCTION AND PASS IN VALUES
-    setChart(dsp_mon);
+    setChart();
 }
 
 function widthCondition() {
@@ -270,6 +270,12 @@ $(document).click(function () {
 // $('.graph-canvas').append('<svg height="210" width="500"><line x1="0" y1="0" x2="200" y2="200" style="stroke:rgb(255,0,0);stroke-width:2" /></svg>');
 
 function setChart() {
+
+var allValues = [dsp_mon, dsp_tue, dsp_wed, dsp_thur, dsp_fri, dsp_sat, dsp_sun, itk_mon, itk_tue, itk_wed, itk_thur, itk_fri, itk_sat, itk_sun];
+
+arrayAllValues = Object.values(allValues);
+maxVal = Math.max(...arrayAllValues);
+console.log(maxVal);
 
     var windowWidth = $(window).width(); 
 
