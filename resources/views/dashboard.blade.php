@@ -271,11 +271,12 @@ $(document).click(function () {
 
 function setChart() {
 
-var allValues = [dsp_mon, dsp_tue, dsp_wed, dsp_thur, dsp_fri, dsp_sat, dsp_sun, itk_mon, itk_tue, itk_wed, itk_thur, itk_fri, itk_sat, itk_sun];
+    var allValues = [dsp_mon, dsp_tue, dsp_wed, dsp_thur, dsp_fri, dsp_sat, dsp_sun, itk_mon, itk_tue, itk_wed, itk_thur, itk_fri, itk_sat, itk_sun];
 
-arrayAllValues = Object.values(allValues);
-maxVal = Math.max(...arrayAllValues);
-console.log(maxVal);
+    arrayAllValues = Object.values(allValues);
+    maxVal = Math.max(...arrayAllValues);
+
+    limitVal = maxVal * 1.1; //KEY
 
     var windowWidth = $(window).width(); 
 
@@ -341,8 +342,37 @@ console.log(maxVal);
     $('.x-axis').attr('y1', interceptOffsetY);
     $('.x-axis').attr('y2', interceptOffsetY);
 
+    //point heights
+    // 0 -> interceptOffsetY
+    // Max -> areaOffsetY
+
+    //svgRange = 160 aka interceptOffsetY - areaOffsetY 
+    svgRange = interceptOffsetY - areaOffsetY; 
+
+    //dataRange = 244 limitval 
+    dataRange = limitVal; 
+
+    //svgRange / dataRange = scaleFactor
+    scaleFactor = svgRange / dataRange;
+
+    //DATAIN * scaleFactor = suitable in magnitude aka scaled data from 0 to 160
+    dspMonMag = dsp_mon * scaleFactor;
+
+    // - it. now from 0 to - 160
+    dspMonSigned = - dspMonMag;
+
+    // + 180 so that max is 20
+    dspMonAfloat = dspMonSigned + 180;
+
+    //want limitVal to be areaOffsetY
+    console.log('limitval: ', limitVal);
+    console.log('maxval: ', maxVal);
+    console.log('minval', 0);
+    console.log('areaOffsetY: ', areaOffsetY);
+    console.log('interceptOffsetY: ', interceptOffsetY);
+
     $('.dsp-mon-point').attr('cx', monPointX);
-    $('.dsp-mon-point').attr('cy', interceptOffsetY);
+    $('.dsp-mon-point').attr('cy', dspMonAfloat);
 
     $('.dsp-tue-point').attr('cx', tuePointX);
     $('.dsp-tue-point').attr('cy', interceptOffsetY);
