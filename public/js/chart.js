@@ -5,7 +5,12 @@ function setChart() {
     arrayAllValues = Object.values(allValues);
     maxVal = Math.max(...arrayAllValues);
 
-    limitVal = maxVal * 1.1; //KEY
+    limitVal = (Math.ceil(maxVal/100)) * 100;
+
+    console.log('maxVal:', maxVal);
+    console.log('limitVal:', limitVal);
+
+
 
     var windowWidth = $(window).width();
 
