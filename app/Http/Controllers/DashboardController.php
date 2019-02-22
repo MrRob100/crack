@@ -16,7 +16,7 @@ class DashboardController extends Controller
      *
      * @param $repository
      */
-    public function __construct(DashboardRepository $repository)
+    public function __construct(Request $request, DashboardRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -27,9 +27,10 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-    public function index()
+    public function index(Request $request, DashboardRepository $repository)
     {
-        
+        //$response = $repository->test();
+
         $current_mon = strtotime("monday this week"); 
         //next week
         if (isset($_GET['input_sun']))
@@ -184,8 +185,10 @@ class DashboardController extends Controller
     }
 
 
-    public function update()
+    public function update(Request $request, DashboardRepository $repository)
     {
+        $response = $repository->test();
+
         $current_mon = strtotime("monday this week"); 
      
         if (isset($_GET['input_sun_hidden_update']))

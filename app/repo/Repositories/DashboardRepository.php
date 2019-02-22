@@ -10,5 +10,8 @@ use App\Repositories\BaseRepository;
 
 class DashboardRepository extends BaseRepository
 {
-    protected $sinchow = 'unique'; 
+    public function test()
+    {
+        //dd($_GET);
+    }
 }
