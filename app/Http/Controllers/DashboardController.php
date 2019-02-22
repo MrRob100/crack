@@ -4,9 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Repositories\DashboardRepository;
 
 class DashboardController extends Controller
 {
+
+    protected $repository;
+
+    /**
+     * __construct.
+     *
+     * @param $repository
+     */
+    public function __construct(DashboardRepository $repository)
+    {
+        $this->repository = $repository;
+    }
 
     /**
      * Show the application dashboard.
@@ -16,6 +29,7 @@ class DashboardController extends Controller
 
     public function index()
     {
+        
         $current_mon = strtotime("monday this week"); 
         //next week
         if (isset($_GET['input_sun']))
