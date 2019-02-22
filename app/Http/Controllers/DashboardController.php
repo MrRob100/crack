@@ -8,7 +8,6 @@ use App\Repositories\DashboardRepository;
 
 class DashboardController extends Controller
 {
-
     protected $repository;
 
     /**
@@ -29,9 +28,10 @@ class DashboardController extends Controller
 
     public function index(Request $request, DashboardRepository $repository)
     {
-        //$response = $repository->test();
+        $current_mon = $repository->current_mon();
 
-        $current_mon = strtotime("monday this week"); 
+        dd($repository->all());
+
         //next week
         if (isset($_GET['input_sun']))
         {
@@ -74,14 +74,14 @@ class DashboardController extends Controller
         
         {
             
-            $row = DB::table('gp')->select('daily_stock_purchase', 'intake')->where('day', $day)->where('unique_week_id', $uwid)->get();
+            $row = DB::table('gps')->select('daily_stock_purchase', 'intake')->where('day', $day)->where('unique_week_id', $uwid)->get();
             $row_size = sizeof(array($row)[0]);
 
             if ($row_size !== 0) 
             {
                 // db values, return them
-                $dsp_sel = DB::table('gp')->select('daily_stock_purchase')->where('day', $day)->where('unique_week_id', $uwid)->limit(1)->get();
-                $itk_sel = DB::table('gp')->select('intake')->where('day', $day)->where('unique_week_id', $uwid)->limit(1)->get();
+                $dsp_sel = DB::table('gps')->select('daily_stock_purchase')->where('day', $day)->where('unique_week_id', $uwid)->limit(1)->get();
+                $itk_sel = DB::table('gps')->select('intake')->where('day', $day)->where('unique_week_id', $uwid)->limit(1)->get();
                 //array_push($values[$day]['dsp'], 'hello');
                 array_push($values[$day]['dsp'], $dsp_sel[0]->daily_stock_purchase);
                 array_push($values[$day]['itk'], $itk_sel[0]->intake);
@@ -111,61 +111,7 @@ class DashboardController extends Controller
 
         //calcing averages
         //mon
-        $intake_mon_arr = DB::table('gp')->select('intake')->where('day', 'mon')->where('unique_week_id', '<', $current_mon)->get();
-        $intake_mon_sum = 0;
-        foreach ($intake_mon_arr as $val)
-        {
-            $intake_mon_sum += $val->intake;
-        }
-        $intake_mon_ave = $intake_mon_sum / (sizeof($intake_mon_arr) + 0.00001);
-        //tue
-        $intake_tue_arr = DB::table('gp')->select('intake')->where('day', 'tue')->where('unique_week_id', '<', $current_mon)->get();
-        $intake_tue_sum = 0;
-        foreach ($intake_tue_arr as $val)
-        {
-            $intake_tue_sum += $val->intake;
-        }
-        $intake_tue_ave = $intake_tue_sum / (sizeof($intake_tue_arr) + 0.00001);
-        //wed
-        $intake_wed_arr = DB::table('gp')->select('intake')->where('day', 'wed')->where('unique_week_id', '<', $current_mon)->get();
-        $intake_wed_sum = 0;
-        foreach ($intake_wed_arr as $val)
-        {
-            $intake_wed_sum += $val->intake;
-        }
-        $intake_wed_ave = $intake_wed_sum / (sizeof($intake_wed_arr) + 0.00001);
-        //thur
-        $intake_thur_arr = DB::table('gp')->select('intake')->where('day', 'thur')->where('unique_week_id', '<', $current_mon)->get();
-        $intake_thur_sum = 0;
-        foreach ($intake_thur_arr as $val)
-        {
-            $intake_thur_sum += $val->intake;
-        }
-        $intake_thur_ave = $intake_thur_sum / (sizeof($intake_thur_arr) + 0.00001);
-        //fri
-        $intake_fri_arr = DB::table('gp')->select('intake')->where('day', 'fri')->where('unique_week_id', '<', $current_mon)->get();
-        $intake_fri_sum = 0;
-        foreach ($intake_fri_arr as $val)
-        {
-            $intake_fri_sum += $val->intake;
-        }
-        $intake_fri_ave = $intake_fri_sum / (sizeof($intake_fri_arr) + 0.00001);
-        //sat
-        $intake_sat_arr = DB::table('gp')->select('intake')->where('day', 'sat')->where('unique_week_id', '<', $current_mon)->get();
-        $intake_sat_sum = 0;
-        foreach ($intake_sat_arr as $val)
-        {
-            $intake_sat_sum += $val->intake;
-        }
-        $intake_sat_ave = $intake_sat_sum / (sizeof($intake_sat_arr) + 0.00001);
-        //sun
-        $intake_sun_arr = DB::table('gp')->select('intake')->where('day', 'sun')->where('unique_week_id', '<', $current_mon)->get();
-        $intake_sun_sum = 0;
-        foreach ($intake_sun_arr as $val)
-        {
-            $intake_sun_sum += $val->intake;
-        }
-        $intake_sun_ave = $intake_sun_sum / (sizeof($intake_sun_arr) + 0.00001);
+
 
         return view('dashboard', compact(
             'dsp_mon', 'itk_mon', 
@@ -184,12 +130,10 @@ class DashboardController extends Controller
         ));
     }
 
-
     public function update(Request $request, DashboardRepository $repository)
     {
-        $response = $repository->test();
 
-        $current_mon = strtotime("monday this week"); 
+        $current_mon = $repository->current_mon();
      
         if (isset($_GET['input_sun_hidden_update']))
         {
@@ -269,8 +213,8 @@ class DashboardController extends Controller
             else 
             {
                 //get value from db
-                $dsp_sel = DB::table('gp')->select('daily_stock_purchase')->where('day', $day)->where('unique_week_id', $uwid)->limit(1)->get();
-                $itk_sel = DB::table('gp')->select('intake')->where('day', $day)->where('unique_week_id', $uwid)->limit(1)->get();
+                $dsp_sel = DB::table('gps')->select('daily_stock_purchase')->where('day', $day)->where('unique_week_id', $uwid)->limit(1)->get();
+                $itk_sel = DB::table('gps')->select('intake')->where('day', $day)->where('unique_week_id', $uwid)->limit(1)->get();
 
                 //set variable
                 $dsp = $dsp_sel[0]->daily_stock_purchase;
@@ -285,18 +229,18 @@ class DashboardController extends Controller
                 $dsp = $_GET['dsp_'.$day];
 
                 //create a date for it to log so then it can be ordered
-                $row = DB::table('gp')->select('daily_stock_purchase', 'intake')->where('day', $day)->where('unique_week_id', $uwid)->get();
+                $row = DB::table('gps')->select('daily_stock_purchase', 'intake')->where('day', $day)->where('unique_week_id', $uwid)->get();
                 $row_size = sizeof(array($row)[0]);
                 if ($row_size == 0) //checking if record already there
                 {
                     //insert into db as new record
-                    DB::table('gp')->insert(['daily_stock_purchase' => $dsp, 'day' => $day, 'unique_week_id' => $uwid, 'date' => $date_to_log]);
+                    DB::table('gps')->insert(['daily_stock_purchase' => $dsp, 'day' => $day, 'unique_week_id' => $uwid, 'date' => $date_to_log]);
 
                 } 
                 else 
                 {                    
                     //update db
-                    DB::table('gp')->where('day', $day)->where('unique_week_id', $uwid)->update(['daily_stock_purchase' => $dsp]);
+                    DB::table('gps')->where('day', $day)->where('unique_week_id', $uwid)->update(['daily_stock_purchase' => $dsp]);
                     //dd($uwid, $dsp);
                 }    
             }
@@ -306,19 +250,19 @@ class DashboardController extends Controller
             if ($_GET['itk_'.$day] !== "0") 
             {
                 $itk = $_GET['itk_'.$day];
-                $row = DB::table('gp')->select('daily_stock_purchase', 'intake')->where('day', $day)->where('unique_week_id', $uwid)->get();
+                $row = DB::table('gps')->select('daily_stock_purchase', 'intake')->where('day', $day)->where('unique_week_id', $uwid)->get();
                 $row_size = sizeof(array($row)[0]);
                 if ($row_size == 0)
                 {
 
                     //insert into db as new record
-                    DB::table('gp')->insert(['intake' => $itk, 'day' => $day, 'unique_week_id' => $uwid, 'date' => $date_to_log]);
+                    DB::table('gps')->insert(['intake' => $itk, 'day' => $day, 'unique_week_id' => $uwid, 'date' => $date_to_log]);
 
                 } 
                 else 
                 {                    
                     //update db
-                    DB::table('gp')->where('day', $day)->where('unique_week_id', $uwid)->update(['intake' => $itk]);
+                    DB::table('gps')->where('day', $day)->where('unique_week_id', $uwid)->update(['intake' => $itk]);
                 }    
             }
 

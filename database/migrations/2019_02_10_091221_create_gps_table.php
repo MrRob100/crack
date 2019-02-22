@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGPTable extends Migration
+class CreateGPSTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateGPTable extends Migration
      */
     public function up()
     {
-        Schema::create('gp', function (Blueprint $table) {
+        Schema::create('gps', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('daily_stock_purchase')->default('0');//input
             $table->integer('intake')->default('0');//input
@@ -35,6 +35,6 @@ class CreateGPTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gp');
+        Schema::dropIfExists('gps');
     }
 }
