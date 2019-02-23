@@ -2,6 +2,12 @@
 
 @section('content')
 
+<?php
+
+var_dump($itks);
+
+?>
+
 <script type="text/javascript" src="js/data.js"></script>
 <script type="text/javascript" src="js/chart.js"></script>
 

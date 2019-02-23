@@ -28,9 +28,14 @@ class DashboardController extends Controller
 
     public function index(Request $request, DashboardRepository $repository)
     {
+        
         $current_mon = $repository->current_mon();
 
-        dd($repository->all());
+        $itks = $repository->aves();
+
+        //dd($itks);
+        
+        //dd($itks[10]['intake']); WORKS!
 
         //next week
         if (isset($_GET['input_sun']))
@@ -126,7 +131,8 @@ class DashboardController extends Controller
             'current_mon', 'intake_mon_ave',
             'intake_tue_ave', 'intake_wed_ave',
             'intake_thur_ave', 'intake_fri_ave',
-            'intake_sat_ave', 'intake_sun_ave'
+            'intake_sat_ave', 'intake_sun_ave',
+            'itks'
         ));
     }
 
@@ -135,6 +141,8 @@ class DashboardController extends Controller
 
         $current_mon = $repository->current_mon();
      
+        $itks = $repository->aves();
+
         if (isset($_GET['input_sun_hidden_update']))
         {
         //fetch from week input
@@ -200,7 +208,7 @@ class DashboardController extends Controller
             //updating uwid (dont update uwid)
             // DB::table('gp')->where('day', $day)->update(['unique_week_id' => $uwid]); //not wanted
 
-            $row = DB::table('gp')->select('daily_stock_purchase', 'intake')->where('day', $day)->where('unique_week_id', $uwid)->get();
+            $row = DB::table('gps')->select('daily_stock_purchase', 'intake')->where('day', $day)->where('unique_week_id', $uwid)->get();
             $row_size = sizeof(array($row)[0]);
 
             //dsp & itk outputting values to table
@@ -286,6 +294,8 @@ class DashboardController extends Controller
         $itk_sat = $values['sat']['itk'][0];
         $itk_sun = $values['sun']['itk'][0];
 
+        dd($itks);
+
         return view('dashboard', compact(
             'dsp_mon', 'itk_mon', 
             'dsp_tue', 'itk_tue',
@@ -296,7 +306,7 @@ class DashboardController extends Controller
             'dsp_sun', 'itk_sun',
             'the_mon', 'the_sun',
             'mon_unix', 'sun_unix',
-            'current_mon'
+            'current_mon', 'itks'
         ));
 
     }
