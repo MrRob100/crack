@@ -16,13 +16,6 @@ class DashboardRepository extends BaseRepository
         return $current_mon;
     }
 
-    public function test() 
-    {    
-        $current_mon = strtotime("monday this week"); 
-
-        return $intake_mon;
-    }
-
     public function itk_aves()
     {
         $days = ['mon', 'tue', 'wed', 'thur', 'fri', 'sat', 'sun'];
@@ -42,7 +35,7 @@ class DashboardRepository extends BaseRepository
             }
             array_push($itk_aves, $itk_ave);
         }
-        return $itk_aves;
+        return $itk_aves; //array
     }
 
     public function dsp_aves()
@@ -64,7 +57,7 @@ class DashboardRepository extends BaseRepository
             }
             array_push($dsp_aves, $dsp_ave);
         }
-        return $dsp_aves;
+        return $dsp_aves; //array
     }
 
     public function create()

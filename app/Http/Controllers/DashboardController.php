@@ -31,13 +31,7 @@ class DashboardController extends Controller
         
         $current_mon = $repository->current_mon();
 
-        $itks = $repository->itk_aves();
-
-        //dd($itks);
-        
-        //dd($itks[10]['intake']); WORKS!
-
-        //next week
+        //week select buttons (index only)
         if (isset($_GET['input_sun']))
         {
             //$the_mon = $_GET['input_mon'];
@@ -115,8 +109,14 @@ class DashboardController extends Controller
         $itk_sun = $values['sun']['itk'][0];
 
         //calcing averages
-        //mon
-
+        $itks = $repository->itk_aves();
+        $itk_mon_ave = $itks[0];
+        $itk_tue_ave = $itks[1];
+        $itk_wed_ave = $itks[2];
+        $itk_thur_ave = $itks[3];
+        $itk_fri_ave = $itks[4];
+        $itk_sat_ave = $itks[5];
+        $itk_sun_ave = $itks[6];
 
         return view('dashboard', compact(
             'dsp_mon', 'itk_mon', 
@@ -128,11 +128,10 @@ class DashboardController extends Controller
             'dsp_sun', 'itk_sun',
             'the_mon', 'the_sun',
             'mon_unix', 'sun_unix',
-            'current_mon', 'intake_mon_ave',
-            'intake_tue_ave', 'intake_wed_ave',
-            'intake_thur_ave', 'intake_fri_ave',
-            'intake_sat_ave', 'intake_sun_ave',
-            'itks'
+            'current_mon', 'itk_mon_ave',
+            'itk_tue_ave', 'itk_wed_ave',
+            'itk_thur_ave', 'itk_fri_ave',
+            'itk_sat_ave', 'itk_sun_ave'
         ));
     }
 
@@ -141,8 +140,6 @@ class DashboardController extends Controller
 
         $current_mon = $repository->current_mon();
      
-        $itks = $repository->itk_aves();
-
         if (isset($_GET['input_sun_hidden_update']))
         {
         //fetch from week input
@@ -294,7 +291,16 @@ class DashboardController extends Controller
         $itk_sat = $values['sat']['itk'][0];
         $itk_sun = $values['sun']['itk'][0];
 
-        dd($itks);
+        //calcing averages
+        $itks = $repository->itk_aves();
+
+        $itk_mon_ave = $itks[0];
+        $itk_tue_ave = $itks[1];
+        $itk_wed_ave = $itks[2];
+        $itk_thur_ave = $itks[3];
+        $itk_fri_ave = $itks[4];
+        $itk_sat_ave = $itks[5];
+        $itk_sun_ave = $itks[6];
 
         return view('dashboard', compact(
             'dsp_mon', 'itk_mon', 
@@ -306,9 +312,11 @@ class DashboardController extends Controller
             'dsp_sun', 'itk_sun',
             'the_mon', 'the_sun',
             'mon_unix', 'sun_unix',
-            'current_mon', 'itks'
+            'current_mon', 'itk_mon_ave',
+            'itk_tue_ave', 'itk_wed_ave',
+            'itk_thur_ave', 'itk_fri_ave',
+            'itk_sat_ave', 'itk_sun_ave'
         ));
 
     }
-
 }

@@ -5,7 +5,6 @@
             <rect class="inner-rect"/>
             <line class="x-axis axis" />
             <line class="y-axis axis" />
-            {{-- <line x1="50" y1="50" x2="200" y2="200" stroke="red" stroke-width="2" /> --}}
             <circle class="dsp-mon-point dsp-point point" cx="50" cy="50" r="5" stroke="black" stroke-width="0" />
             <circle class="dsp-tue-point dsp-point point" cx="50" cy="50" r="5" stroke="black" stroke-width="0" />
             <circle class="dsp-wed-point dsp-point point" cx="50" cy="50" r="5" stroke="black" stroke-width="0" />
@@ -32,12 +31,19 @@
             <line class="itk-thur-fri connecting-line-itk"/>
             <line class="itk-fri-sat connecting-line-itk"/>
             <line class="itk-sat-sun connecting-line-itk"/>
+            <circle class="itk-mon-ave-point itk-point-ave point" cx="50" cy="50" r="5" stroke="black" stroke-width="0" />
+            <circle class="itk-tue-ave-point itk-point-ave point" cx="50" cy="50" r="5" stroke="black" stroke-width="0" />
+            <circle class="itk-wed-ave-point itk-point-ave point" cx="50" cy="50" r="5" stroke="black" stroke-width="0" />
+            <circle class="itk-thur-ave-point itk-point-ave point" cx="50" cy="50" r="5" stroke="black" stroke-width="0" />
+            <circle class="itk-fri-ave-point itk-point-ave point" cx="50" cy="50" r="5" stroke="black" stroke-width="0" />
+            <circle class="itk-sat-ave-point itk-point-ave point" cx="50" cy="50" r="5" stroke="black" stroke-width="0" />
+            <circle class="itk-sun-ave-point itk-point-ave point" cx="50" cy="50" r="5" stroke="black" stroke-width="0" />
+            <line class="itk-mon-tue-ave connecting-line-itk-ave"/>
+            <line class="itk-tue-wed-ave connecting-line-itk-ave"/>
+            <line class="itk-wed-thur-ave connecting-line-itk-ave"/>
+            <line class="itk-thur-fri-ave connecting-line-itk-ave"/>
+            <line class="itk-fri-sat-ave connecting-line-itk-ave"/>
+            <line class="itk-sat-sun-ave connecting-line-itk-ave"/>
         </svg>
     </div>
 </div>
-
-<script>
-
-
-
-</script>

@@ -2,14 +2,14 @@
 
 @section('content')
 
-<?php
-
-var_dump($itks);
-
-?>
-
 <script type="text/javascript" src="js/data.js"></script>
 <script type="text/javascript" src="js/chart.js"></script>
+
+<?php
+
+print_r($itk_mon_ave);
+
+?>
 
 <form id="week_select" action="dashboard" method="get" enctype="multipart/form-data">
     @csrf
@@ -158,22 +158,31 @@ if (monDisplay == monCurrent)
 
 //THE ABOVE COULD GO IN SEPARATE FILE????
 
+
 function calcWide() {
 
-    dsp_mon = parseFloat($('#dsp_mon_w_cell').text());
-    itk_mon = parseFloat($('#itk_mon_w_cell').text());
-    dsp_tue = parseFloat($('#dsp_tue_w_cell').text());
-    itk_tue = parseFloat($('#itk_tue_w_cell').text());
-    dsp_wed = parseFloat($('#dsp_wed_w_cell').text());
-    itk_wed = parseFloat($('#itk_wed_w_cell').text());
-    dsp_thur = parseFloat($('#dsp_thur_w_cell').text());
-    itk_thur = parseFloat($('#itk_thur_w_cell').text());
-    dsp_fri = parseFloat($('#dsp_fri_w_cell').text());
-    itk_fri = parseFloat($('#itk_fri_w_cell').text());
-    dsp_sat = parseFloat($('#dsp_sat_w_cell').text());
-    itk_sat = parseFloat($('#itk_sat_w_cell').text());
-    dsp_sun = parseFloat($('#dsp_sun_w_cell').text());
-    itk_sun = parseFloat($('#itk_sun_w_cell').text());
+    itk_mon_ave = '<?php echo $itk_mon_ave; ?>';
+    itk_tue_ave = '<?php echo $itk_tue_ave; ?>';
+    itk_wed_ave = '<?php echo $itk_wed_ave; ?>';
+    itk_thur_ave = '<?php echo $itk_thur_ave; ?>';
+    itk_fri_ave = '<?php echo $itk_fri_ave; ?>';
+    itk_sat_ave = '<?php echo $itk_sat_ave; ?>';
+    itk_sun_ave = '<?php echo $itk_sun_ave; ?>';
+
+    dsp_mon = parseFloat($('#dsp_mon_w_cell').text()) + 0.00001;
+    itk_mon = parseFloat($('#itk_mon_w_cell').text()) + 0.00001;
+    dsp_tue = parseFloat($('#dsp_tue_w_cell').text()) + 0.00001;
+    itk_tue = parseFloat($('#itk_tue_w_cell').text()) + 0.00001;
+    dsp_wed = parseFloat($('#dsp_wed_w_cell').text()) + 0.00001;
+    itk_wed = parseFloat($('#itk_wed_w_cell').text()) + 0.00001;
+    dsp_thur = parseFloat($('#dsp_thur_w_cell').text()) + 0.00001;
+    itk_thur = parseFloat($('#itk_thur_w_cell').text()) + 0.00001;
+    dsp_fri = parseFloat($('#dsp_fri_w_cell').text()) + 0.00001;
+    itk_fri = parseFloat($('#itk_fri_w_cell').text()) + 0.00001;
+    dsp_sat = parseFloat($('#dsp_sat_w_cell').text()) + 0.00001;
+    itk_sat = parseFloat($('#itk_sat_w_cell').text()) + 0.00001;
+    dsp_sun = parseFloat($('#dsp_sun_w_cell').text()) + 0.00001;
+    itk_sun = parseFloat($('#itk_sun_w_cell').text()) + 0.00001;
 
     dsp_total = dsp_mon + dsp_tue + dsp_wed + dsp_thur + dsp_fri + dsp_sat + dsp_sun;
     itk_total = itk_mon + itk_tue + itk_wed + itk_thur + itk_fri + itk_sat + itk_sun;
@@ -193,20 +202,28 @@ function calcWide() {
 
 function calcNarrow() {
 
-    dsp_mon = parseFloat($('#dsp_mon_n_cell').text());
-    itk_mon = parseFloat($('#itk_mon_n_cell').text());
-    dsp_tue = parseFloat($('#dsp_tue_n_cell').text());
-    itk_tue = parseFloat($('#itk_tue_n_cell').text());
-    dsp_wed = parseFloat($('#dsp_wed_n_cell').text());
-    itk_wed = parseFloat($('#itk_wed_n_cell').text());
-    dsp_thur = parseFloat($('#dsp_thur_n_cell').text());
-    itk_thur = parseFloat($('#itk_thur_n_cell').text());
-    dsp_fri = parseFloat($('#dsp_fri_n_cell').text());
-    itk_fri = parseFloat($('#itk_fri_n_cell').text());
-    dsp_sat = parseFloat($('#dsp_sat_n_cell').text());
-    itk_sat = parseFloat($('#itk_sat_n_cell').text());
-    dsp_sun = parseFloat($('#dsp_sun_n_cell').text());
-    itk_sun = parseFloat($('#itk_sun_n_cell').text());
+    itk_mon_ave = '<?php echo $itk_mon_ave; ?>';
+    itk_tue_ave = '<?php echo $itk_tue_ave; ?>';
+    itk_wed_ave = '<?php echo $itk_wed_ave; ?>';
+    itk_thur_ave = '<?php echo $itk_thur_ave; ?>';
+    itk_fri_ave = '<?php echo $itk_fri_ave; ?>';
+    itk_sat_ave = '<?php echo $itk_sat_ave; ?>';
+    itk_sun_ave = '<?php echo $itk_sun_ave; ?>';
+
+    dsp_mon = parseFloat($('#dsp_mon_n_cell').text()) + 0.00001;
+    itk_mon = parseFloat($('#itk_mon_n_cell').text()) + 0.00001;
+    dsp_tue = parseFloat($('#dsp_tue_n_cell').text()) + 0.00001;
+    itk_tue = parseFloat($('#itk_tue_n_cell').text()) + 0.00001;
+    dsp_wed = parseFloat($('#dsp_wed_n_cell').text()) + 0.00001;
+    itk_wed = parseFloat($('#itk_wed_n_cell').text()) + 0.00001;
+    dsp_thur = parseFloat($('#dsp_thur_n_cell').text()) + 0.00001;
+    itk_thur = parseFloat($('#itk_thur_n_cell').text()) + 0.00001;
+    dsp_fri = parseFloat($('#dsp_fri_n_cell').text()) + 0.00001;
+    itk_fri = parseFloat($('#itk_fri_n_cell').text()) + 0.00001;
+    dsp_sat = parseFloat($('#dsp_sat_n_cell').text()) + 0.00001;
+    itk_sat = parseFloat($('#itk_sat_n_cell').text()) + 0.00001;
+    dsp_sun = parseFloat($('#dsp_sun_n_cell').text()) + 0.00001;
+    itk_sun = parseFloat($('#itk_sun_n_cell').text()) + 0.00001;
 
     dsp_total = dsp_mon + dsp_tue + dsp_wed + dsp_thur + dsp_fri + dsp_sat + dsp_sun;
     itk_total = itk_mon + itk_tue + itk_wed + itk_thur + itk_fri + itk_sat + itk_sun;
