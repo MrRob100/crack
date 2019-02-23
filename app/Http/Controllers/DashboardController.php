@@ -31,7 +31,7 @@ class DashboardController extends Controller
         
         $current_mon = $repository->current_mon();
 
-        $itks = $repository->aves();
+        $itks = $repository->itk_aves();
 
         //dd($itks);
         
@@ -141,7 +141,7 @@ class DashboardController extends Controller
 
         $current_mon = $repository->current_mon();
      
-        $itks = $repository->aves();
+        $itks = $repository->itk_aves();
 
         if (isset($_GET['input_sun_hidden_update']))
         {

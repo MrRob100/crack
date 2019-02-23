@@ -23,7 +23,7 @@ class DashboardRepository extends BaseRepository
         return $intake_mon;
     }
 
-    public function aves()
+    public function itk_aves()
     {
         $days = ['mon', 'tue', 'wed', 'thur', 'fri', 'sat', 'sun'];
 
@@ -34,7 +34,6 @@ class DashboardRepository extends BaseRepository
         {
             $record = GP::all()->where('unique_week_id', '<', $current_mon)->where('day', $day);
 
-            $intake_arr = [];
             $itk_sum = 0;
             foreach ($record as $item) 
             {
@@ -43,7 +42,45 @@ class DashboardRepository extends BaseRepository
             }
             array_push($itk_aves, $itk_ave);
         }
-
         return $itk_aves;
     }
+
+    public function dsp_aves()
+    {
+        $days = ['mon', 'tue', 'wed', 'thur', 'fri', 'sat', 'sun'];
+
+        $current_mon = strtotime("monday this week"); 
+
+        $dsp_aves = [];
+        foreach ($days as $day)
+        {
+            $record = GP::all()->where('unique_week_id', '<', $current_mon)->where('day', $day);
+
+            $dsp_sum = 0;
+            foreach ($record as $item) 
+            {
+                $dsp_sum += $item['daily_stock_purchase']; 
+                $dsp_ave = $dsp_sum / sizeof($record) + 0.00001;
+            }
+            array_push($dsp_aves, $dsp_ave);
+        }
+        return $dsp_aves;
+    }
+
+    public function create()
+    {
+        
+    }
+
+    public function read()
+    {
+
+    }
+
+    public function update()
+    {
+
+    }
+
+
 }
