@@ -45,7 +45,6 @@ function setChart() {
     sunPointX = sundayStartOffset + halfDayWidth;
 
     //gridlines
-
     $('.gridline').hide();
     $('.gridLabel').hide();
     nGridlines = limitVal / 100;
@@ -60,7 +59,7 @@ function setChart() {
         fs2 = fs1 + 6;
         labelOffsetY = height / 50;
         labelPositionY = labelOffsetY + y;
-        $('.graph-canvas').append('<svg><text class="gridLabel" font-size="' + fs2 + '" x="'+ areaOffsetX * 0.4 +'" y="' + labelPositionY + '">' + scale +'</text></svg>');
+        $('.graph-canvas').append('<svg><text class="gridLabel" fill="#777" font-size="' + fs2 + '" x="'+ areaOffsetX * 0.4 +'" y="' + labelPositionY + '">' + scale +'</text></svg>');
     }
 
     $('.axis').attr('stroke', 'black'); //set color of axes
@@ -69,6 +68,24 @@ function setChart() {
     $('.dsp-point').attr('fill', 'blue'); //set color of dsp points
     $('.itk-point').attr('fill', '#57B474'); //set color of itk points
     $('.itk-point-ave').attr('fill', '#303B37'); //set color of itk-ave points
+
+    //set axes labels
+    $('.x-axis-label').attr('x', width / 100);
+    $('.x-axis-label').attr('y', height / 2);
+
+    $('.label-line-itk').attr('x', width * 0.25);
+    $('.label-line-itk').attr('y', height * 0.05);
+    $('.label-line-itk').attr('fill', '#57B474');
+
+    $('.label-line-dsp').attr('x', width * 0.5);
+    $('.label-line-dsp').attr('y', height * 0.05);
+    $('.label-line-dsp').attr('fill', 'blue');
+
+    $('.label-line-itk-ave').attr('x', width * 0.75);
+    $('.label-line-itk-ave').attr('y', height * 0.05);
+    $('.label-line-itk-ave').attr('fill', '#303B37');
+
+    $('.label-line').attr('font-size', fs2);
 
     //set connecting line style
     $('.connecting-line-dsp').attr('stroke', 'blue');

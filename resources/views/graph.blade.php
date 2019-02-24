@@ -5,6 +5,11 @@
             <rect class="inner-rect"/>
             <line class="x-axis axis" />
             <line class="y-axis axis" />
+            <text class="x-axis-label" x="0" y="0" fill="#777">£</text>
+            <text class="label-line label-line-itk" text-anchor="middle" alignment-baseline="middle" x="0" y="0" fill="#777">Intake</text>
+            <text class="label-line label-line-dsp" text-anchor="middle" alignment-baseline="middle" x="0" y="0" fill="#777">Stock Purchase</text>
+            <text class="label-line label-line-itk-ave" text-anchor="middle" alignment-baseline="middle" x="0" y="0" fill="#777">Intake Average</text>
+            <text class="y-axis-label" x="0" y="0" fill="#777"></text>
             <circle class="dsp-mon-point dsp-point point" cx="50" cy="50" r="5" stroke="black" stroke-width="0" />
             <circle class="dsp-tue-point dsp-point point" cx="50" cy="50" r="5" stroke="black" stroke-width="0" />
             <circle class="dsp-wed-point dsp-point point" cx="50" cy="50" r="5" stroke="black" stroke-width="0" />
