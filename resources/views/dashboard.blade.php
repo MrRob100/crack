@@ -10,7 +10,6 @@
 //print_r($itk_mon_ave);
 
 ?>
-
 <form id="week_select" action="dashboard" method="get" enctype="multipart/form-data">
     @csrf
     <input type="hidden" id="input_mon" name="input_mon">
@@ -18,20 +17,20 @@
     <input type="hidden" id="input_sun_hidden" name="input_sun_hidden">
     <input type="hidden" id="input_mon_hidden" name="input_mon_hidden">
 </form>
-<div class="row">
+<div class="row current-week current-week-top">
     <div class="col"></div>
     <div class="col text-center">Week:</div>
     <div class="col"></div>
 </div>
 <div class="row text-center row-week-select col-md-8 mx-auto">
     <div class="col-5">
-        <h4 class="week-mon week">{{ $the_mon }}<h4>
+        <h4 class="week-mon week float-right">{{ $the_mon }}<h4>
     </div>
     <div class="col-2">
         <h4 class="week">-</h4>
     </div>
     <div class="col-5">
-        <h4 class="week-sun week">{{ $the_sun }}<h4>
+        <h4 class="week-sun week float-left">{{ $the_sun }}<h4>
     </div>
 
 </div>
@@ -48,22 +47,20 @@
     </div>
 </div>
 <br>
-<!-- Wide -->
-@include('dashwideclient')
-
-<!-- Mobile -->
-@include('dashnarrowclient')
+<!-- Graph -->
+@include('graph')
+<br>
 
 <div class="row">
     <div class="col-12">
         <div class="panel panel-default info-card">
             <div class="panel-body panel-data">
                 <div class="col-6 mx-auto data-div">
-                    <h4>GP - Week</h4>
+                    <h4>GP Week</h4>
                     <h4 id="gp_currency"></h4>
                     <h4 id="gp_percent"></h4>
                     <hr>
-                    <h4>Budget - Rest of Week:</h4>
+                    <h4>Budget Rest of Week:</h4>
                     <h4 id="remaining_budget" class="th-vert"></h4>
                 </div>
             </div>
@@ -71,7 +68,12 @@
     </div>
 </div>
 <br>
-@include('graph')
+
+<!-- Wide -->
+@include('dashwideclient')
+
+<!-- Mobile -->
+@include('dashnarrowclient')
 
 <h4 class="week-hidden week-mon-hidden">{{ $mon_unix }}</h4>
 <h4 class="week-hidden week-sun-hidden">{{ $sun_unix }}</h4>
@@ -95,7 +97,6 @@ $('.cell-data').on('focus', function() {
     selection.addRange(range);
   }
 });
-
 
     var monDisplay = "<?php echo $mon_unix; ?>";
     var monCurrent = "<?php echo $current_mon; ?>";

@@ -10665,9 +10665,9 @@ td {
   background-color: #EBEDEF;
 }
 
-.graph-area {
-  background-color: blue;
-  z-index: 10;
+.current-week-top {
+  margin-left: 0px !important;
+  padding-left: 10px;
 }
 
 .navbar-laravel {

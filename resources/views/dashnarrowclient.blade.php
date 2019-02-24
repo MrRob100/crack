@@ -52,9 +52,9 @@
                 </tr>
             </tbody>
             </table>
-            <div class="row">
-                <form id="fields_form_narrow" action="dashboard-update" method="get" enctype="multipart/form-data">
-                    @csrf
+            <form id="fields_form_narrow" action="dashboard-update" method="get" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
                     <input value="monwide" type="hidden" id="input_mon_hidden_update_n" name="input_mon_hidden_update">
                     <input value="sunwide" type="hidden" id="input_sun_hidden_update_n" name="input_sun_hidden_update">
                     <input type="hidden" name="dsp_mon" id="dsp_mon_n" class="dsp_mon">
@@ -72,10 +72,11 @@
                     <input type="hidden" name="itk_sat" id="itk_sat_n" class="itk_sat">
                     <input type="hidden" name="itk_sun" id="itk_sun_n" class="itk_sun">
                     <br>
-                    <button class="btn btn-primary btn-sm mx-auto" type="subnit">Save</button>
-                </form>
+                </div>
+            <div class="row text-center">
+                <button class="btn btn-primary btn-sm mx-auto col-11" type="submit">Save</button>
             </div>
-            <br>
+            </form>
         </div>
     </div>
 </div>
