@@ -71,7 +71,6 @@
                     <input type="hidden" name="itk_fri" id="itk_fri_n" class="itk_fri">
                     <input type="hidden" name="itk_sat" id="itk_sat_n" class="itk_sat">
                     <input type="hidden" name="itk_sun" id="itk_sun_n" class="itk_sun">
-                    <br>
                 </div>
             <div class="row text-center">
                 <button class="btn btn-primary btn-sm mx-auto col-11" type="submit">Save</button>

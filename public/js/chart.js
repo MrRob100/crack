@@ -53,6 +53,13 @@ function setChart() {
     for (n = 0; n < nGridlines; n++) {
         y = areaOffsetY + (n * gridlineSpace);
         $('.graph-canvas').append('<svg><line class="gridline" x1="' + areaOffsetX + '" x2="' + (areaOffsetX + (dayWidth * 7)) + '" y1="' + y + '" y2="' + y + '" /></svg>')
+        negScale = -n * 100;
+        scale = negScale + limitVal;
+        fs1 = width / 90;
+        fs2 = fs1 + 6;
+        labelOffsetY = height / 50;
+        labelPositionY = labelOffsetY + y;
+        $('.graph-canvas').append('<svg><text font-size="' + fs2 + '" x="'+ areaOffsetX * 0.4 +'" y="' + labelPositionY + '">' + scale +'</text></svg>');
     }
 
     $('.axis').attr('stroke', 'black'); //set color of axes
