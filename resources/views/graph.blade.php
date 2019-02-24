@@ -9,7 +9,13 @@
             <text class="label-line label-line-itk" text-anchor="middle" alignment-baseline="middle" x="0" y="0" fill="#777">Intake</text>
             <text class="label-line label-line-dsp" text-anchor="middle" alignment-baseline="middle" x="0" y="0" fill="#777">Stock Purchase</text>
             <text class="label-line label-line-itk-ave" text-anchor="middle" alignment-baseline="middle" x="0" y="0" fill="#777">Intake Average</text>
-            <text class="y-axis-label" x="0" y="0" fill="#777"></text>
+            <text class="label-mon label-day" x="0" y="0" fill="#777">mon</text>
+            <text class="label-tue label-day" x="0" y="0" fill="#777">tue</text>
+            <text class="label-wed label-day" x="0" y="0" fill="#777">wed</text>
+            <text class="label-thur label-day" x="0" y="0" fill="#777">thur</text>
+            <text class="label-fri label-day" x="0" y="0" fill="#777">fri</text>
+            <text class="label-sat label-day" x="0" y="0" fill="#777">sat</text>
+            <text class="label-sun label-day" x="0" y="0" fill="#777">sun</text>
             <circle class="dsp-mon-point dsp-point point" cx="50" cy="50" r="5" stroke="black" stroke-width="0" />
             <circle class="dsp-tue-point dsp-point point" cx="50" cy="50" r="5" stroke="black" stroke-width="0" />
             <circle class="dsp-wed-point dsp-point point" cx="50" cy="50" r="5" stroke="black" stroke-width="0" />

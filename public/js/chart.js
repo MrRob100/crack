@@ -87,6 +87,8 @@ function setChart() {
 
     $('.label-line').attr('font-size', fs2);
 
+    $('.label-day').attr('font-size', fs2);
+
     //set connecting line style
     $('.connecting-line-dsp').attr('stroke', 'blue');
     $('.connecting-line-dsp').attr('stroke-width', 1.5);
@@ -118,6 +120,27 @@ function setChart() {
     $('.x-axis').attr('x2', endOffsetX);
     $('.x-axis').attr('y1', interceptOffsetY);
     $('.x-axis').attr('y2', interceptOffsetY);
+
+    $('.label-mon').attr('x', monPointX);
+    $('.label-mon').attr('y', height * 0.95);
+
+    $('.label-tue').attr('x', tuePointX);
+    $('.label-tue').attr('y', height * 0.95);
+
+    $('.label-wed').attr('x', wedPointX);
+    $('.label-wed').attr('y', height * 0.95);
+
+    $('.label-thur').attr('x', thurPointX);
+    $('.label-thur').attr('y', height * 0.95);
+
+    $('.label-fri').attr('x', friPointX);
+    $('.label-fri').attr('y', height * 0.95);
+
+    $('.label-sat').attr('x', satPointX);
+    $('.label-sat').attr('y', height * 0.95);
+
+    $('.label-sun').attr('x', sunPointX);
+    $('.label-sun').attr('y', height * 0.95);
 
     scaleFactor = (interceptOffsetY - areaOffsetY) / limitVal;
 
