@@ -7,7 +7,7 @@
 
 <?php
 
-print_r($itk_mon_ave);
+//print_r($itk_mon_ave);
 
 ?>
 
@@ -78,6 +78,8 @@ print_r($itk_mon_ave);
 
 <script>
 //select on click
+
+
 $('.cell-data').on('focus', function() {
   var cell = this;
   var range, selection;
@@ -190,13 +192,12 @@ function calcWide() {
     gp_currency = itk_total - dsp_total;
     gp_percent = (gp_currency / itk_total) * 100;
 
-    $('.dsp_total').text(dsp_total);
-    $('.itk_total').text(itk_total);
+    $('.dsp_total').text((Math.floor(dsp_total * 100)) / 100);
+    $('.itk_total').text((Math.floor(itk_total * 100)) / 100);
 
-    $('#gp_currency').text("£" + gp_currency);
-    $('#gp_percent').text(gp_percent + "%");
+    $('#gp_currency').text("£" + (Math.floor(gp_currency * 100)) / 100);
+    $('#gp_percent').text((Math.floor(gp_percent * 10)) / 10 + "%");
 
-    //CALL GRAPH FUNCTION AND PASS IN VALUES
     setChart();
 }
 
@@ -231,13 +232,12 @@ function calcNarrow() {
     gp_currency = itk_total - dsp_total;
     gp_percent = (gp_currency / itk_total) * 100;
 
-    $('.dsp_total').text(dsp_total);
-    $('.itk_total').text(itk_total);
+    $('.dsp_total').text((Math.floor(dsp_total * 100)) / 100);
+    $('.itk_total').text((Math.floor(itk_total * 100)) / 100);
 
-    $('#gp_currency').text("£" + gp_currency);
-    $('#gp_percent').text(gp_percent + "%");
+    $('#gp_currency').text("£" + (Math.floor(gp_currency * 100)) / 100);
+    $('#gp_percent').text((Math.floor(gp_percent * 10)) / 10 + "%");
 
-    //CALL GRAPH FUNCTION AND PASS IN VALUES
     setChart();
 }
 
