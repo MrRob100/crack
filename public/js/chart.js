@@ -47,6 +47,7 @@ function setChart() {
     //gridlines
 
     $('.gridline').hide();
+    $('.gridLabel').hide();
     nGridlines = limitVal / 100;
     gridlineSpace = areaHeight / nGridlines;
     n = 0;
@@ -59,7 +60,7 @@ function setChart() {
         fs2 = fs1 + 6;
         labelOffsetY = height / 50;
         labelPositionY = labelOffsetY + y;
-        $('.graph-canvas').append('<svg><text font-size="' + fs2 + '" x="'+ areaOffsetX * 0.4 +'" y="' + labelPositionY + '">' + scale +'</text></svg>');
+        $('.graph-canvas').append('<svg><text class="gridLabel" font-size="' + fs2 + '" x="'+ areaOffsetX * 0.4 +'" y="' + labelPositionY + '">' + scale +'</text></svg>');
     }
 
     $('.axis').attr('stroke', 'black'); //set color of axes
