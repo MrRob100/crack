@@ -1,12 +1,5 @@
 function setChart() {
 
-    var allValues = [dsp_mon, dsp_tue, dsp_wed, dsp_thur, dsp_fri, dsp_sat, dsp_sun, itk_mon, itk_tue, itk_wed, itk_thur, itk_fri, itk_sat, itk_sun];
-
-    arrayAllValues = Object.values(allValues);
-    maxVal = Math.max(...arrayAllValues);
-
-    limitVal = (Math.ceil(maxVal/100)) * 100;
-
     var windowWidth = $(window).width();
 
     if (windowWidth < 585) {
@@ -44,23 +37,7 @@ function setChart() {
     satPointX = saturdayStartOffset + halfDayWidth;
     sunPointX = sundayStartOffset + halfDayWidth;
 
-    //gridlines
-    $('.gridline').hide();
-    $('.gridLabel').hide();
-    nGridlines = limitVal / 100;
-    gridlineSpace = areaHeight / nGridlines;
-    n = 0;
-    for (n = 0; n < nGridlines; n++) {
-        y = areaOffsetY + (n * gridlineSpace);
-        $('.graph-canvas').append('<svg><line class="gridline" x1="' + areaOffsetX + '" x2="' + (areaOffsetX + (dayWidth * 7)) + '" y1="' + y + '" y2="' + y + '" /></svg>')
-        negScale = -n * 100;
-        scale = negScale + limitVal;
-        fs1 = width / 90;
-        fs2 = fs1 + 6;
-        labelOffsetY = height / 50;
-        labelPositionY = labelOffsetY + y;
-        $('.graph-canvas').append('<svg><text class="gridLabel" fill="#777" font-size="' + fs2 + '" x="'+ areaOffsetX * 0.4 +'" y="' + labelPositionY + '">' + scale +'</text></svg>');
-    }
+
 
     $('.axis').attr('stroke', 'black'); //set color of axes
     $('.axis').attr('stroke-width', 1.5); //set stroke width of axes
@@ -77,17 +54,15 @@ function setChart() {
     $('.label-line-itk').attr('y', height * 0.05);
     $('.label-line-itk').attr('fill', '#57B474');
 
-    $('.label-line-dsp').attr('x', width * 0.5);
+    $('.label-line-dsp').attr('x', width * 0.75);
     $('.label-line-dsp').attr('y', height * 0.05);
     $('.label-line-dsp').attr('fill', 'blue');
 
-    $('.label-line-itk-ave').attr('x', width * 0.75);
+    $('.label-line-itk-ave').attr('x', width * 0.5);
     $('.label-line-itk-ave').attr('y', height * 0.05);
     $('.label-line-itk-ave').attr('fill', '#303B37');
 
-    $('.label-line').attr('font-size', fs2);
 
-    $('.label-day').attr('font-size', fs2);
 
     //set connecting line style
     $('.connecting-line-dsp').attr('stroke', 'blue');
@@ -141,6 +116,59 @@ function setChart() {
 
     $('.label-sun').attr('x', sunPointX);
     $('.label-sun').attr('y', height * 0.95);
+
+    //set max here?
+    var allValues = [
+        dsp_mon, 
+        dsp_tue, 
+        dsp_wed, 
+        dsp_thur, 
+        dsp_fri, 
+        dsp_sat, 
+        dsp_sun, 
+        itk_mon, 
+        itk_tue, 
+        itk_wed, 
+        itk_thur, 
+        itk_fri, 
+        itk_sat, 
+        itk_sun,
+        itk_mon_ave,
+        itk_tue_ave,
+        itk_wed_ave,
+        itk_thur_ave,
+        itk_fri_ave,
+        itk_sat_ave,
+        itk_sun_ave,
+    ];
+
+
+    arrayAllValues = Object.values(allValues);
+    maxVal = Math.max(...arrayAllValues);
+
+    limitVal = (Math.ceil(maxVal / 100)) * 100;
+
+    //gridlines
+    $('.gridline').hide();
+    $('.gridLabel').hide();
+    nGridlines = limitVal / 100;
+    gridlineSpace = areaHeight / nGridlines;
+    n = 0;
+    for (n = 0; n < nGridlines; n++) {
+        y = areaOffsetY + (n * gridlineSpace);
+        $('.graph-canvas').append('<svg><line class="gridline" x1="' + areaOffsetX + '" x2="' + (areaOffsetX + (dayWidth * 7)) + '" y1="' + y + '" y2="' + y + '" /></svg>')
+        negScale = -n * 100;
+        scale = negScale + limitVal;
+        fs1 = width / 90;
+        fs2 = fs1 + 6;
+        labelOffsetY = height / 50;
+        labelPositionY = labelOffsetY + y;
+        $('.graph-canvas').append('<svg><text class="gridLabel" fill="#777" font-size="' + fs2 + '" x="' + areaOffsetX * 0.4 + '" y="' + labelPositionY + '">' + scale + '</text></svg>');
+    }
+
+    $('.label-line').attr('font-size', fs2);
+
+    $('.label-day').attr('font-size', fs2);
 
     scaleFactor = (interceptOffsetY - areaOffsetY) / limitVal;
 
