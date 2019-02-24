@@ -317,6 +317,5 @@ class DashboardController extends Controller
             'itk_thur_ave', 'itk_fri_ave',
             'itk_sat_ave', 'itk_sun_ave'
         ));
-
     }
 }

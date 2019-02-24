@@ -10,7 +10,7 @@ function setChart() {
     var windowWidth = $(window).width();
 
     if (windowWidth < 585) {
-        width = windowWidth * 0.8;
+        width = windowWidth * 0.95;
         height = 200;
     } else {
         width = windowWidth * 0.8;
