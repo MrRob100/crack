@@ -171,34 +171,45 @@ function setChart() {
     if (thisWeek)
     {
         dateToday = new Date().getDay();
-        console.log(dateToday);
         dayLineX = 0;
         switch (dateToday){
             case 1:
             dayLineX = monPointX;
+            itkRestPred = eval(itk_mon_ave) + eval(itk_tue_ave) + eval(itk_wed_ave) + eval(itk_thur_ave) + eval(itk_fri_ave) + eval(itk_sat_ave) + eval(itk_sun_ave);
             break;
             case 2:
             dayLineX = tuePointX;
+                itkRestPred = eval(itk_mon) + eval(itk_tue_ave) + eval(itk_wed_ave) + eval(itk_thur_ave) + eval(itk_fri_ave) + eval(itk_sat_ave) + eval(itk_sun_ave);
             break;
             case 3:
             dayLineX = wedPointX;
+                itkRestPred = eval(itk_mon) + eval(itk_tue) + eval(itk_wed_ave) + eval(itk_thur_ave) + eval(itk_fri_ave) + eval(itk_sat_ave) + eval(itk_sun_ave);
             break;
             case 4:
             dayLineX = thurPointX;
+                itkRestPred = eval(itk_mon) + eval(itk_tue) + eval(itk_wed) + eval(itk_thur_ave) + eval(itk_fri_ave) + eval(itk_sat_ave) + eval(itk_sun_ave);
             break;
             case 5:
             dayLineX = friPointX;
+                itkRestPred = eval(itk_mon) + eval(itk_tue) + eval(itk_wed) + eval(itk_thur) + eval(itk_fri_ave) + eval(itk_sat_ave) + eval(itk_sun_ave);
             break;
             case 6:
             dayLineX = satPointX;
+                itkRestPred = eval(itk_mon) + eval(itk_tue) + eval(itk_wed) + eval(itk_thur) + eval(itk_fri) + eval(itk_sat_ave) + eval(itk_sun_ave);
             break;
             case 7:
             dayLineX = sunPointX;
+                itkRestPred = eval(itk_mon) + eval(itk_tue) + eval(itk_wed) + eval(itk_thur) + eval(itk_fri) + eval(itk_sat) +eval(itk_sun_ave);
             break;
         }
 
         $('.graph-canvas').append('<svg><line class="today" stroke="red" stroke-width="1" x1="' + dayLineX + '" y1="'+ areaOffsetY +'" x2="' + dayLineX + '" y2="'+ interceptOffsetY +'" /></svg>')
     }
+    
+    budgetRestOfWeek = (0.7 * itkRestPred) - dsp_total;
+
+    $('#remaining_budget').text('£' + (Math.floor(budgetRestOfWeek * 100)) / 100);
+
 
     scaleFactor = (interceptOffsetY - areaOffsetY) / limitVal;
 
