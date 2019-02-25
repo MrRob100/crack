@@ -80,7 +80,7 @@
 
 <script>
 //select on click
-
+thisWeek = false;
 
 $('.cell-data').on('focus', function() {
   var cell = this;
@@ -103,9 +103,12 @@ $('.cell-data').on('focus', function() {
 
 if (monDisplay == monCurrent)
 {
+    //current week indication
     $(".current-week").text('current week');
     $(".current-week").css('background-color', '#28B473');
     $(".current-week").css('color', '#fff');
+
+    thisWeek = true;
 }
 
 //Week Previous

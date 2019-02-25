@@ -8,7 +8,7 @@
             <text class="x-axis-label" x="0" y="0" fill="#777">£</text>
             <text class="label-line label-line-itk" text-anchor="middle" alignment-baseline="middle" x="0" y="0" fill="#777">Intake</text>
             <text class="label-line label-line-dsp" text-anchor="middle" alignment-baseline="middle" x="0" y="0" fill="#777">Stock Purchase</text>
-            <text class="label-line label-line-itk-ave" text-anchor="middle" alignment-baseline="middle" x="0" y="0" fill="#777">Intake Average</text>
+            <text class="label-line label-line-itk-ave" text-anchor="middle" alignment-baseline="middle" x="0" y="0" fill="#777">Intake Prediction</text>
             <text class="label-mon label-day" x="0" y="0" fill="#777">mon</text>
             <text class="label-tue label-day" x="0" y="0" fill="#777">tue</text>
             <text class="label-wed label-day" x="0" y="0" fill="#777">wed</text>

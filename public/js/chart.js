@@ -38,7 +38,6 @@ function setChart() {
     sunPointX = sundayStartOffset + halfDayWidth;
 
 
-
     $('.axis').attr('stroke', 'black'); //set color of axes
     $('.axis').attr('stroke-width', 1.5); //set stroke width of axes
     $('.point').attr('r', 3); //set radius of point
@@ -63,7 +62,6 @@ function setChart() {
     $('.label-line-itk-ave').attr('fill', '#303B37');
 
 
-
     //set connecting line style
     $('.connecting-line-dsp').attr('stroke', 'blue');
     $('.connecting-line-dsp').attr('stroke-width', 1.5);
@@ -73,9 +71,6 @@ function setChart() {
 
     $('.connecting-line-itk-ave').attr('stroke', '#303B37');
     $('.connecting-line-itk-ave').attr('stroke-width', 1.5);
-
-    $('.gridline').attr('stroke', '#777');
-    $('.gridline').attr('stroke-width', 0.7);
 
     $('.graph-canvas').attr('width', width);
     $('.graph-canvas').attr('height', height);
@@ -142,7 +137,6 @@ function setChart() {
         itk_sun_ave,
     ];
 
-
     arrayAllValues = Object.values(allValues);
     maxVal = Math.max(...arrayAllValues);
 
@@ -169,6 +163,42 @@ function setChart() {
     $('.label-line').attr('font-size', fs2);
 
     $('.label-day').attr('font-size', fs2);
+
+    $('.gridline').attr('stroke', '#777');
+    $('.gridline').attr('stroke-width', 0.7);
+
+    //set dayline
+    if (thisWeek)
+    {
+        dateToday = new Date().getDay();
+        console.log(dateToday);
+        dayLineX = 0;
+        switch (dateToday){
+            case 1:
+            dayLineX = monPointX;
+            break;
+            case 2:
+            dayLineX = tuePointX;
+            break;
+            case 3:
+            dayLineX = wedPointX;
+            break;
+            case 4:
+            dayLineX = thurPointX;
+            break;
+            case 5:
+            dayLineX = friPointX;
+            break;
+            case 6:
+            dayLineX = satPointX;
+            break;
+            case 7:
+            dayLineX = sunPointX;
+            break;
+        }
+
+        $('.graph-canvas').append('<svg><line class="today" stroke="red" stroke-width="1" x1="' + dayLineX + '" y1="'+ areaOffsetY +'" x2="' + dayLineX + '" y2="'+ interceptOffsetY +'" /></svg>')
+    }
 
     scaleFactor = (interceptOffsetY - areaOffsetY) / limitVal;
 
