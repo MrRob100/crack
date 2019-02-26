@@ -237,9 +237,6 @@ function setChart() {
     itkSatAveAfloat = (-(itk_sat_ave * scaleFactor)) + interceptOffsetY;
     itkSunAveAfloat = (-(itk_sun_ave * scaleFactor)) + interceptOffsetY;
 
-console.log(itk_mon_ave);
-console.log(itk_tue_ave);
-
     //dsp points
     $('.dsp-mon-point').attr('cx', monPointX);
     $('.dsp-mon-point').attr('cy', dspMonAfloat);
