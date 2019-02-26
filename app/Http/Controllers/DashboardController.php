@@ -114,13 +114,12 @@ class DashboardController extends Controller
 
         $itks = $repository->itk_aves();
         $itk_mon_ave = isset($itks[0]) ? $itks[0] : 0;
-        $itk_tue_ave = isset($itks[1]) ? $itks[0] : 0;
-        $itk_wed_ave = isset($itks[2]) ? $itks[0] : 0;
-        $itk_thur_ave = isset($itks[3]) ? $itks[0] : 0;
-        $itk_fri_ave = isset($itks[4]) ? $itks[0] : 0;
-        $itk_sat_ave = isset($itks[5]) ? $itks[0] : 0;
-        $itk_sun_ave = isset($itks[6]) ? $itks[0] : 0;
-
+        $itk_tue_ave = isset($itks[1]) ? $itks[1] : 0;
+        $itk_wed_ave = isset($itks[2]) ? $itks[2] : 0;
+        $itk_thur_ave = isset($itks[3]) ? $itks[3] : 0;
+        $itk_fri_ave = isset($itks[4]) ? $itks[4] : 0;
+        $itk_sat_ave = isset($itks[5]) ? $itks[5] : 0;
+        $itk_sun_ave = isset($itks[6]) ? $itks[6] : 0;
 
         return view('dashboard', compact(
             'dsp_mon', 'itk_mon', 

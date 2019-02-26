@@ -211,10 +211,6 @@ function setChart() {
 
     }
 
-    
-
-
-
     scaleFactor = (interceptOffsetY - areaOffsetY) / limitVal;
 
     dspMonAfloat = (-(dsp_mon * scaleFactor)) + interceptOffsetY;
@@ -240,6 +236,9 @@ function setChart() {
     itkFriAveAfloat = (-(itk_fri_ave * scaleFactor)) + interceptOffsetY;
     itkSatAveAfloat = (-(itk_sat_ave * scaleFactor)) + interceptOffsetY;
     itkSunAveAfloat = (-(itk_sun_ave * scaleFactor)) + interceptOffsetY;
+
+console.log(itk_mon_ave);
+console.log(itk_tue_ave);
 
     //dsp points
     $('.dsp-mon-point').attr('cx', monPointX);
