@@ -26,7 +26,10 @@ class DashboardRepository extends BaseRepository
         foreach ($days as $day)
         {
             $record = GP::all()->where('unique_week_id', '<', $current_mon)->where('day', $day);
-
+            
+            if (sizeof($record) !== 0)
+            { 
+            
             $itk_sum = 0;
             foreach ($record as $item) 
             {
@@ -34,6 +37,7 @@ class DashboardRepository extends BaseRepository
                 $itk_ave = $itk_sum / sizeof($record) + 0.00001;
             }
             array_push($itk_aves, $itk_ave);
+            }
         }
         return $itk_aves; //array
     }
@@ -48,14 +52,17 @@ class DashboardRepository extends BaseRepository
         foreach ($days as $day)
         {
             $record = GP::all()->where('unique_week_id', '<', $current_mon)->where('day', $day);
-
-            $dsp_sum = 0;
-            foreach ($record as $item) 
+            
+            if (sizeof($record) !== 0) 
             {
-                $dsp_sum += $item['daily_stock_purchase']; 
-                $dsp_ave = $dsp_sum / sizeof($record) + 0.00001;
+                $dsp_sum = 0;
+                foreach ($record as $item) 
+                {
+                    $dsp_sum += $item['daily_stock_purchase']; 
+                    $dsp_ave = $dsp_sum / sizeof($record) + 0.00001;
+                }
+                array_push($dsp_aves, $dsp_ave);
             }
-            array_push($dsp_aves, $dsp_ave);
         }
         return $dsp_aves; //array
     }
