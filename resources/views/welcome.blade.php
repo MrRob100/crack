@@ -81,11 +81,11 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    GP TRACKER
+                    Crack Maninoff
                 </div>
 
                 <div class="links">
-                    <a href="{{ route('dashboard') }}">Dashboard</a>
+                <a href="{{ route('dashboard') }}">Dashboard</a>
                 </div>
             </div>
         </div>

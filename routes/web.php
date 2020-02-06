@@ -16,10 +16,21 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-Route::get('/dashboard-update', 'DashboardController@update')->name('dashboard-update');
+Route::post('/dashboard', 'DashboardController@upload')->name('upload-song');
+Route::get('/del', 'DashboardController@delete');
+Route::get('/get', 'DashboardController@getMarker');
+Route::get('/set', 'DashboardController@setMarker');
 
-Route::get('/dashnarrowclient', 'gettestController@index')->name('dashnarrowclient');
-Route::get('/gettest-update', 'GettestController@update')->name('gettest-update');
+Route::post('/eff', 'DashboardController@uploadEff')->name('upload-song-eff');
+Route::get('/eff', 'DashboardController@eff')->name('eff');
+
+Route::get('/loaded', 'DashboardController@loaded')->name('loaded');
+Route::post('/loaded', 'DashboardController@uploadLoaded')->name('upload-song-loaded');
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+//AJAX BOLLOCKS
+Route::post('bollocks', 'DashboardController@store');
 
 Auth::routes();
 
