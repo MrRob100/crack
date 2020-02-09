@@ -2104,7 +2104,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (document.getElementById(elmnt.id + "-header")) {
         // if present, the header is where you move the DIV from:
-        document.getElementById(elmnt.id + "-header").onmousedown = dragMouseDown;
+        var ballHead = document.getElementById(elmnt.id + "-header");
+        ballHead.onmousedown = dragMouseDown;
+        ballHead.addEventListener('touchstart', function () {
+          console.log('btn touched');
+        });
+        ballHead.addEventListener('touchcancel', function () {
+          console.log('btn moving cancel');
+        });
+        btn.addEventListener('touchmove', function () {
+          console.log('btn moved');
+        });
       } else {
         // otherwise, move the DIV from anywhere inside the DIV:
         elmnt.onmousedown = dragMouseDown;
