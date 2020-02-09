@@ -2112,7 +2112,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         ballHead.addEventListener('touchcancel', function () {
           console.log('btn moving cancel');
         });
-        btn.addEventListener('touchmove', function () {
+        ballHead.addEventListener('touchmove', function () {
           console.log('btn moved');
         });
       } else {
