@@ -2115,6 +2115,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         ballHead.addEventListener('touchmove', function () {
           console.log('btn moved');
         });
+        ballHead.addEventListener('touchend', function () {
+          console.log('btn leaved (touchend)');
+        });
+        btnHead.addEventListener('touchleave', function () {
+          console.log('btn moving end (touchleave)');
+        });
       } else {
         // otherwise, move the DIV from anywhere inside the DIV:
         elmnt.onmousedown = dragMouseDown;
