@@ -2021,8 +2021,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var AudioContext = window.AudioContext || window.webkitAudioContext;
       var audioCtx = new AudioContext();
       var request = new XMLHttpRequest(); // const set = this.pos;
+      //prod
 
-      request.open('GET', '../public/storage/data/' + isso.name, true);
+      request.open('GET', '../storage/data/' + isso.name, true); //local
+      // request.open('GET', '../public/storage/data/' + isso.name, true);
+
       var source = audioCtx.createBufferSource();
       var source2 = audioCtx.createBufferSource();
       request.responseType = 'arraybuffer';
