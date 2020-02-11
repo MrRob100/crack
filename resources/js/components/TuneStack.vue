@@ -254,12 +254,40 @@ export default {
             var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
             if (document.getElementById(elmnt.id + "-header")) {
                 // if present, the header is where you move the DIV from:
-                document.getElementById(elmnt.id + "-header").onmousedown = dragMouseDown;
+                var ballHead = document.getElementById(elmnt.id + "-header");
+                ballHead.onmousedown = dragMouseDown;
+                ballHead.ontouchstart = dragMouseDown;
+
+                // ballHead.addEventListener('touchstart', function(){
+                //     console.log('btn touched');
+                // });
+
+                // ballHead.addEventListener('touchcancel', function(){
+	            //     console.log('btn moving cancel');
+                // })
+
+                // ballHead.addEventListener('touchmove', function(){
+	            //     console.log('btn moved');
+                // })
+                // ballHead.addEventListener('touchend', function(){
+                //     console.log('btn leaved (touchend)');
+                //     //end of movement
+                // })
+                // ballHead.addEventListener('touchleave', function(){
+                //     console.log('btn moving end (touchleave)');
+                //     //not used
+                // })
+
             } else {
                 // otherwise, move the DIV from anywhere inside the DIV:
                 elmnt.onmousedown = dragMouseDown;
             }
 
+            function touchDown(e) {
+                console.log('same but touch');
+            }
+
+            //first touch
             function dragMouseDown(e) {
                 e = e || window.event;
                 e.preventDefault();
@@ -267,18 +295,38 @@ export default {
                 pos3 = e.clientX;
                 pos4 = e.clientY;
                 document.onmouseup = closeDragElement;
+                document.ontouchend = closeDragElement;
                 // call a function whenever the cursor moves:
                 document.onmousemove = elementDrag;
+                document.ontouchmove = elementDrag;
             }
 
-            function elementDrag(e) {
+            //while moving
+            function elementDrag(e, touch) {
                 e = e || window.event;
-                e.preventDefault();
-                // calculate the new cursor position:
-                pos1 = pos3 - e.clientX;
-                pos2 = pos4 - e.clientY;
-                pos3 = e.clientX;
-                pos4 = e.clientY;
+                if (e.touches) {
+                    console.log('touches');
+
+                    console.log('v', e.touches[0].clientX);
+
+                    pos1 = pos3 - e.touches[0].clientX;
+                    pos2 = pos4 - e.touches[0].clientY;
+                    pos3 = e.touches[0].clientX;
+                    pos4 = e.touches[0].clientY;
+
+                } else {
+                    console.log('clicks');
+                    e.preventDefault();
+                    // calculate the new cursor position:
+                    pos1 = pos3 - e.clientX;
+                    pos2 = pos4 - e.clientY;
+                    pos3 = e.clientX;
+                    pos4 = e.clientY;
+                }
+
+                console.log('pos1', pos1);
+                console.log('pos2', pos2);
+
                 // set the element's new position:
                 elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
                 elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
@@ -289,10 +337,13 @@ export default {
 
             }
 
+            //finished moving
             function closeDragElement() {
                 // stop moving when mouse button is released:
-                document.onmouseup = null;
-                document.onmousemove = null;
+                // document.onmouseup = null;
+                document.ontouchend = null;
+                // document.onmousemove = null;
+                document.ontouchmove = null;
             }
         }
     },
