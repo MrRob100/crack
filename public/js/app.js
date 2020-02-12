@@ -2021,10 +2021,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var AudioContext = window.AudioContext || window.webkitAudioContext;
       var audioCtx = new AudioContext();
       var request = new XMLHttpRequest(); // const set = this.pos;
-      //prod
 
-      request.open('GET', '../storage/data/' + isso.name, true); //local
-      // request.open('GET', '../public/storage/data/' + isso.name, true);
+      if (window.location.pathname == '/crack/public/dashboard') {
+        //local
+        request.open('GET', '../public/storage/data/' + isso.name, true);
+      } else {
+        //prod
+        request.open('GET', '../storage/data/' + isso.name, true);
+      }
 
       var source = audioCtx.createBufferSource();
       var source2 = audioCtx.createBufferSource();
@@ -2106,44 +2110,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         // if present, the header is where you move the DIV from:
         var ballHead = document.getElementById(elmnt.id + "-header");
         ballHead.onmousedown = dragMouseDown;
-        ballHead.ontouchstart = dragMouseDown; // ballHead.addEventListener('touchstart', function(){
-        //     console.log('btn touched');
-        // });
-        // ballHead.addEventListener('touchcancel', function(){
-        //     console.log('btn moving cancel');
-        // })
-        // ballHead.addEventListener('touchmove', function(){
-        //     console.log('btn moved');
-        // })
-        // ballHead.addEventListener('touchend', function(){
-        //     console.log('btn leaved (touchend)');
-        //     //end of movement
-        // })
-        // ballHead.addEventListener('touchleave', function(){
-        //     console.log('btn moving end (touchleave)');
-        //     //not used
-        // })
+        ballHead.ontouchstart = dragMouseDown;
       } else {
         // otherwise, move the DIV from anywhere inside the DIV:
         elmnt.onmousedown = dragMouseDown;
-      }
-
-      function touchDown(e) {
-        console.log('same but touch');
       } //first touch
 
 
       function dragMouseDown(e) {
         e = e || window.event;
-        e.preventDefault(); // get the mouse cursor position at startup:
 
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        document.onmouseup = closeDragElement;
-        document.ontouchend = closeDragElement; // call a function whenever the cursor moves:
-
-        document.onmousemove = elementDrag;
-        document.ontouchmove = elementDrag;
+        if (e.touches) {
+          // get the mouse cursor position at startup:
+          pos3 = e.touches[0].clientX;
+          pos4 = e.touches[0].clientY;
+          document.ontouchend = closeDragElement;
+          document.ontouchmove = elementDrag;
+        } else {
+          e.preventDefault(); // get the mouse cursor position at startup:
+          // pos3 = e.clientX;
+          // pos4 = e.clientY;
+          // document.onmouseup = closeDragElement;
+          // call a function whenever the cursor moves:
+          // document.onmousemove = elementDrag;
+        }
       } //while moving
 
 
@@ -2151,27 +2141,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         e = e || window.event;
 
         if (e.touches) {
-          console.log('touches');
-          console.log('v', e.touches[0].clientX);
           pos1 = pos3 - e.touches[0].clientX;
+          console.log('ety', e.touches[0].clientY);
+          console.log('pos4', pos4);
           pos2 = pos4 - e.touches[0].clientY;
           pos3 = e.touches[0].clientX;
           pos4 = e.touches[0].clientY;
         } else {
-          console.log('clicks');
           e.preventDefault(); // calculate the new cursor position:
 
           pos1 = pos3 - e.clientX;
           pos2 = pos4 - e.clientY;
           pos3 = e.clientX;
           pos4 = e.clientY;
-        }
+        } // set the element's new position:
 
-        console.log('pos1', pos1);
-        console.log('pos2', pos2); // set the element's new position:
 
         elmnt.style.top = elmnt.offsetTop - pos2 + "px";
         elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
+        console.log('wsy', window.scrollY);
+        console.log('p2', pos2);
         isso.src.playbackRate.value = (-(elmnt.offsetTop - pos2) + 600 + window.scrollY) / 450;
         isso.src2.playbackRate.value = (-(elmnt.offsetTop - pos2) + 600 + window.scrollY) / 450;
         isso.filter.frequency.value = -elmnt.offsetLeft * 25 + 10000;
@@ -7073,7 +7062,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.stack-play {\n    flex: 1;\n}\n.stack-name {\n    flex: 4;\n}\n.stack-del {\n    flex: 1;\n}\n.stack-del button {\n    float: right;\n}\n.stack-top-sec {\n    display: inline;\n}\n.stack-house {\n    margin-bottom: 10px;\n    background-color: aquamarine;\n    width: 100%;\n    height: 80px;\n}\n.stack-slice {\n    display: block;\n}\n.stack-top {\n    display: flex;\n    height: 40px;\n    background-color: wheat;\n}\n.stack-bottom {\n    height: 40px;\n    background-color: aquamarine;\n}\n.canv {\n    width: 100%;\n    height: 40px !important;\n}\n.wb-top {\n    position: absolute;\n    z-index: 20;\n    text-align: center;\n    border-radius: 30px;\n}\n.wb-header {\n    border-radius: 30px;\n    width: 70px;\n    height: 70px;\n    cursor: move;\n    z-index: 50;\n    background-color: #2196F3;\n    color: #fff;\n}\n", ""]);
+exports.push([module.i, "\nbutton {\n    height: 40px;\n}\n.stack-play {\n    flex: 1;\n}\n.stack-name {\n    flex: 4;\n}\n.stack-del {\n    flex: 1;\n}\n.stack-del button {\n    float: right;\n}\n.stack-top-sec {\n    display: inline;\n}\n.stack-house {\n    margin-bottom: 10px;\n    background-color: aquamarine;\n    width: 100%;\n    height: 80px;\n}\n.stack-slice {\n    display: block;\n}\n.stack-top {\n    display: flex;\n    height: 40px;\n    background-color: wheat;\n}\n.stack-bottom {\n    height: 40px;\n    background-color: aquamarine;\n}\n.canv {\n    width: 100%;\n    height: 40px !important;\n}\n.wb-top {\n    position: absolute;\n    z-index: 20;\n    text-align: center;\n    border-radius: 30px;\n}\n.wb-header {\n    border-radius: 30px;\n    width: 70px;\n    height: 70px;\n    cursor: move;\n    z-index: 50;\n    background-color: #2196F3;\n    color: #fff;\n}\n", ""]);
 
 // exports
 
