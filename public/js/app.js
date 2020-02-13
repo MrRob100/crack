@@ -2127,12 +2127,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           document.ontouchend = closeDragElement;
           document.ontouchmove = elementDrag;
         } else {
-          e.preventDefault(); // get the mouse cursor position at startup:
-          // pos3 = e.clientX;
-          // pos4 = e.clientY;
-          // document.onmouseup = closeDragElement;
-          // call a function whenever the cursor moves:
-          // document.onmousemove = elementDrag;
+          e.preventDefault();
+          pos3 = e.clientX;
+          pos4 = e.clientY;
+          document.onmouseup = closeDragElement;
+          document.onmousemove = elementDrag;
         }
       } //while moving
 
@@ -2142,8 +2141,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         if (e.touches) {
           pos1 = pos3 - e.touches[0].clientX;
-          console.log('ety', e.touches[0].clientY);
-          console.log('pos4', pos4);
           pos2 = pos4 - e.touches[0].clientY;
           pos3 = e.touches[0].clientX;
           pos4 = e.touches[0].clientY;
@@ -2159,8 +2156,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         elmnt.style.top = elmnt.offsetTop - pos2 + "px";
         elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
-        console.log('wsy', window.scrollY);
-        console.log('p2', pos2);
         isso.src.playbackRate.value = (-(elmnt.offsetTop - pos2) + 600 + window.scrollY) / 450;
         isso.src2.playbackRate.value = (-(elmnt.offsetTop - pos2) + 600 + window.scrollY) / 450;
         isso.filter.frequency.value = -elmnt.offsetLeft * 25 + 10000;

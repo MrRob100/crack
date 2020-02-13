@@ -25,6 +25,16 @@ pos={{ array_search($tune, $tunes) }}
 @endforeach
 @endsection
 
+<style>
+
+html, body {
+    overflow: hidden;
+    position: fixed;
+    touch-action: none;
+}
+
+</style>
+
 <script>
 
 //upload
