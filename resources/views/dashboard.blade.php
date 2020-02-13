@@ -28,7 +28,6 @@ pos={{ array_search($tune, $tunes) }}
 <style>
 
 html, body {
-    overflow: hidden;
     position: fixed;
     touch-action: none;
 }
