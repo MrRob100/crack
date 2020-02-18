@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
 {
@@ -26,21 +27,17 @@ class DashboardController extends Controller
 
     public function upload(Request $request) {
 
-        dump($request);
+        Log::info(json_encode($request));
 
         $path = $request->file('song')->store('upload');
 
         $file = $request->file('song');
         $song_name = $file->getClientOriginalName(); 
 
-        dump($file);
 
         //change name of file
         
         // $file->store('public/data');
-
-        dump(scandir('storage/data'));
-        dump(scandir('../storage/data'));
 
         $file->move('storage/data/', $song_name);
 
