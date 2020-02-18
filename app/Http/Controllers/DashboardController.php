@@ -26,6 +26,8 @@ class DashboardController extends Controller
 
     public function upload(Request $request) {
 
+        dump($request);
+
         $path = $request->file('song')->store('upload');
 
         $file = $request->file('song');
