@@ -38,7 +38,8 @@ class DashboardController extends Controller
         $file->move('storage/data/', $song_name);
 
         $path_bare = substr($path, 7);
-        $path_full = '../public/storage/data/'.$path_bare; 
+        $path_full = '../storage/data/'.$path_bare; 
+        // $path_full = '../public/storage/data/'.$path_bare; 
 
         return redirect('dashboard');
 
