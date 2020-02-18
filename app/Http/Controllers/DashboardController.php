@@ -31,9 +31,14 @@ class DashboardController extends Controller
         $file = $request->file('song');
         $song_name = $file->getClientOriginalName(); 
 
+        dump($file);
+
         //change name of file
         
         // $file->store('public/data');
+
+        dump(scandir('storage/data'));
+        dump(scandir('../storage/data'));
 
         $file->move('storage/data/', $song_name);
 
