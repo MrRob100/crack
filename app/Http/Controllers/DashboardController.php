@@ -27,7 +27,8 @@ class DashboardController extends Controller
 
     public function upload(Request $request) {
 
-        Log::info(json_encode($request));
+        Log::info(json_encode($request)->file('song'));
+        // dd($request->file('song'));
 
         $path = $request->file('song')->store('upload');
 
