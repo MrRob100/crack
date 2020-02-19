@@ -27,6 +27,8 @@ class DashboardController extends Controller
 
     public function upload(Request $request) {
 
+        ini_set('max_post_size', 0);
+
         Log::info(json_encode($request->file('song')));
         // dd($request->file('song'));
 
