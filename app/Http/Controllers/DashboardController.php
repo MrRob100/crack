@@ -16,6 +16,9 @@ class DashboardController extends Controller
      */
 
     public function index() {
+
+        ini_set('max_post_size', 0);
+
         $path_full = 'nopath';
         
         $tunes = scandir('storage/data/');
@@ -26,8 +29,6 @@ class DashboardController extends Controller
     }
 
     public function upload(Request $request) {
-
-        ini_set('max_post_size', 0);
 
         Log::info(json_encode($request->file('song')));
         // dd($request->file('song'));
