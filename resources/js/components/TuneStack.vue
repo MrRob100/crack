@@ -82,8 +82,12 @@ export default {
         setBody: function(state) {
             if (state === 'play') {
                 document.querySelector('body').style.position = 'relative';
+                document.querySelector('html').style.position = 'relative';
+                console.log('i');
             } else {
+                console.log('e');
                 document.querySelector('body').style.position = 'fixed';
+                document.querySelector('html').style.position = 'fixed';
             }
         },
         play: function() {
@@ -395,9 +399,6 @@ export default {
 <style>
     .container {
         padding: 0!important;
-    }
-    body {
-        background-color: tan;
     }
     button {
         -webkit-appearance: none;

@@ -31,6 +31,9 @@ html, body {
     overflow-x: hidden;
     touch-action: none;
 }
+body {
+    position: relative;
+}
 
 </style>
 
