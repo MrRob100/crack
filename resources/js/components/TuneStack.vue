@@ -80,7 +80,7 @@ export default {
             }
         },
         setBody: function(state) {
-            if (state === 'play') {
+            if (state === 'stop') {
                 document.querySelector('body').style.position = 'relative';
                 document.querySelector('html').style.position = 'relative';
                 console.log('i');

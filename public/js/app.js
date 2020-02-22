@@ -1948,7 +1948,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
     },
     setBody: function setBody(state) {
-      if (state === 'play') {
+      if (state === 'stop') {
         document.querySelector('body').style.position = 'relative';
         document.querySelector('html').style.position = 'relative';
         console.log('i');
