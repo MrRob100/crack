@@ -2187,6 +2187,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
+    console.log('MTD');
+
     if (!this.nonMob) {
       this.wreckBallMeth(document.getElementById("mydiv-ball-" + this.pos));
     }

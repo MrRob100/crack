@@ -346,7 +346,7 @@ export default {
     },
 
     mounted() {
-
+        console.log('MTD');
 
         if (!this.nonMob) {
             this.wreckBallMeth(document.getElementById("mydiv-ball-"+this.pos));
