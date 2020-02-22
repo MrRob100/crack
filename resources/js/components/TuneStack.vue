@@ -79,6 +79,13 @@ export default {
                 }
             }
         },
+        setBody: function(state) {
+            if (state === 'play') {
+                document.querySelector('body').style.position = 'relative';
+            } else {
+                document.querySelector('body').style.position = 'fixed';
+            }
+        },
         play: function() {
             var leftStart = document.getElementById("div-start-" + this.pos).offsetLeft;
             var leftEnd = document.getElementById("div-end-" + this.pos).offsetLeft;
@@ -97,6 +104,7 @@ export default {
             this.src2.start(0, resultantStartingTime);
 
             this.playing = true;
+            this.setBody('play');
 
             if (!this.nonMob) {
 
@@ -112,6 +120,8 @@ export default {
             this.src = {};
             this.src2 = {};
             this.load();
+
+            this.setBody('stop');
 
             if (!this.nonMob) {
                 document.getElementById("mydiv-ball-"+this.pos).style.visibility = 'hidden';

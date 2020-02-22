@@ -1947,6 +1947,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       };
     },
+    setBody: function setBody(state) {
+      if (state === 'play') {
+        document.querySelector('body').style.position = 'relative';
+      } else {
+        document.querySelector('body').style.position = 'fixed';
+      }
+    },
     play: function play() {
       var leftStart = document.getElementById("div-start-" + this.pos).offsetLeft;
       var leftEnd = document.getElementById("div-end-" + this.pos).offsetLeft;
@@ -1961,6 +1968,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.src.start(0, resultantStartingTime);
       this.src2.start(0, resultantStartingTime);
       this.playing = true;
+      this.setBody('play');
 
       if (!this.nonMob) {
         document.getElementById("mydiv-ball-" + this.pos).style.visibility = 'visible';
@@ -1974,6 +1982,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.src = {};
       this.src2 = {};
       this.load();
+      this.setBody('stop');
 
       if (!this.nonMob) {
         document.getElementById("mydiv-ball-" + this.pos).style.visibility = 'hidden';
