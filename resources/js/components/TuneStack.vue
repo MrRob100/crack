@@ -91,6 +91,10 @@ export default {
             }
         },
         play: function() {
+
+            console.log('asb');
+            this.setBody('play');
+
             var leftStart = document.getElementById("div-start-" + this.pos).offsetLeft;
             var leftEnd = document.getElementById("div-end-" + this.pos).offsetLeft;
             var offsetPx = leftStart >0 ? leftStart : 0;
@@ -108,7 +112,7 @@ export default {
             this.src2.start(0, resultantStartingTime);
 
             this.playing = true;
-            this.setBody('play');
+
 
             if (!this.nonMob) {
 
@@ -118,6 +122,10 @@ export default {
 
         },
         stop: function() {
+
+            console.log('ast');
+            this.setBody('stop');
+
             this.src.stop();
             this.src2.stop();
             this.playing = false;
@@ -125,7 +133,6 @@ export default {
             this.src2 = {};
             this.load();
 
-            this.setBody('stop');
 
             if (!this.nonMob) {
                 document.getElementById("mydiv-ball-"+this.pos).style.visibility = 'hidden';
