@@ -1,6 +1,5 @@
 <template>
     <div v-if="!deleted" class="stack-house">
-        
         <div v-if="!nonMob" class="wb-top" :id='"mydiv-ball-"+pos' style="visibility:hidden">
             <div class="wb-header" :id='"mydiv-ball-"+pos+"-header"'></div>
         </div>
@@ -111,7 +110,11 @@ export default {
             var resultantStartingTime = offsetPx * spp;
             var resultantLoopEnd = offsetPxEnd * spp;
             this.src.loopStart = resultantStartingTime;
+            this.src2.loopStart = resultantStartingTime;
             this.src.loopEnd = resultantLoopEnd;
+            this.src2.loopEnd = resultantLoopEnd;
+
+            console.log('rle', resultantLoopEnd);
 
             this.src.start(0, resultantStartingTime);
             this.src2.start(0, resultantStartingTime);

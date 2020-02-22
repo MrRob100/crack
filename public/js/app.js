@@ -1773,7 +1773,8 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var isso = this;
     var nonHeadStart = document.getElementById("div-start-" + isso.setting);
-    var nonHeadEnd = document.getElementById("div-end-" + isso.setting); // console.log('this.canvaswidth', this.canvasWidth);
+    var nonHeadEnd = document.getElementById("div-end-" + isso.setting);
+    nonHeadEnd.style.left = "calc(100% - 20px)"; // console.log('this.canvaswidth', this.canvasWidth);
     // nonHeadEnd.style.left = this.canvasWidth; 
     // Make the DIV element draggable:
 
@@ -1911,7 +1912,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['name', 'pos'],
   data: function data() {
@@ -1976,7 +1976,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var resultantStartingTime = offsetPx * spp;
       var resultantLoopEnd = offsetPxEnd * spp;
       this.src.loopStart = resultantStartingTime;
+      this.src2.loopStart = resultantStartingTime;
       this.src.loopEnd = resultantLoopEnd;
+      this.src2.loopEnd = resultantLoopEnd;
+      console.log('rle', resultantLoopEnd);
       this.src.start(0, resultantStartingTime);
       this.src2.start(0, resultantStartingTime);
       this.playing = true;
@@ -7061,7 +7064,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.slider-house {\n  background-color: aqua;\n  padding-left: 0;\n}\n.marker {\n  height: 40px;\n  position: absolute;\n  z-index: 9;\n  background-color: #f1f1f1;\n  border: 1px solid #d3d3d3;\n  text-align: center;\n}\n.markerheader {\n  height: 40px;\n  cursor: move;\n  z-index: 10;\n}\n\n", ""]);
+exports.push([module.i, "\n.slider-house {\n  background-color: aqua;\n  padding-left: 0;\n}\n.marker {\n  width:20px;\n  height: 40px;\n  position: absolute;\n  z-index: 9;\n  background-color: #f1f1f1;\n  border: 1px solid #d3d3d3;\n  text-align: center;\n}\n.markerheader {\n  height: 40px;\n  cursor: move;\n  z-index: 10;\n}\n\n", ""]);
 
 // exports
 
@@ -40787,18 +40790,14 @@ var render = function() {
             staticClass: "markerheader",
             attrs: { id: "div-start-" + _vm.setting + "-header" }
           },
-          [_vm._v("B")]
+          [_vm._v("S")]
         )
       ]
     ),
     _vm._v(" "),
     _c(
       "div",
-      {
-        staticClass: "marker",
-        staticStyle: { left: "97.8%" },
-        attrs: { id: "div-end-" + _vm.setting }
-      },
+      { staticClass: "marker", attrs: { id: "div-end-" + _vm.setting } },
       [
         _c(
           "div",
@@ -40806,7 +40805,7 @@ var render = function() {
             staticClass: "markerheader",
             attrs: { id: "div-end-" + _vm.setting + "-header" }
           },
-          [_vm._v("F")]
+          [_vm._v("E")]
         )
       ]
     )
