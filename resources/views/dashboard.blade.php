@@ -35,6 +35,10 @@ body {
     position: relative;
 }
 
+.navbar {
+    height: 20px;
+}
+
 </style>
 
 <script>
