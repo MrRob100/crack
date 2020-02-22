@@ -165,11 +165,14 @@ export default {
             var request = new XMLHttpRequest();
             // const set = this.pos;
 
-            //prod
-            request.open('GET', '../storage/data/' + isso.name, true);
+            if (window.location.pathname == '/crack/public/dashboard') {
+                //local
+                request.open('GET', '../public/storage/data/' + isso.name, true);
+            } else {
+                //prod
+                request.open('GET', '../storage/data/' + isso.name, true);
+            }
 
-            //local
-            // request.open('GET', '../public/storage/data/' + isso.name, true);
             const source = audioCtx.createBufferSource();
             const source2 = audioCtx.createBufferSource();
             request.responseType = 'arraybuffer';
@@ -258,64 +261,41 @@ export default {
                 ballHead.onmousedown = dragMouseDown;
                 ballHead.ontouchstart = dragMouseDown;
 
-                // ballHead.addEventListener('touchstart', function(){
-                //     console.log('btn touched');
-                // });
-
-                // ballHead.addEventListener('touchcancel', function(){
-	            //     console.log('btn moving cancel');
-                // })
-
-                // ballHead.addEventListener('touchmove', function(){
-	            //     console.log('btn moved');
-                // })
-                // ballHead.addEventListener('touchend', function(){
-                //     console.log('btn leaved (touchend)');
-                //     //end of movement
-                // })
-                // ballHead.addEventListener('touchleave', function(){
-                //     console.log('btn moving end (touchleave)');
-                //     //not used
-                // })
-
             } else {
                 // otherwise, move the DIV from anywhere inside the DIV:
                 elmnt.onmousedown = dragMouseDown;
             }
-
-            function touchDown(e) {
-                console.log('same but touch');
-            }
-
+            
             //first touch
             function dragMouseDown(e) {
                 e = e || window.event;
-                e.preventDefault();
-                // get the mouse cursor position at startup:
-                pos3 = e.clientX;
-                pos4 = e.clientY;
-                document.onmouseup = closeDragElement;
-                document.ontouchend = closeDragElement;
-                // call a function whenever the cursor moves:
-                document.onmousemove = elementDrag;
-                document.ontouchmove = elementDrag;
+                if (e.touches) {
+                    // get the mouse cursor position at startup:
+                    pos3 = e.touches[0].clientX;
+                    pos4 = e.touches[0].clientY;
+                    document.ontouchend = closeDragElement;
+                    document.ontouchmove = elementDrag;
+                } else {
+                    e.preventDefault();
+                    pos3 = e.clientX;
+                    pos4 = e.clientY;
+                    document.onmouseup = closeDragElement;
+                    document.onmousemove = elementDrag;
+                }
             }
 
             //while moving
             function elementDrag(e, touch) {
                 e = e || window.event;
                 if (e.touches) {
-                    console.log('touches');
-
-                    console.log('v', e.touches[0].clientX);
 
                     pos1 = pos3 - e.touches[0].clientX;
                     pos2 = pos4 - e.touches[0].clientY;
                     pos3 = e.touches[0].clientX;
                     pos4 = e.touches[0].clientY;
 
+
                 } else {
-                    console.log('clicks');
                     e.preventDefault();
                     // calculate the new cursor position:
                     pos1 = pos3 - e.clientX;
@@ -324,13 +304,9 @@ export default {
                     pos4 = e.clientY;
                 }
 
-                console.log('pos1', pos1);
-                console.log('pos2', pos2);
-
                 // set the element's new position:
                 elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
                 elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-                
                 isso.src.playbackRate.value = (-(elmnt.offsetTop - pos2) + 600 + window.scrollY) /450;
                 isso.src2.playbackRate.value = (-(elmnt.offsetTop - pos2) + 600 + window.scrollY) /450;
                 isso.filter.frequency.value = (-(elmnt.offsetLeft) * 25) + 10000;
@@ -407,6 +383,16 @@ export default {
 
 </script>
 <style>
+    .container {
+        padding: 0!important;
+    }
+    body {
+        background-color: tan;
+    }
+    button {
+        -webkit-appearance: none;
+        height: 40px;
+    }
     .stack-play {
         flex: 1;
     }
@@ -448,10 +434,15 @@ export default {
         position: absolute;
         z-index: 20;
         text-align: center;
-        border-radius: 30px;
+        border-radius: 50%;
     }
     .wb-header {
-        border-radius: 30px;
+        -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        border-width: 10px;
+        border-style: double;
+        border-radius: 50%;
         width: 70px;
         height: 70px;
         cursor: move;
