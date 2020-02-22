@@ -1937,7 +1937,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     del: function del() {
       var request = new XMLHttpRequest();
-      request.open('GET', '/public/del?song=' + this.name, true); // request.open('GET', '/crack/public/del?song=' + this.name, true);
+
+      if (window.location.pathname == '/crack/public/dashboard') {
+        request.open('GET', '/crack/public/del?song=' + this.name, true);
+      } else {
+        request.open('GET', '/del?song=' + this.name, true);
+      }
 
       request.send();
       var isso = this;
