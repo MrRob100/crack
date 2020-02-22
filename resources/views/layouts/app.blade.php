@@ -19,7 +19,6 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/dash.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -79,10 +78,10 @@
         </main>
     </div>
 </body>
-    <script type="text/javascript" src="{{ URL::asset('js/audio.js') }}"></script>
+    {{-- <script type="text/javascript" src="{{ URL::asset('js/audio.js') }}"></script> --}}
     {{-- <script type="text/javascript" src="{{ URL::asset('js/drag.js') }}"></script> --}}
     {{-- <script type="text/javascript" src="{{ URL::asset('js/audiocrop.js') }}"></script> --}}
-    <script type="text/javascript" src="{{ URL::asset('js/effect.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('js/controls.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('js/songcrop.js') }}"></script>
+    {{-- <script type="text/javascript" src="{{ URL::asset('js/effect.js') }}"></script> --}}
+    {{-- <script type="text/javascript" src="{{ URL::asset('js/controls.js') }}"></script> --}}
+    {{-- <script type="text/javascript" src="{{ URL::asset('js/songcrop.js') }}"></script> --}}
 </html>
