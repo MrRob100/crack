@@ -70,7 +70,8 @@ export default {
     methods: {
         del: function() {
             var request = new XMLHttpRequest();
-            request.open('GET', '/crack/public/del?song=' + this.name, true);
+            request.open('GET', '/public/del?song=' + this.name, true);
+            // request.open('GET', '/crack/public/del?song=' + this.name, true);
             request.send();
             var isso = this;
             request.onload = function () {
