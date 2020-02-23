@@ -14,6 +14,7 @@
                 v-on:click="stop"
                 ><img class="crack-icon" src="images/stop.png"></button>
                 <button
+                class="btn-crack-play"
                 v-else
                 v-on:click="play"
                 ><img class="crack-icon" src="images/play.png"></button>

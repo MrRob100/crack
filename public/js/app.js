@@ -1913,6 +1913,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['name', 'pos'],
   data: function data() {
@@ -40881,12 +40882,19 @@ var render = function() {
                         attrs: { src: "images/stop.png" }
                       })
                     ])
-                  : _c("button", { on: { click: _vm.play } }, [
-                      _c("img", {
-                        staticClass: "crack-icon",
-                        attrs: { src: "images/play.png" }
-                      })
-                    ])
+                  : _c(
+                      "button",
+                      {
+                        staticClass: "btn-crack-play",
+                        on: { click: _vm.play }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "crack-icon",
+                          attrs: { src: "images/play.png" }
+                        })
+                      ]
+                    )
               ]),
           _vm._v(" "),
           _c("div", { staticClass: "stack-top-sec stack-name" }, [

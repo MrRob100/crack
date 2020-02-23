@@ -48,4 +48,20 @@ function ch() {
     $('#song-upload').submit();
 }
 
+setInterval(function() {
+    var playing = false;
+    var sp = $('.stack-play');
+
+    sp.each(function(k, v) {
+        if (v.childNodes[0].innerHTML.includes('stop')) {
+            $('.btn-crack-play').hide();
+            playing = true;
+        } else {
+            if (!playing) {
+                $('.btn-crack-play').show();
+            }
+        }
+    })
+}, 500);
+
 </script>
