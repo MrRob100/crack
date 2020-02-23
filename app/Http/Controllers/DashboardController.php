@@ -30,28 +30,26 @@ class DashboardController extends Controller
 
     public function upload(Request $request) {
 
-        Log::info(json_encode($request->file('song')));
-        // dd($request->file('song'));
-
-        $path = $request->file('song')->store('upload');
-
         $file = $request->file('song');
-        $song_name = $file->getClientOriginalName(); 
+        $typ = $file->getMimeType(); 
+        if ($typ === 'audio/mpeg') {
 
+            //removes spaces in name
+            $song_name = str_replace(" ", "_", $file->getClientOriginalName()); 
 
-        //change name of file
-        
-        // $file->store('public/data');
+            $path = $request->file('song')->store('upload');
 
-        $file->move('storage/data/', $song_name);
+            $file->move('storage/data/', $song_name);
 
-        $path_bare = substr($path, 7);
-        $path_full = '../storage/data/'.$path_bare; 
-        // $path_full = '../public/storage/data/'.$path_bare; 
+            $path_bare = substr($path, 7);
+            $path_full = '../storage/data/'.$path_bare; 
+            // $path_full = '../public/storage/data/'.$path_bare; 
+
+        } else {
+            return redirect('dashboard');
+        }
 
         return redirect('dashboard');
-
-        // return view('dashboard', compact('path_full', 'song_name'));
     }
 
     // public function delete($file) {

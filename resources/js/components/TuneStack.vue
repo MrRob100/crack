@@ -84,14 +84,21 @@ export default {
             }
         },
         setBody: function(state) {
+            var ht = document.querySelector('html');
+            var bod = document.querySelector('body');
+
             if (state === 'stop') {
-                document.querySelector('body').style.position = 'relative';
-                document.querySelector('html').style.position = 'relative';
+                var off = ht.offsetTop;
+                ht.style.top = 'initial';
+                bod.style.position = 'relative';
+                ht.style.position = 'relative';
                 console.log('i');
+                window.scrollTo(0, off - (off * 2));                
             } else {
                 console.log('e');
-                document.querySelector('body').style.position = 'fixed';
-                document.querySelector('html').style.position = 'fixed';
+                ht.style.top = - window.scrollY + 'px';
+                bod.style.position = 'fixed';
+                ht.style.position = 'fixed';
             }
         },
         play: function() {
@@ -114,10 +121,10 @@ export default {
             this.src.loopEnd = resultantLoopEnd;
             this.src2.loopEnd = resultantLoopEnd;
 
-            console.log('rle', resultantLoopEnd);
-
             this.src.start(0, resultantStartingTime);
             this.src2.start(0, resultantStartingTime);
+
+            console.log('src2', this.src2);
 
             this.playing = true;
 
@@ -166,26 +173,6 @@ export default {
         setCanvasWidth: function() {
             this.canvasWidth = window.innerWidth;
         },
-        // shuffleMarkers: function() {
-        //     var isso = this
-        //     var request = new XMLHttpRequest();
-        //     request.open('GET', '/crack/public/get?position=' + this.pos);
-        //     request.send();
-        //     request.onload = function() {
-
-        //         var jsonResp = JSON.parse(request.response);
-
-        //         if (jsonResp.startScale) {
-        //             isso.leftMarker.style.left = jsonResp.startScale * window.innerWidth + 'px';
-        //         }
-
-        //         // isso.leftMarkerScale = JSON.parse(request.response.startScale);
-        //         // isso.rightMarkerScale = JSON.parse(request.response.endScale);
-        //     };
-
-        //     console.log('ww', window.innerWidth);
-        //     console.log('set as', window.innerWidth * parseInt(isso.rightMarkerScale) + 'px'); 
-        // }
         load: function() {
 
             var isso = this;
@@ -225,13 +212,16 @@ export default {
 
                     //filter bit
                     var filter = audioCtx.createBiquadFilter();
-                    filter.type = 'highpass';
+                    // filter.type = 'highpass';
+                    filter.type = 'lowpass';
 
                     source2.connect(filter);
                     filter.connect(audioCtx.destination);
-                    filter.frequency.value = 20000;
+                    filter.frequency.value = 0;
+                    // filter.frequency.value = 20000;
 
                     source.loop = true;
+                    source2.loop = true;
                     isso.src = source;
                     isso.src2 = source2;
 
@@ -338,7 +328,9 @@ export default {
                 elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
                 isso.src.playbackRate.value = (-(elmnt.offsetTop - pos2) + 600 + window.scrollY) /450;
                 isso.src2.playbackRate.value = (-(elmnt.offsetTop - pos2) + 600 + window.scrollY) /450;
-                isso.filter.frequency.value = (-(elmnt.offsetLeft) * 25) + 10000;
+                // isso.filter.frequency.value = ((elmnt.offsetLeft) * 25) + 10000;
+                // isso.filter.frequency.value = (elmnt.offsetLeft);
+                // isso.filter.frequency.value = ((elmnt.offsetLeft) * 25) + 10000;
 
             }
 
@@ -350,15 +342,32 @@ export default {
                 // document.onmousemove = null;
                 document.ontouchmove = null;
             }
-        }
+        },
+            setRange: function() {
+                console.log('range');
+                var isso = this
+                var request = new XMLHttpRequest();
+                request.open('GET', '/crack/public/get?position=' + this.pos);
+                request.send();
+                request.onload = function() {
+                    var jsonResp = JSON.parse(request.response);
+
+                    if (jsonResp.startScale) {
+                        isso.leftMarker.style.left = jsonResp.startScale * 100 + '%';
+                    }
+                };
+            }
     },
 
     mounted() {
+        var isso = this;
         console.log('MTD');
 
         if (!this.nonMob) {
             this.wreckBallMeth(document.getElementById("mydiv-ball-"+this.pos));
         }
+
+        this.setRange();
 
         this.checkMob();
 
@@ -366,7 +375,6 @@ export default {
 
         this.load();
 
-        var isso = this;
         isso.leftMarker = document.getElementById("div-start-" + this.pos);
         isso.rightMarker = document.getElementById("div-end-" + this.pos);
 
@@ -394,7 +402,11 @@ export default {
                 if (isso.playing) {
                     isso.src.playbackRate.value = (-y + 600 + window.scrollY) / 450;
                     isso.src2.playbackRate.value = (-y + 600 + window.scrollY) / 450;
-                    isso.filter.frequency.value = (-x * 20) + 10000;
+                    isso.filter.frequency.value = (x * 1.2 - 100);
+
+                    console.log(isso.filter.frequency.value);
+    
+                    // isso.filter.frequency.value = (-x * 20) + 10000;
                 }      
             }  
         }
