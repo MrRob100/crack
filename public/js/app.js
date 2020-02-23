@@ -1974,7 +1974,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     play: function play() {
       console.log('asb');
-      this.setBody('play');
       var leftStart = document.getElementById("div-start-" + this.pos).offsetLeft;
       var leftEnd = document.getElementById("div-end-" + this.pos).offsetLeft;
       var offsetPx = leftStart > 0 ? leftStart : 0;
@@ -1989,7 +1988,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.src2.loopEnd = resultantLoopEnd;
       this.src.start(0, resultantStartingTime);
       this.src2.start(0, resultantStartingTime);
-      console.log('src2', this.src2);
+      this.setBody('play');
       this.playing = true;
 
       if (!this.nonMob) {

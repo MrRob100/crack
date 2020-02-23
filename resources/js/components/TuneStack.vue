@@ -105,7 +105,6 @@ export default {
         play: function() {
 
             console.log('asb');
-            this.setBody('play');
 
             var leftStart = document.getElementById("div-start-" + this.pos).offsetLeft;
             var leftEnd = document.getElementById("div-end-" + this.pos).offsetLeft;
@@ -125,7 +124,7 @@ export default {
             this.src.start(0, resultantStartingTime);
             this.src2.start(0, resultantStartingTime);
 
-            console.log('src2', this.src2);
+            this.setBody('play');
 
             this.playing = true;
 
