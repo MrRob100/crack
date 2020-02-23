@@ -33,6 +33,7 @@
             :setting='pos'
             v-bind:canvasWidth='canvasWidth'
             v-bind:canvasLeft='canvasLeft'
+            :name='name'
             ></tune-crop>
             <canvas class="canv" :id='"canvas-"+pos' :width="canvasWidth" height="40"></canvas>
         </div>
@@ -347,7 +348,7 @@ export default {
                 console.log('range');
                 var isso = this
                 var request = new XMLHttpRequest();
-                request.open('GET', '/crack/public/get?position=' + this.pos);
+                request.open('GET', '/crack/public/get?position=' + this.name);
                 request.send();
                 request.onload = function() {
                     var jsonResp = JSON.parse(request.response);
@@ -355,6 +356,11 @@ export default {
                     if (jsonResp.startScale) {
                         isso.leftMarker.style.left = jsonResp.startScale * 100 + '%';
                     }
+
+                    if (jsonResp.endScale) {
+                        isso.rightMarker.style.left = jsonResp.endScale * 100 + '%';
+                    }
+
                 };
             }
     },

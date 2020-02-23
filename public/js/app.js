@@ -1763,7 +1763,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['setting', 'canvasWidth', 'canvasLeft'],
+  props: ['setting', 'canvasWidth', 'canvasLeft', 'name'],
   data: function data() {
     return {
       end: 0
@@ -1852,7 +1852,7 @@ __webpack_require__.r(__webpack_exports__);
       var isso = this;
       var request = new XMLHttpRequest();
       var value = ol / window.innerWidth;
-      request.open('GET', '/crack/public/set?which=' + which + "&position=" + isso.setting + "&value=" + value);
+      request.open('GET', '/crack/public/set?which=' + which + "&position=" + isso.name + "&value=" + value);
       request.send(); // request.onload = function () {
       //   }
     }
@@ -1872,6 +1872,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -2193,7 +2194,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       console.log('range');
       var isso = this;
       var request = new XMLHttpRequest();
-      request.open('GET', '/crack/public/get?position=' + this.pos);
+      request.open('GET', '/crack/public/get?position=' + this.name);
       request.send();
 
       request.onload = function () {
@@ -2201,6 +2202,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         if (jsonResp.startScale) {
           isso.leftMarker.style.left = jsonResp.startScale * 100 + '%';
+        }
+
+        if (jsonResp.endScale) {
+          isso.rightMarker.style.left = jsonResp.endScale * 100 + '%';
         }
       };
     }
@@ -40907,7 +40912,8 @@ var render = function() {
               attrs: {
                 setting: _vm.pos,
                 canvasWidth: _vm.canvasWidth,
-                canvasLeft: _vm.canvasLeft
+                canvasLeft: _vm.canvasLeft,
+                name: _vm.name
               }
             }),
             _vm._v(" "),

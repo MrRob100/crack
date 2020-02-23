@@ -67,12 +67,14 @@ class DashboardController extends Controller
     }
 
     public function getMarker() {
+
         $position = $_GET['position'];
         $markers = json_decode(file_get_contents('../public/data/markerData.json'), true);
         return $markers[$position];
     }
 
     public function setMarker() {
+        dump($_GET);
         $position = $_GET['position'];
         $which = $_GET['which'];
         $val = $_GET['value'];
