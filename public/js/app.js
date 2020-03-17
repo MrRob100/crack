@@ -1852,7 +1852,13 @@ __webpack_require__.r(__webpack_exports__);
       var isso = this;
       var request = new XMLHttpRequest();
       var value = ol / window.innerWidth;
-      request.open('GET', '/crack/public/set?which=' + which + "&position=" + isso.name + "&value=" + value);
+
+      if (window.location.pathname == '/crack/public/dashboard') {
+        request.open('GET', '/crack/public/set?which=' + which + "&position=" + isso.name + "&value=" + value);
+      } else {
+        request.open('GET', '/set?which=' + which + "&position=" + isso.name + "&value=" + value);
+      }
+
       request.send(); // request.onload = function () {
       //   }
     }
@@ -2194,7 +2200,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       console.log('range');
       var isso = this;
       var request = new XMLHttpRequest();
-      request.open('GET', '/crack/public/get?position=' + this.name);
+
+      if (window.location.pathname == '/crack/public/dashboard') {
+        request.open('GET', '/crack/public/get?position=' + this.name);
+      } else {
+        request.open('GET', '/get?position=' + this.name);
+      }
+
       request.send();
 
       request.onload = function () {

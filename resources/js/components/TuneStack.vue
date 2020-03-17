@@ -348,7 +348,13 @@ export default {
                 console.log('range');
                 var isso = this
                 var request = new XMLHttpRequest();
-                request.open('GET', '/crack/public/get?position=' + this.name);
+
+                if (window.location.pathname == '/crack/public/dashboard') {
+                    request.open('GET', '/crack/public/get?position=' + this.name);
+                } else {
+                    request.open('GET', '/get?position=' + this.name);
+                }
+
                 request.send();
                 request.onload = function() {
                     var jsonResp = JSON.parse(request.response);
