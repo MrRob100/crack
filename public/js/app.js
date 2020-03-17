@@ -1854,6 +1854,7 @@ __webpack_require__.r(__webpack_exports__);
       var value = ol / window.innerWidth;
 
       if (window.location.pathname == '/crack/public/dashboard') {
+        console.log('wlp-2', window.location.pathname);
         request.open('GET', '/crack/public/set?which=' + which + "&position=" + isso.name + "&value=" + value);
       } else {
         request.open('GET', '/set?which=' + which + "&position=" + isso.name + "&value=" + value);
@@ -1947,6 +1948,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var request = new XMLHttpRequest();
 
       if (window.location.pathname == '/crack/public/dashboard') {
+        console.log('wlp-1', window.location.pathname);
         request.open('GET', '/crack/public/del?song=' + this.name, true);
       } else {
         request.open('GET', '/del?song=' + this.name, true);
@@ -2046,6 +2048,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (window.location.pathname == '/crack/public/dashboard') {
         //local
+        console.log('wlp0', window.location.pathname);
         request.open('GET', '../public/storage/data/' + isso.name, true);
       } else {
         //prod
@@ -2202,6 +2205,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var request = new XMLHttpRequest();
 
       if (window.location.pathname == '/crack/public/dashboard') {
+        console.log('wlp1', window.location.pathname);
         request.open('GET', '/crack/public/get?position=' + this.name);
       } else {
         request.open('GET', '/get?position=' + this.name);

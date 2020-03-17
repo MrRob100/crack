@@ -73,6 +73,7 @@ export default {
             var request = new XMLHttpRequest();
 
             if (window.location.pathname == '/crack/public/dashboard') {
+                console.log('wlp-1', window.location.pathname);
                 request.open('GET', '/crack/public/del?song=' + this.name, true);
             } else {
                request.open('GET', '/del?song=' + this.name, true);
@@ -184,6 +185,7 @@ export default {
 
             if (window.location.pathname == '/crack/public/dashboard') {
                 //local
+                console.log('wlp0', window.location.pathname);
                 request.open('GET', '../public/storage/data/' + isso.name, true);
             } else {
                 //prod
@@ -350,6 +352,7 @@ export default {
                 var request = new XMLHttpRequest();
 
                 if (window.location.pathname == '/crack/public/dashboard') {
+                    console.log('wlp1', window.location.pathname);
                     request.open('GET', '/crack/public/get?position=' + this.name);
                 } else {
                     request.open('GET', '/get?position=' + this.name);
