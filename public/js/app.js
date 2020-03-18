@@ -1815,12 +1815,14 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       function elementDrag(e) {
+        console.log('drag');
         e = e || window.event;
 
         if (e.touches) {
           pos1 = pos3 - e.touches[0].clientX;
           pos3 = e.touches[0].clientX;
         } else {
+          console.log('else');
           e.preventDefault();
           pos1 = pos3 - e.clientX;
           pos3 = e.clientX;
