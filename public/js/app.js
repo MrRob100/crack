@@ -1799,6 +1799,7 @@ __webpack_require__.r(__webpack_exports__);
       function dragMouseDown(e) {
         console.log('new');
         e = e || window.event;
+        console.log(e);
 
         if (e.touches) {
           console.log('tchs');
