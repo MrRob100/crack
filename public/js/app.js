@@ -1789,7 +1789,9 @@ __webpack_require__.r(__webpack_exports__);
 
       if (document.getElementById(elmnt.id + "-header")) {
         // if present, the header is where you move the DIV from:
-        document.getElementById(elmnt.id + "-header").onmousedown = dragMouseDown;
+        var mHead = document.getElementById(elmnt.id + "-header");
+        mHead.onmousedown = dragMouseDown;
+        mHead.ontouchstart = dragMouseDown;
       } else {
         // otherwise, move the DIV from anywhere inside the DIV:
         elmnt.onmousedown = dragMouseDown;
@@ -1797,7 +1799,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
       function dragMouseDown(e) {
-        console.log('new');
+        console.log('new2');
         e = e || window.event;
         console.log(e);
 

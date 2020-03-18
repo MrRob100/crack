@@ -364,7 +364,6 @@ export default {
                     if (jsonResp.endScale) {
                         isso.rightMarker.style.left = jsonResp.endScale * 100 + '%';
                     }
-
                 };
             }
     },
