@@ -69,11 +69,19 @@ export default {
     },
 
     methods: {
+
+        path: function() {
+            var slug = '';
+            if (window.location.pathname == '/crack/public/dashboard') {
+                slug = '/crack/public';
+            }
+            return slug;
+        },
+
         del: function() {
             var request = new XMLHttpRequest();
 
             if (window.location.pathname == '/crack/public/dashboard') {
-                console.log('wlp-1', window.location.pathname);
                 request.open('GET', '/crack/public/del?song=' + this.name, true);
             } else {
                request.open('GET', '/del?song=' + this.name, true);
@@ -95,18 +103,14 @@ export default {
                 ht.style.top = 'initial';
                 bod.style.position = 'relative';
                 ht.style.position = 'relative';
-                console.log('i');
                 window.scrollTo(0, off - (off * 2));                
             } else {
-                console.log('e');
                 ht.style.top = - window.scrollY + 'px';
                 bod.style.position = 'fixed';
                 ht.style.position = 'fixed';
             }
         },
         play: function() {
-
-            console.log('asb');
 
             var leftStart = document.getElementById("div-start-" + this.pos).offsetLeft;
             var leftEnd = document.getElementById("div-end-" + this.pos).offsetLeft;
@@ -130,7 +134,6 @@ export default {
 
             this.playing = true;
 
-
             if (!this.nonMob) {
 
                 document.getElementById("mydiv-ball-"+this.pos).style.visibility = 'visible';
@@ -140,16 +143,13 @@ export default {
         },
         stop: function() {
 
-            console.log('ast');
             this.setBody('stop');
-
             this.src.stop();
             this.src2.stop();
             this.playing = false;
             this.src = {};
             this.src2 = {};
             this.load();
-
 
             if (!this.nonMob) {
                 document.getElementById("mydiv-ball-"+this.pos).style.visibility = 'hidden';
@@ -185,7 +185,6 @@ export default {
 
             if (window.location.pathname == '/crack/public/dashboard') {
                 //local
-                console.log('wlp0', window.location.pathname);
                 request.open('GET', '../public/storage/data/' + isso.name, true);
             } else {
                 //prod
@@ -217,6 +216,7 @@ export default {
                     var filter = audioCtx.createBiquadFilter();
                     // filter.type = 'highpass';
                     filter.type = 'lowpass';
+                    // filter.type = 'bandpass';
 
                     source2.connect(filter);
                     filter.connect(audioCtx.destination);
@@ -291,8 +291,8 @@ export default {
             //first touch
             function dragMouseDown(e) {
                 e = e || window.event;
+                // get the mouse cursor position at startup:
                 if (e.touches) {
-                    // get the mouse cursor position at startup:
                     pos3 = e.touches[0].clientX;
                     pos4 = e.touches[0].clientY;
                     document.ontouchend = closeDragElement;
@@ -310,13 +310,10 @@ export default {
             function elementDrag(e, touch) {
                 e = e || window.event;
                 if (e.touches) {
-
                     pos1 = pos3 - e.touches[0].clientX;
                     pos2 = pos4 - e.touches[0].clientY;
                     pos3 = e.touches[0].clientX;
                     pos4 = e.touches[0].clientY;
-
-
                 } else {
                     e.preventDefault();
                     // calculate the new cursor position:
@@ -347,12 +344,10 @@ export default {
             }
         },
             setRange: function() {
-                console.log('range');
-                var isso = this
+                var isso = this;
                 var request = new XMLHttpRequest();
 
                 if (window.location.pathname == '/crack/public/dashboard') {
-                    console.log('wlp1', window.location.pathname);
                     request.open('GET', '/crack/public/get?position=' + this.name);
                 } else {
                     request.open('GET', '/get?position=' + this.name);
@@ -376,7 +371,6 @@ export default {
 
     mounted() {
         var isso = this;
-        console.log('MTD');
 
         if (!this.nonMob) {
             this.wreckBallMeth(document.getElementById("mydiv-ball-"+this.pos));
@@ -415,12 +409,14 @@ export default {
                 y = e.pageY;
 
                 if (isso.playing) {
-                    isso.src.playbackRate.value = (-y + 600 + window.scrollY) / 450;
-                    isso.src2.playbackRate.value = (-y + 600 + window.scrollY) / 450;
+
+                    var formula = (-y + 700 + window.scrollY) / 650;
+                    console.log('f', formula);
+
+                    isso.src.playbackRate.value = formula;
+                    isso.src2.playbackRate.value = formula;
                     isso.filter.frequency.value = (x * 1.2 - 100);
 
-                    console.log(isso.filter.frequency.value);
-    
                     // isso.filter.frequency.value = (-x * 20) + 10000;
                 }      
             }  

@@ -1793,39 +1793,48 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         // otherwise, move the DIV from anywhere inside the DIV:
         elmnt.onmousedown = dragMouseDown;
-      }
+      } //first touch
+
 
       function dragMouseDown(e) {
         e = e || window.event;
-        e.preventDefault(); // get the mouse cursor position at startup:
 
-        pos3 = e.clientX;
-        document.onmouseup = closeDragElement; // call a function whenever the cursor moves:
-
-        document.onmousemove = elementDrag;
+        if (e.touches) {
+          pos3 = e.touches[0].clientX;
+          document.ontouchend = closeDragElement;
+          document.ontouchmove = elementDrag;
+        } else {
+          e.preventDefault();
+          pos3 = e.clientX;
+          document.onmouseup = closeDragElement;
+          document.onmousemove = elementDrag;
+        }
       }
 
       function elementDrag(e) {
         e = e || window.event;
-        e.preventDefault(); // calculate the new cursor position:
 
-        pos1 = pos3 - e.clientX;
-        pos3 = e.clientX; // set the element's new position:
-        //link loop start and loop end to marker position
-
-        var startx = nonHeadStart.offsetLeft;
-        var endx = nonHeadEnd.offsetLeft;
-
-        if (endx >= startx) {
-          var posCalced = (elmnt.offsetLeft - pos1) / window.innerWidth * 100;
-          elmnt.style.left = elmnt.offsetLeft - pos1;
+        if (e.touches) {
+          pos1 = pos3 - e.touches[0].clientX;
+          pos3 = e.touches[0].clientX;
         } else {
-          if (elmnt.id == "div-end-" + isso.setting) {
-            elmnt.style.left = elmnt.offsetLeft + 1 + "px";
-          }
+          e.preventDefault();
+          pos1 = pos3 - e.clientX;
+          pos3 = e.clientX;
+          var startx = nonHeadStart.offsetLeft;
+          var endx = nonHeadEnd.offsetLeft;
 
-          if (elmnt.id == "div-start-" + isso.setting) {
-            elmnt.style.left = elmnt.offsetLeft - 1 + "px";
+          if (endx >= startx) {
+            var posCalced = (elmnt.offsetLeft - pos1) / window.innerWidth * 100;
+            elmnt.style.left = elmnt.offsetLeft - pos1;
+          } else {
+            if (elmnt.id == "div-end-" + isso.setting) {
+              elmnt.style.left = elmnt.offsetLeft + 1 + "px";
+            }
+
+            if (elmnt.id == "div-start-" + isso.setting) {
+              elmnt.style.left = elmnt.offsetLeft - 1 + "px";
+            }
           }
         }
       }
@@ -1844,6 +1853,8 @@ __webpack_require__.r(__webpack_exports__);
 
         document.onmouseup = null;
         document.onmousemove = null;
+        document.ontouchend = null;
+        document.ontouchmove = null;
       }
     }
   },
@@ -1854,7 +1865,6 @@ __webpack_require__.r(__webpack_exports__);
       var value = ol / window.innerWidth;
 
       if (window.location.pathname == '/crack/public/dashboard') {
-        console.log('wlp-2', window.location.pathname);
         request.open('GET', '/crack/public/set?which=' + which + "&position=" + isso.name + "&value=" + value);
       } else {
         request.open('GET', '/set?which=' + which + "&position=" + isso.name + "&value=" + value);
@@ -1944,11 +1954,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }, "deleted", false);
   },
   methods: {
+    path: function path() {
+      var slug = '';
+
+      if (window.location.pathname == '/crack/public/dashboard') {
+        slug = '/crack/public';
+      }
+
+      return slug;
+    },
     del: function del() {
       var request = new XMLHttpRequest();
 
       if (window.location.pathname == '/crack/public/dashboard') {
-        console.log('wlp-1', window.location.pathname);
         request.open('GET', '/crack/public/del?song=' + this.name, true);
       } else {
         request.open('GET', '/del?song=' + this.name, true);
@@ -1972,17 +1990,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         ht.style.top = 'initial';
         bod.style.position = 'relative';
         ht.style.position = 'relative';
-        console.log('i');
         window.scrollTo(0, off - off * 2);
       } else {
-        console.log('e');
         ht.style.top = -window.scrollY + 'px';
         bod.style.position = 'fixed';
         ht.style.position = 'fixed';
       }
     },
     play: function play() {
-      console.log('asb');
       var leftStart = document.getElementById("div-start-" + this.pos).offsetLeft;
       var leftEnd = document.getElementById("div-end-" + this.pos).offsetLeft;
       var offsetPx = leftStart > 0 ? leftStart : 0;
@@ -2006,7 +2021,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     stop: function stop() {
-      console.log('ast');
       this.setBody('stop');
       this.src.stop();
       this.src2.stop();
@@ -2048,7 +2062,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (window.location.pathname == '/crack/public/dashboard') {
         //local
-        console.log('wlp0', window.location.pathname);
         request.open('GET', '../public/storage/data/' + isso.name, true);
       } else {
         //prod
@@ -2076,7 +2089,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           var filter = audioCtx.createBiquadFilter(); // filter.type = 'highpass';
 
-          filter.type = 'lowpass';
+          filter.type = 'lowpass'; // filter.type = 'bandpass';
+
           source2.connect(filter);
           filter.connect(audioCtx.destination);
           filter.frequency.value = 0; // filter.frequency.value = 20000;
@@ -2146,10 +2160,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
       function dragMouseDown(e) {
-        e = e || window.event;
+        e = e || window.event; // get the mouse cursor position at startup:
 
         if (e.touches) {
-          // get the mouse cursor position at startup:
           pos3 = e.touches[0].clientX;
           pos4 = e.touches[0].clientY;
           document.ontouchend = closeDragElement;
@@ -2200,12 +2213,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     setRange: function setRange() {
-      console.log('range');
       var isso = this;
       var request = new XMLHttpRequest();
 
       if (window.location.pathname == '/crack/public/dashboard') {
-        console.log('wlp1', window.location.pathname);
         request.open('GET', '/crack/public/get?position=' + this.name);
       } else {
         request.open('GET', '/get?position=' + this.name);
@@ -2228,7 +2239,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   mounted: function mounted() {
     var isso = this;
-    console.log('MTD');
 
     if (!this.nonMob) {
       this.wreckBallMeth(document.getElementById("mydiv-ball-" + this.pos));
@@ -2258,10 +2268,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         y = e.pageY;
 
         if (isso.playing) {
-          isso.src.playbackRate.value = (-y + 600 + window.scrollY) / 450;
-          isso.src2.playbackRate.value = (-y + 600 + window.scrollY) / 450;
-          isso.filter.frequency.value = x * 1.2 - 100;
-          console.log(isso.filter.frequency.value); // isso.filter.frequency.value = (-x * 20) + 10000;
+          var formula = (-y + 700 + window.scrollY) / 650;
+          console.log('f', formula);
+          isso.src.playbackRate.value = formula;
+          isso.src2.playbackRate.value = formula;
+          isso.filter.frequency.value = x * 1.2 - 100; // isso.filter.frequency.value = (-x * 20) + 10000;
         }
       }
     }
