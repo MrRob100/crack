@@ -1847,14 +1847,24 @@ __webpack_require__.r(__webpack_exports__);
 
       function closeDragElement(e) {
         elmnt.style.left = (elmnt.offsetLeft - pos1) / window.innerWidth * 100 + "%";
-        console.log(e);
+        console.log('n');
 
-        if (e.toElement.id == "div-start-" + isso.setting + "-header") {
-          isso.setMarkers('startScale', e.clientX);
-        }
+        if (e.toElement) {
+          if (e.toElement.id == "div-start-" + isso.setting + "-header") {
+            isso.setMarkers('startScale', e.clientX);
+          }
 
-        if (e.toElement.id == "div-end-" + isso.setting + "-header") {
-          isso.setMarkers('endScale', e.clientX);
+          if (e.toElement.id == "div-end-" + isso.setting + "-header") {
+            isso.setMarkers('endScale', e.clientX);
+          }
+        } else {
+          if (e.target.id == "div-start-" + isso.setting + "-header") {
+            isso.setMarkers('startScale', e.pageX);
+          }
+
+          if (e.target.id == "div-end-" + isso.setting + "-header") {
+            isso.setMarkers('endScale', e.pageX);
+          }
         } // stop moving when mouse button is released:
 
 
