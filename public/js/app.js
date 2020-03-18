@@ -1807,10 +1807,13 @@ __webpack_require__.r(__webpack_exports__);
           document.ontouchend = closeDragElement;
           document.ontouchmove = elementDrag;
         } else {
+          console.log('else');
           e.preventDefault();
           pos3 = e.clientX;
           document.onmouseup = closeDragElement;
           document.onmousemove = elementDrag;
+          document.ontouchend = closeDragElement;
+          document.ontouchmove = elementDrag;
         }
       }
 
