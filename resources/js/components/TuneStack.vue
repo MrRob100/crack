@@ -191,7 +191,12 @@ export default {
                 request.open('GET', '../storage/data/' + isso.name, true);
             }
 
+            console.log(audioCtx);
+
             const source = audioCtx.createBufferSource();
+        
+            console.log(source);
+
             const source2 = audioCtx.createBufferSource();
             request.responseType = 'arraybuffer';
 

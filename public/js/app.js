@@ -1847,7 +1847,6 @@ __webpack_require__.r(__webpack_exports__);
 
       function closeDragElement(e) {
         elmnt.style.left = (elmnt.offsetLeft - pos1) / window.innerWidth * 100 + "%";
-        console.log('n');
 
         if (e.toElement) {
           if (e.toElement.id == "div-start-" + isso.setting + "-header") {
@@ -2085,7 +2084,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         request.open('GET', '../storage/data/' + isso.name, true);
       }
 
+      console.log(audioCtx);
       var source = audioCtx.createBufferSource();
+      console.log(source);
       var source2 = audioCtx.createBufferSource();
       request.responseType = 'arraybuffer';
 
