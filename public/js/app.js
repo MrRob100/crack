@@ -1797,9 +1797,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
       function dragMouseDown(e) {
+        console.log('new');
         e = e || window.event;
 
         if (e.touches) {
+          console.log('tchs');
           pos3 = e.touches[0].clientX;
           document.ontouchend = closeDragElement;
           document.ontouchmove = elementDrag;
