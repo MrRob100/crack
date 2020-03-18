@@ -2042,8 +2042,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.src2.stop();
       this.playing = false;
       this.src = {};
-      this.src2 = {};
-      this.load();
+      this.src2 = {}; // this.load();
 
       if (!this.nonMob) {
         document.getElementById("mydiv-ball-" + this.pos).style.visibility = 'hidden';

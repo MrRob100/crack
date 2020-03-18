@@ -149,7 +149,7 @@ export default {
             this.playing = false;
             this.src = {};
             this.src2 = {};
-            this.load();
+            // this.load();
 
             if (!this.nonMob) {
                 document.getElementById("mydiv-ball-"+this.pos).style.visibility = 'hidden';
