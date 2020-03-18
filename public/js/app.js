@@ -1824,6 +1824,7 @@ __webpack_require__.r(__webpack_exports__);
         e = e || window.event;
 
         if (e.touches) {
+          console.log('dt');
           pos1 = pos3 - e.touches[0].clientX;
           pos3 = e.touches[0].clientX;
         } else {
@@ -1831,20 +1832,23 @@ __webpack_require__.r(__webpack_exports__);
           e.preventDefault();
           pos1 = pos3 - e.clientX;
           pos3 = e.clientX;
-          var startx = nonHeadStart.offsetLeft;
-          var endx = nonHeadEnd.offsetLeft;
+        }
 
-          if (endx >= startx) {
-            var posCalced = (elmnt.offsetLeft - pos1) / window.innerWidth * 100;
-            elmnt.style.left = elmnt.offsetLeft - pos1;
-          } else {
-            if (elmnt.id == "div-end-" + isso.setting) {
-              elmnt.style.left = elmnt.offsetLeft + 1 + "px";
-            }
+        var startx = nonHeadStart.offsetLeft;
+        var endx = nonHeadEnd.offsetLeft;
 
-            if (elmnt.id == "div-start-" + isso.setting) {
-              elmnt.style.left = elmnt.offsetLeft - 1 + "px";
-            }
+        if (endx >= startx) {
+          var posCalced = (elmnt.offsetLeft - pos1) / window.innerWidth * 100;
+          elmnt.style.left = elmnt.offsetLeft - pos1;
+          console.log('p1', pos1);
+          console.log('p3', pos3);
+        } else {
+          if (elmnt.id == "div-end-" + isso.setting) {
+            elmnt.style.left = elmnt.offsetLeft + 1 + "px";
+          }
+
+          if (elmnt.id == "div-start-" + isso.setting) {
+            elmnt.style.left = elmnt.offsetLeft - 1 + "px";
           }
         }
       }
