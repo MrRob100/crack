@@ -1799,17 +1799,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
       function dragMouseDown(e) {
-        console.log('new2');
         e = e || window.event;
         console.log(e);
 
         if (e.touches) {
-          console.log('tchs');
           pos3 = e.touches[0].clientX;
           document.ontouchend = closeDragElement;
           document.ontouchmove = elementDrag;
         } else {
-          console.log('else');
           e.preventDefault();
           pos3 = e.clientX;
           document.onmouseup = closeDragElement;
@@ -1820,15 +1817,12 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       function elementDrag(e) {
-        console.log('drag');
         e = e || window.event;
 
         if (e.touches) {
-          console.log('dt');
           pos1 = pos3 - e.touches[0].clientX;
           pos3 = e.touches[0].clientX;
         } else {
-          console.log('else');
           e.preventDefault();
           pos1 = pos3 - e.clientX;
           pos3 = e.clientX;
@@ -1840,8 +1834,6 @@ __webpack_require__.r(__webpack_exports__);
         if (endx >= startx) {
           var posCalced = (elmnt.offsetLeft - pos1) / window.innerWidth * 100;
           elmnt.style.left = elmnt.offsetLeft - pos1;
-          console.log('p1', pos1);
-          console.log('p3', pos3);
         } else {
           if (elmnt.id == "div-end-" + isso.setting) {
             elmnt.style.left = elmnt.offsetLeft + 1 + "px";
@@ -1855,6 +1847,7 @@ __webpack_require__.r(__webpack_exports__);
 
       function closeDragElement(e) {
         elmnt.style.left = (elmnt.offsetLeft - pos1) / window.innerWidth * 100 + "%";
+        console.log(e);
 
         if (e.toElement.id == "div-start-" + isso.setting + "-header") {
           isso.setMarkers('startScale', e.clientX);
