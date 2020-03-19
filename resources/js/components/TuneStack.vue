@@ -149,7 +149,7 @@ export default {
             this.playing = false;
             this.src = {};
             this.src2 = {};
-            // this.load();
+            this.load();
 
             if (!this.nonMob) {
                 document.getElementById("mydiv-ball-"+this.pos).style.visibility = 'hidden';
@@ -191,12 +191,8 @@ export default {
                 request.open('GET', '../storage/data/' + isso.name, true);
             }
 
-            console.log(audioCtx);
-
             const source = audioCtx.createBufferSource();
-        
-            console.log(source);
-
+    
             const source2 = audioCtx.createBufferSource();
             request.responseType = 'arraybuffer';
 

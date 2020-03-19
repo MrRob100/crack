@@ -2042,7 +2042,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.src2.stop();
       this.playing = false;
       this.src = {};
-      this.src2 = {}; // this.load();
+      this.src2 = {};
+      this.load();
 
       if (!this.nonMob) {
         document.getElementById("mydiv-ball-" + this.pos).style.visibility = 'hidden';
@@ -2083,9 +2084,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         request.open('GET', '../storage/data/' + isso.name, true);
       }
 
-      console.log(audioCtx);
       var source = audioCtx.createBufferSource();
-      console.log(source);
       var source2 = audioCtx.createBufferSource();
       request.responseType = 'arraybuffer';
 
