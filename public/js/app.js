@@ -2284,8 +2284,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         y = e.pageY;
 
         if (isso.playing) {
-          var formula = (-y + 700 + window.scrollY) / 650;
-          console.log('f', formula);
+          var formula = (-y + 900 + window.scrollY) / 650;
           isso.src.playbackRate.value = formula;
           isso.src2.playbackRate.value = formula;
           isso.filter.frequency.value = x * 1.2 - 100; // isso.filter.frequency.value = (-x * 20) + 10000;
