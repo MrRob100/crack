@@ -3,12 +3,12 @@
 @section('content')
 
 <div class="container">
-    <form id="song-upload" action="dashboard" method="post" enctype="multipart/form-data">
+    <form class="upl" id="song-upload" action="dashboard" method="post" enctype="multipart/form-data">
         {!! csrf_field() !!}
         <input id="song-file-input" type="file" name="song" onchange="ch()">
         <div style="display:none" id="path">{{ $path_full }}</div>
     </form>
-    <br>
+    <h1 class="tit">CRACK MANINOFF</h1>
     {{-- @foreach ($tunes as $tune)
     <Tune-Strip
     name={{ $tune }}
@@ -16,7 +16,6 @@
     ></Tune-Strip>
     @endforeach --}}
 </div>
-
 @foreach ($tunes as $tune)
 <Tune-Stack
 name={{ $tune }}
@@ -30,9 +29,11 @@ pos={{ array_search($tune, $tunes) }}
 html, body {
     overflow-x: hidden;
     touch-action: none;
+    background-color: rgb(70, 2, 95) !important;
 }
 body {
     position: relative;
+    color: #B27FFF !important;
 }
 
 .navbar {
@@ -41,6 +42,10 @@ body {
 
 .stack-del button {
     display: none;
+}
+
+.upl {
+    float: left;
 }
 
 </style>

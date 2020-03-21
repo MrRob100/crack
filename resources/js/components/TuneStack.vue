@@ -463,7 +463,7 @@ export default {
     }
     .stack-house {
         margin-bottom: 10px;
-        background-color: aquamarine;
+        background-color: rgb(62, 59, 105);
         width: 100%;
         height: 80px;
     }
@@ -473,11 +473,11 @@ export default {
     .stack-top {
         display: flex;
         height: 40px;
-        background-color: wheat;
+        background-color: rgb(62, 59, 105);
     }
     .stack-bottom {
         height: 40px;
-        background-color: aquamarine;
+        background-color: #B27FFF;
     }
     .canv {
         width: 100%;

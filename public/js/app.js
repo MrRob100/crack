@@ -7127,7 +7127,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.slider-house {\n  background-color: aqua;\n  padding-left: 0;\n}\n.marker {\n  width:20px;\n  height: 40px;\n  position: absolute;\n  z-index: 9;\n  background-color: #f1f1f1;\n  border: 1px solid #d3d3d3;\n  text-align: center;\n}\n.markerheader {\n  height: 40px;\n  cursor: move;\n  z-index: 10;\n}\n\n", ""]);
+exports.push([module.i, "\n.slider-house {\n  background-color: aqua;\n  padding-left: 0;\n}\n.marker {\n  width:20px;\n  height: 40px;\n  position: absolute;\n  z-index: 9;\n  /* background-color: #f1f1f1; */\n  border: 2px solid #d3d3d3;\n  text-align: center;\n}\n.markerheader {\n  height: 40px;\n  cursor: move;\n  z-index: 10;\n}\n\n", ""]);
 
 // exports
 
@@ -7146,7 +7146,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.container {\n    padding: 0!important;\n}\nbutton {\n    -webkit-appearance: none;\n    height: 40px;\n}\n.stack-play {\n    flex: 1;\n}\n.stack-name {\n    flex: 4;\n}\n.stack-del {\n    flex: 1;\n}\n.stack-del button {\n    float: right;\n}\n.stack-top-sec {\n    display: inline;\n}\n.stack-house {\n    margin-bottom: 10px;\n    background-color: aquamarine;\n    width: 100%;\n    height: 80px;\n}\n.stack-slice {\n    display: block;\n}\n.stack-top {\n    display: flex;\n    height: 40px;\n    background-color: wheat;\n}\n.stack-bottom {\n    height: 40px;\n    background-color: aquamarine;\n}\n.canv {\n    width: 100%;\n    height: 40px !important;\n}\n.wb-top {\n    position: absolute;\n    z-index: 20;\n    text-align: center;\n    border-radius: 50%;\n}\n.wb-header {\n    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);\n    border-width: 10px;\n    border-style: double;\n    border-radius: 50%;\n    width: 70px;\n    height: 70px;\n    cursor: move;\n    z-index: 50;\n    background-color: #2196F3;\n    color: #fff;\n}\n", ""]);
+exports.push([module.i, "\n.container {\n    padding: 0!important;\n}\nbutton {\n    -webkit-appearance: none;\n    height: 40px;\n}\n.stack-play {\n    flex: 1;\n}\n.stack-name {\n    flex: 4;\n}\n.stack-del {\n    flex: 1;\n}\n.stack-del button {\n    float: right;\n}\n.stack-top-sec {\n    display: inline;\n}\n.stack-house {\n    margin-bottom: 10px;\n    background-color: rgb(62, 59, 105);\n    width: 100%;\n    height: 80px;\n}\n.stack-slice {\n    display: block;\n}\n.stack-top {\n    display: flex;\n    height: 40px;\n    background-color: rgb(62, 59, 105);\n}\n.stack-bottom {\n    height: 40px;\n    background-color: #B27FFF;\n}\n.canv {\n    width: 100%;\n    height: 40px !important;\n}\n.wb-top {\n    position: absolute;\n    z-index: 20;\n    text-align: center;\n    border-radius: 50%;\n}\n.wb-header {\n    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);\n    border-width: 10px;\n    border-style: double;\n    border-radius: 50%;\n    width: 70px;\n    height: 70px;\n    cursor: move;\n    z-index: 50;\n    background-color: #2196F3;\n    color: #fff;\n}\n", ""]);
 
 // exports
 
