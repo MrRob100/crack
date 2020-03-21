@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 Route::post('/dashboard', 'DashboardController@upload')->name('upload-song');
+
 Route::get('/del', 'DashboardController@delete');
 Route::get('/get', 'DashboardController@getMarker');
 Route::get('/set', 'DashboardController@setMarker');

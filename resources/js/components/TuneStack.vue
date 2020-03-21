@@ -127,7 +127,7 @@ export default {
             this.src.loopEnd = resultantLoopEnd;
             this.src2.loopEnd = resultantLoopEnd;
 
-            // this.src.start(0, resultantStartingTime);
+            this.src.start(0, resultantStartingTime);
             this.src2.start(0, resultantStartingTime);
 
             this.setBody('play');
@@ -220,8 +220,8 @@ export default {
 
                     source2.connect(filter);
                     filter.connect(audioCtx.destination);
-                    filter.frequency.value = 0;
-                    // filter.frequency.value = 20000;
+                    // filter.frequency.value = 0; 
+                    filter.frequency.value = 20000;
 
                     source.loop = true;
                     source2.loop = true;
@@ -412,9 +412,14 @@ export default {
                 if (isso.playing) {
 
                     var formula = (-y + 900 + window.scrollY) / 650;
+
+                    var freqFormula = (-x * 30) + 15000; //hipass
+                    // var freqFormula = (-x * 20) + 10000; //hipass
+                    // var freqFormula = (x * 1.2 - 100); //lopass
                     isso.src.playbackRate.value = formula;
                     isso.src2.playbackRate.value = formula;
-                    isso.filter.frequency.value = (x * 1.2 - 100);
+
+                    isso.filter.frequency.value = freqFormula;
 
                     // isso.filter.frequency.value = (-x * 20) + 10000;
                 }      
