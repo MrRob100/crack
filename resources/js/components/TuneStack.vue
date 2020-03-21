@@ -127,7 +127,7 @@ export default {
             this.src.loopEnd = resultantLoopEnd;
             this.src2.loopEnd = resultantLoopEnd;
 
-            this.src.start(0, resultantStartingTime);
+            // this.src.start(0, resultantStartingTime);
             this.src2.start(0, resultantStartingTime);
 
             this.setBody('play');
@@ -139,7 +139,6 @@ export default {
                 document.getElementById("mydiv-ball-"+this.pos).style.visibility = 'visible';
                 this.wreckBallMeth(document.getElementById("mydiv-ball-"+this.pos));
             }
-
         },
         stop: function() {
 
@@ -215,8 +214,8 @@ export default {
 
                     //filter bit
                     var filter = audioCtx.createBiquadFilter();
-                    // filter.type = 'highpass';
-                    filter.type = 'lowpass';
+                    filter.type = 'highpass';
+                    // filter.type = 'lowpass';
                     // filter.type = 'bandpass';
 
                     source2.connect(filter);
@@ -356,14 +355,16 @@ export default {
 
                 request.send();
                 request.onload = function() {
-                    var jsonResp = JSON.parse(request.response);
+                    if (request.response) {
+                        var jsonResp = JSON.parse(request.response);
 
-                    if (jsonResp.startScale) {
-                        isso.leftMarker.style.left = jsonResp.startScale * 100 + '%';
-                    }
+                        if (jsonResp.startScale) {
+                            isso.leftMarker.style.left = jsonResp.startScale * 100 + '%';
+                        }
 
-                    if (jsonResp.endScale) {
-                        isso.rightMarker.style.left = jsonResp.endScale * 100 + '%';
+                        if (jsonResp.endScale) {
+                            isso.rightMarker.style.left = jsonResp.endScale * 100 + '%';
+                        }
                     }
                 };
             }

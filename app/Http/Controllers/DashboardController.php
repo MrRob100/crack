@@ -70,29 +70,21 @@ class DashboardController extends Controller
 
         $position = $_GET['position'];
         $markers = json_decode(file_get_contents('../public/data/markerData.json'), true);
-        return $markers[$position];
+        return array_key_exists($position, $markers) ? $markers[$position] : null;
     }
 
     public function setMarker() {
-        dump($_GET);
         $position = $_GET['position'];
         $which = $_GET['which'];
         $val = $_GET['value'];
-
         $markers = json_decode(file_get_contents('../public/data/markerData.json'), true);
-        
-        dump($markers);
-
         $markers[$position][$which] = $val;
-    
         file_put_contents('../public/data/markerData.json', json_encode($markers));  
 
     }
 
-    public function eff()
-    {
+    public function eff() {
         $path_full = 'nopath';
-        
         $tunes = scandir('storage/data/');
         array_shift($tunes);
         array_shift($tunes);

@@ -1774,8 +1774,7 @@ __webpack_require__.r(__webpack_exports__);
     var isso = this;
     var nonHeadStart = document.getElementById("div-start-" + isso.setting);
     var nonHeadEnd = document.getElementById("div-end-" + isso.setting);
-    nonHeadEnd.style.left = "calc(100% - 20px)"; // console.log('this.canvaswidth', this.canvasWidth);
-    // nonHeadEnd.style.left = this.canvasWidth; 
+    nonHeadEnd.style.left = "calc(100% - 20px)"; // nonHeadEnd.style.left = this.canvasWidth; 
     // Make the DIV element draggable:
 
     dragElement(nonHeadStart);
@@ -1800,7 +1799,6 @@ __webpack_require__.r(__webpack_exports__);
 
       function dragMouseDown(e) {
         e = e || window.event;
-        console.log(e);
 
         if (e.touches) {
           pos3 = e.touches[0].clientX;
@@ -2025,8 +2023,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.src.loopStart = resultantStartingTime;
       this.src2.loopStart = resultantStartingTime;
       this.src.loopEnd = resultantLoopEnd;
-      this.src2.loopEnd = resultantLoopEnd;
-      this.src.start(0, resultantStartingTime);
+      this.src2.loopEnd = resultantLoopEnd; // this.src.start(0, resultantStartingTime);
+
       this.src2.start(0, resultantStartingTime);
       this.setBody('play');
       this.playing = true;
@@ -2103,9 +2101,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           source.connect(audioCtx.destination); // source2.connect(audioCtx.destination)
           //filter bit
 
-          var filter = audioCtx.createBiquadFilter(); // filter.type = 'highpass';
-
-          filter.type = 'lowpass'; // filter.type = 'bandpass';
+          var filter = audioCtx.createBiquadFilter();
+          filter.type = 'highpass'; // filter.type = 'lowpass';
+          // filter.type = 'bandpass';
 
           source2.connect(filter);
           filter.connect(audioCtx.destination);
@@ -2241,14 +2239,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       request.send();
 
       request.onload = function () {
-        var jsonResp = JSON.parse(request.response);
+        if (request.response) {
+          var jsonResp = JSON.parse(request.response);
 
-        if (jsonResp.startScale) {
-          isso.leftMarker.style.left = jsonResp.startScale * 100 + '%';
-        }
+          if (jsonResp.startScale) {
+            isso.leftMarker.style.left = jsonResp.startScale * 100 + '%';
+          }
 
-        if (jsonResp.endScale) {
-          isso.rightMarker.style.left = jsonResp.endScale * 100 + '%';
+          if (jsonResp.endScale) {
+            isso.rightMarker.style.left = jsonResp.endScale * 100 + '%';
+          }
         }
       };
     }

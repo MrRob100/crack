@@ -39,6 +39,10 @@ body {
     height: 20px;
 }
 
+.stack-del button {
+    display: none;
+}
+
 </style>
 
 <script>
