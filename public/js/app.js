@@ -1945,10 +1945,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['name', 'pos'],
   data: function data() {
-    return _defineProperty({
+    var _ref;
+
+    return _ref = {
       spp: 1,
       src: {},
       src2: {},
@@ -1965,9 +1979,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       canvasWidth: 0,
       nonMob: true,
       wreckBall: {}
-    }, "deleted", false);
+    }, _defineProperty(_ref, "deleted", false), _defineProperty(_ref, "dlding", false), _ref;
   },
   methods: {
+    dl: function dl() {
+      var isso = this;
+      isso.dlding = true;
+      setTimeout(function () {
+        isso.dlding = false;
+      }, 500);
+      var request = new XMLHttpRequest();
+
+      if (window.location.pathname == '/crack/public/dashboard') {
+        request.open('GET', '/crack/public/dl?song=' + this.name);
+      } else {
+        request.open('GET', '/dl?song=' + this.name);
+      }
+
+      request.send();
+    },
+    songClick: function songClick() {
+      if (!this.dlding) {
+        var abled = document.getElementsByClassName('dbld');
+
+        if (abled.length == 0) {
+          this.play();
+        } else if (this.playing) {
+          this.stop();
+        }
+      }
+    },
+    playClass: function playClass() {
+      return this.playing ? 'strip-play' : 'strip-stop';
+    },
     path: function path() {
       var slug = '';
 
@@ -7146,7 +7190,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.container {\n    padding: 0!important;\n}\nbutton {\n    -webkit-appearance: none;\n    height: 40px;\n}\n.stack-play {\n    flex: 1;\n}\n.stack-name {\n    flex: 4;\n}\n.stack-del {\n    flex: 1;\n}\n.stack-del button {\n    float: right;\n}\n.stack-top-sec {\n    display: inline;\n}\n.stack-house {\n    margin-bottom: 10px;\n    background-color: rgb(62, 59, 105);\n    width: 100%;\n    height: 80px;\n}\n.stack-slice {\n    display: block;\n}\n.stack-top {\n    display: flex;\n    height: 40px;\n    background-color: rgb(62, 59, 105);\n}\n.stack-bottom {\n    height: 40px;\n    background-color: #B27FFF;\n}\n.canv {\n    width: 100%;\n    height: 40px !important;\n}\n.wb-top {\n    position: absolute;\n    z-index: 20;\n    text-align: center;\n    border-radius: 50%;\n}\n.wb-header {\n    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);\n    border-width: 10px;\n    border-style: double;\n    border-radius: 50%;\n    width: 70px;\n    height: 70px;\n    cursor: move;\n    z-index: 50;\n    background-color: #2196F3;\n    color: #fff;\n}\n", ""]);
+exports.push([module.i, "\n.inln-btn {\n    position: absolute;\n}\n.container {\n    padding: 0!important;\n}\nbutton {\n    -webkit-appearance: none;\n    height: 40px;\n}\n.stack-play {\n    flex: 1;\n}\n.stack-name {\n    flex: 4;\n}\n.stack-del {\n    flex: 1;\n}\n.stack-del button {\n    float: right;\n}\n.stack-top-sec {\n    display: inline;\n}\n.stack-house {\n    margin-bottom: 10px;\n    width: 100%;\n}\n.stack-slice {\n    display: block;\n}\n.stack-top {\n    display: flex;\n    height: 40px;\n    background-color: rgb(62, 59, 105);\n}\n.stack-bottom {\n    height: 40px;\n    background-color: rgb(79, 56, 114);\n}\n.canv {\n    width: 100%;\n    height: 40px !important;\n}\n.wb-top {\n    position: absolute;\n    z-index: 20;\n    text-align: center;\n    border-radius: 50%;\n}\n.wb-header {\n    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);\n    border-width: 10px;\n    border-style: double;\n    border-radius: 50%;\n    width: 70px;\n    height: 70px;\n    cursor: move;\n    z-index: 50;\n    background-color: #2196F3;\n    color: #fff;\n}\n", ""]);
 
 // exports
 
@@ -7165,7 +7209,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.sec {\n    display: inline;\n}\n.sec-play {\n    background-color:darkolivegreen;\n}\n.sec-play button {\n    height: 100%;\n    width: 50px;\n}\n.sec-name {\n    padding: 5px;\n    font-size: 12px;\n    line-height: 15px;\n    flex:3;\n    background-color: cadetblue;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n.sec-crop {\n    flex:6.5;\n    background-color: cornflowerblue;\n}\n.sec-del button {\n    height: 100%;\n}\n.plankhouse { /* Safari */\n  display: flex;\n  height: 40px;\n  background-color: aqua;\n  margin: 10px;\n}\n.crack-icon {\n    height: 35px;\n}\n.wb-top {\n  position: absolute;\n  z-index: 9;\n  background-color: #f1f1f1;\n  border: 1px solid #d3d3d3;\n  text-align: center;\n}\n.wb-header {\n  padding: 10px;\n  cursor: move;\n  z-index: 10;\n  background-color: #2196F3;\n  color: #fff;\n}\n\n", ""]);
+exports.push([module.i, "\n.sec {\n    display: inline;\n}\n.sec-play {\n    background-color:darkolivegreen;\n}\n.sec-play button {\n    height: 100%;\n    width: 50px;\n}\n.sec-name {\n    padding: 5px;\n    font-size: 12px;\n    line-height: 15px;\n    flex:3;\n    background-color: cadetblue;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n.sec-crop {\n    flex:6.5;\n    background-color: cornflowerblue;\n}\n.sec-del button {\n    height: 100%;\n}\n.plankhouse { /* Safari */\n  display: flex;\n  height: 40px;\n  background-color: aqua;\n  margin: 10px;\n}\n.crack-icon {\n    height: 40px;\n    top: 0;\n}\n.wb-top {\n  position: absolute;\n  z-index: 9;\n  background-color: #f1f1f1;\n  border: 1px solid #d3d3d3;\n  text-align: center;\n}\n.wb-header {\n  padding: 10px;\n  cursor: move;\n  z-index: 10;\n  background-color: #2196F3;\n  color: #fff;\n}\n\n", ""]);
 
 // exports
 
@@ -40915,52 +40959,22 @@ var render = function() {
             )
           : _vm._e(),
         _vm._v(" "),
-        _c("div", { staticClass: "stack-slice stack-top" }, [
-          _vm.loading
-            ? _c("div", { staticClass: "stack-play" }, [
-                _c("button", { attrs: { disabled: "" } }, [_vm._v("...")])
-              ])
-            : _c("div", { staticClass: "stack-play" }, [
-                _vm.playing
-                  ? _c("button", { on: { click: _vm.stop } }, [
-                      _c("img", {
-                        staticClass: "crack-icon",
-                        attrs: { src: "images/stop.png" }
-                      })
-                    ])
-                  : _c(
-                      "button",
-                      {
-                        staticClass: "btn-crack-play",
-                        on: { click: _vm.play }
-                      },
-                      [
-                        _c("img", {
-                          staticClass: "crack-icon",
-                          attrs: { src: "images/play.png" }
-                        })
-                      ]
-                    )
-              ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "stack-top-sec stack-name" }, [
-            _vm._v("\n            " + _vm._s(_vm.name) + "\n        ")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "stack-top-sec stack-del" }, [
-            _c("button", { on: { click: _vm.del } }, [
-              _c("img", {
-                staticClass: "crack-icon",
-                attrs: { src: "images/waste.png" }
-              })
-            ])
-          ])
-        ]),
-        _vm._v(" "),
         _c(
           "div",
-          { staticClass: "stack-slice stack-bottom" },
+          {
+            staticClass: "stack-slice stack-bottom",
+            class: _vm.playClass(),
+            on: {
+              click: function($event) {
+                return _vm.songClick()
+              }
+            }
+          },
           [
+            _c("div", { staticClass: "inln-btn" }, [
+              _c("h3", [_vm._v(_vm._s(_vm.name))])
+            ]),
+            _vm._v(" "),
             _c("tune-crop", {
               attrs: {
                 setting: _vm.pos,
@@ -40977,7 +40991,14 @@ var render = function() {
                 width: _vm.canvasWidth,
                 height: "40"
               }
-            })
+            }),
+            _vm._v(" "),
+            _c("button", { staticClass: "dld", on: { click: _vm.dl } }, [
+              _c("img", {
+                staticClass: "crack-icon dl-icon",
+                attrs: { src: "images/dld.png" }
+              })
+            ])
           ],
           1
         )

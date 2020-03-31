@@ -4,7 +4,7 @@
             <div class="wb-header" :id='"mydiv-ball-"+pos+"-header"'></div>
         </div>
 
-        <div class="stack-slice stack-top">
+        <!-- <div class="stack-slice stack-top">
             <div v-if="loading" class="stack-play">
                 <button disabled>...</button>
             </div>  
@@ -28,8 +28,15 @@
                 <img class="crack-icon" src="images/waste.png">
                 </button>
             </div>
-        </div>
-        <div class="stack-slice stack-bottom">
+        </div> -->
+        <div 
+        class="stack-slice stack-bottom"
+        :class="playClass()"
+        v-on:click="songClick()"
+        >
+            <div class="inln-btn">
+                <h3>{{ name }}</h3>
+            </div>
             <tune-crop
             :setting='pos'
             v-bind:canvasWidth='canvasWidth'
@@ -37,6 +44,11 @@
             :name='name'
             ></tune-crop>
             <canvas class="canv" :id='"canvas-"+pos' :width="canvasWidth" height="40"></canvas>
+            <button 
+            class="dld"
+            v-on:click="dl">
+                <img class="crack-icon dl-icon" src="images/dld.png">
+            </button>
         </div>
     </div>
 </template>
@@ -64,11 +76,46 @@ export default {
             canvasWidth: 0,
             nonMob: true,
             wreckBall: {},
-            deleted: false
+            deleted: false,
+            dlding: false,
         }
     },
 
     methods: {
+
+        dl: function() {
+            var isso = this;
+            isso.dlding = true;
+            setTimeout(function() {
+                isso.dlding = false;
+            }, 500);
+
+            var request = new XMLHttpRequest();
+
+            if (window.location.pathname == '/crack/public/dashboard') {
+                request.open('GET', '/crack/public/dl?song=' + this.name);
+            } else {
+                request.open('GET', '/dl?song=' + this.name);
+            }
+            request.send();
+
+        },
+
+        songClick: function() {
+            if (!this.dlding) {
+                var abled = document.getElementsByClassName('dbld');
+                if (abled.length == 0) {
+                        this.play();
+                }
+                else if (this.playing) {
+                    this.stop();
+                }
+            }
+        },
+
+        playClass: function() {
+            return this.playing ? 'strip-play' : 'strip-stop';
+        },
 
         path: function() {
             var slug = '';
@@ -439,6 +486,10 @@ export default {
 
 </script>
 <style>
+    .inln-btn {
+        position: absolute;
+    }
+
     .container {
         padding: 0!important;
     }
@@ -463,9 +514,7 @@ export default {
     }
     .stack-house {
         margin-bottom: 10px;
-        background-color: rgb(62, 59, 105);
         width: 100%;
-        height: 80px;
     }
     .stack-slice {
         display: block;
@@ -477,7 +526,7 @@ export default {
     }
     .stack-bottom {
         height: 40px;
-        background-color: #B27FFF;
+        background-color: rgb(79, 56, 114);
     }
     .canv {
         width: 100%;

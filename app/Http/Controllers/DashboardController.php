@@ -56,6 +56,14 @@ class DashboardController extends Controller
     //     storage::delete($file);
     // }
 
+    public function dl() {
+        try {
+            Storage::download('storage/data/'.$_GET['song']);
+        } catch (exception $e) {
+            dump($e);
+        }
+    }
+
     public function delete() {
         try {
             unlink('storage/data/'.$_GET['song']);
