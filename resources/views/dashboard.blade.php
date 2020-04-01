@@ -29,7 +29,7 @@ pos={{ array_search($tune, $tunes) }}
 html, body {
     overflow-x: hidden;
     touch-action: none;
-    background-color: rgb(70, 2, 95) !important;
+    background-color: rgb(50, 2, 95) !important;
     font-family: 'Courier New', Courier, monospace !important;
 }
 body {
