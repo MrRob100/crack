@@ -30,6 +30,11 @@
             </div>
         </div> -->
         <div 
+        class="delhide"
+        v-on:click="del">
+            <h1>DEL</h1>
+        </div>
+        <div 
         class="stack-slice stack-bottom"
         :class="playClass()"
         v-on:click="songClick()"
@@ -505,6 +510,14 @@ export default {
         position: absolute;
     }
 
+    .delhide {
+        position: absolute;
+    }
+
+    .delhide h1 {
+        color: rgba(50, 2, 95, 0) !important;
+    }
+
     .container {
         padding: 0!important;
     }
@@ -540,6 +553,7 @@ export default {
         background-color: rgb(62, 59, 105);
     }
     .stack-bottom {
+        /* margin-left: 200px; */
         height: 40px;
         background-color: rgb(79, 56, 114);
     }

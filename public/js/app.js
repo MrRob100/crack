@@ -1960,6 +1960,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['name', 'pos'],
   data: function data() {
@@ -7203,7 +7208,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.inln-btn {\n    position: absolute;\n}\n.container {\n    padding: 0!important;\n}\nbutton {\n    -webkit-appearance: none;\n    height: 40px;\n}\n.stack-play {\n    flex: 1;\n}\n.stack-name {\n    flex: 4;\n}\n.stack-del {\n    flex: 1;\n}\n.stack-del button {\n    float: right;\n}\n.stack-top-sec {\n    display: inline;\n}\n.stack-house {\n    margin-bottom: 10px;\n    width: 100%;\n}\n.stack-slice {\n    display: block;\n}\n.stack-top {\n    display: flex;\n    height: 40px;\n    background-color: rgb(62, 59, 105);\n}\n.stack-bottom {\n    height: 40px;\n    background-color: rgb(79, 56, 114);\n}\n.canv {\n    width: 100%;\n    height: 40px !important;\n}\n.wb-top {\n    position: absolute;\n    z-index: 20;\n    text-align: center;\n    border-radius: 50%;\n}\n.wb-header {\n    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);\n    border-width: 10px;\n    border-style: double;\n    border-radius: 50%;\n    width: 70px;\n    height: 70px;\n    cursor: move;\n    z-index: 50;\n    background-color: #2196F3;\n    color: #fff;\n}\n", ""]);
+exports.push([module.i, "\n.inln-btn {\n    position: absolute;\n}\n.delhide {\n    position: absolute;\n}\n.delhide h1 {\n    color: rgba(50, 2, 95, 0) !important;\n}\n.container {\n    padding: 0!important;\n}\nbutton {\n    -webkit-appearance: none;\n    height: 40px;\n}\n.stack-play {\n    flex: 1;\n}\n.stack-name {\n    flex: 4;\n}\n.stack-del {\n    flex: 1;\n}\n.stack-del button {\n    float: right;\n}\n.stack-top-sec {\n    display: inline;\n}\n.stack-house {\n    margin-bottom: 10px;\n    width: 100%;\n}\n.stack-slice {\n    display: block;\n}\n.stack-top {\n    display: flex;\n    height: 40px;\n    background-color: rgb(62, 59, 105);\n}\n.stack-bottom {\n    /* margin-left: 200px; */\n    height: 40px;\n    background-color: rgb(79, 56, 114);\n}\n.canv {\n    width: 100%;\n    height: 40px !important;\n}\n.wb-top {\n    position: absolute;\n    z-index: 20;\n    text-align: center;\n    border-radius: 50%;\n}\n.wb-header {\n    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);\n    border-width: 10px;\n    border-style: double;\n    border-radius: 50%;\n    width: 70px;\n    height: 70px;\n    cursor: move;\n    z-index: 50;\n    background-color: #2196F3;\n    color: #fff;\n}\n", ""]);
 
 // exports
 
@@ -40971,6 +40976,10 @@ var render = function() {
               ]
             )
           : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "delhide", on: { click: _vm.del } }, [
+          _c("h1", [_vm._v("DEL")])
+        ]),
         _vm._v(" "),
         _c(
           "div",
