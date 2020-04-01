@@ -96,12 +96,13 @@ export default {
 
         songClick: function() {
             if (!this.dlding) {
+                var slc = document.getElementsByClassName('stack-slice');
                 var abled = document.getElementsByClassName('dbld');
 
-
-                console.log(abled);
-
-                if (abled.length == 0) {
+                if (slc.length == 1 && this.playing) {
+                    this.stop();
+                }
+                else if (abled.length == 0) {
                     this.play();
                 }
                 else if (this.playing) {

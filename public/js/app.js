@@ -1994,10 +1994,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     songClick: function songClick() {
       if (!this.dlding) {
+        var slc = document.getElementsByClassName('stack-slice');
         var abled = document.getElementsByClassName('dbld');
-        console.log(abled);
 
-        if (abled.length == 0) {
+        if (slc.length == 1 && this.playing) {
+          this.stop();
+        } else if (abled.length == 0) {
           this.play();
         } else if (this.playing) {
           this.stop();
