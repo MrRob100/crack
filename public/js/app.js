@@ -1959,6 +1959,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['name', 'pos'],
   data: function data() {
@@ -2295,7 +2296,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    var isso = this; //download link
+    var isso = this;
+    var tc = document.getElementById('tc-' + this.pos);
+
+    tc.onclick = function () {
+      isso.dl();
+    }; //download link
+
 
     if (window.location.pathname == '/crack/public/dashboard') {
       //local
@@ -40982,6 +40989,7 @@ var render = function() {
             _vm._v(" "),
             _c("tune-crop", {
               attrs: {
+                id: "tc-" + _vm.pos,
                 setting: _vm.pos,
                 canvasWidth: _vm.canvasWidth,
                 canvasLeft: _vm.canvasLeft,

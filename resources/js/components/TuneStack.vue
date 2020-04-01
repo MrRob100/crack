@@ -38,6 +38,7 @@
                 <h3>{{ name }}</h3>
             </div>
             <tune-crop
+            :id='"tc-"+pos'
             :setting='pos'
             v-bind:canvasWidth='canvasWidth'
             v-bind:canvasLeft='canvasLeft'
@@ -417,6 +418,12 @@ export default {
 
     mounted() {
         var isso = this;
+
+        var tc = document.getElementById('tc-'+this.pos);
+        tc.onclick = function() {
+            isso.dl();
+        }
+
 
         //download link
         if (window.location.pathname == '/crack/public/dashboard') {
