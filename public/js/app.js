@@ -1965,6 +1965,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['name', 'pos'],
   data: function data() {
@@ -41016,14 +41018,16 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _c("a", { attrs: { href: _vm.dlref } }, [
-              _c("button", { staticClass: "dld", on: { click: _vm.dl } }, [
-                _c("img", {
-                  staticClass: "crack-icon dl-icon",
-                  attrs: { src: "images/dld.png" }
-                })
-              ])
-            ])
+            _vm.nonMob
+              ? _c("a", { attrs: { href: _vm.dlref } }, [
+                  _c("button", { staticClass: "dld", on: { click: _vm.dl } }, [
+                    _c("img", {
+                      staticClass: "crack-icon dl-icon",
+                      attrs: { src: "images/dld.png" }
+                    })
+                  ])
+                ])
+              : _vm._e()
           ],
           1
         )

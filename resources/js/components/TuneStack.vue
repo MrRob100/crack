@@ -50,7 +50,9 @@
             :name='name'
             ></tune-crop>
             <canvas class="canv" :id='"canvas-"+pos' :width="canvasWidth" height="40"></canvas>
-            <a :href="dlref">
+            <a :href="dlref"
+                v-if="nonMob"
+            >
                 <button 
                 class="dld"
                 v-on:click="dl">
