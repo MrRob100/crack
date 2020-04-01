@@ -1878,7 +1878,7 @@ __webpack_require__.r(__webpack_exports__);
       var request = new XMLHttpRequest();
       var value = ol / window.innerWidth;
 
-      if (window.location.pathname == '/crack/public/dashboard') {
+      if (window.location.hostname == 'localhost') {
         request.open('GET', '/crack/public/set?which=' + which + "&position=" + isso.name + "&value=" + value);
       } else {
         request.open('GET', '/set?which=' + which + "&position=" + isso.name + "&value=" + value);
@@ -2013,7 +2013,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     path: function path() {
       var slug = '';
 
-      if (window.location.pathname == '/crack/public/dashboard') {
+      if (window.location.hostname == 'localhost') {
         slug = '/crack/public';
       }
 
@@ -2022,7 +2022,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     del: function del() {
       var request = new XMLHttpRequest();
 
-      if (window.location.pathname == '/crack/public/dashboard') {
+      if (window.location.hostname == 'localhost') {
         request.open('GET', '/crack/public/del?song=' + this.name, true);
       } else {
         request.open('GET', '/del?song=' + this.name, true);
@@ -2116,7 +2116,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var audioCtx = new AudioContext();
       var request = new XMLHttpRequest(); // const set = this.pos;
 
-      if (window.location.pathname == '/crack/public/dashboard') {
+      if (window.location.hostname == 'localhost') {
         //local
         request.open('GET', '../public/storage/data/' + isso.name, true);
       } else {
@@ -2272,9 +2272,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var isso = this;
       var request = new XMLHttpRequest();
 
-      if (window.location.pathname == '/crack/public/dashboard') {
+      if (window.location.hostname == 'localhost') {
         request.open('GET', '/crack/public/get?position=' + this.name);
       } else {
+        console.log('trying');
         request.open('GET', '/get?position=' + this.name);
       }
 
@@ -2304,7 +2305,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }; //download link
 
 
-    if (window.location.pathname == '/crack/public/dashboard') {
+    if (window.location.hostname == 'localhost') {
       //local
       isso.dlref = window.location.origin + "/crack/public/dl?song=" + isso.name;
     } else {

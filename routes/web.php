@@ -11,14 +11,14 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/fff', function () {
     return view('welcome');
 });
 
 Route::get('/dl', 'DashboardController@dl');
 
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-Route::post('/dashboard', 'DashboardController@upload')->name('upload-song');
+Route::get('/', 'DashboardController@index')->name('dashboard');
+Route::post('/', 'DashboardController@upload')->name('upload-song');
 
 Route::get('/del', 'DashboardController@delete');
 Route::get('/get', 'DashboardController@getMarker');

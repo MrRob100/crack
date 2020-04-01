@@ -118,7 +118,7 @@ export default {
 
         path: function() {
             var slug = '';
-            if (window.location.pathname == '/crack/public/dashboard') {
+            if (window.location.hostname == 'localhost') {
                 slug = '/crack/public';
             }
             return slug;
@@ -127,7 +127,7 @@ export default {
         del: function() {
             var request = new XMLHttpRequest();
 
-            if (window.location.pathname == '/crack/public/dashboard') {
+            if (window.location.hostname == 'localhost') {
                 request.open('GET', '/crack/public/del?song=' + this.name, true);
             } else {
                request.open('GET', '/del?song=' + this.name, true);
@@ -228,7 +228,7 @@ export default {
             var request = new XMLHttpRequest();
             // const set = this.pos;
 
-            if (window.location.pathname == '/crack/public/dashboard') {
+            if (window.location.hostname == 'localhost') {
                 //local
                 request.open('GET', '../public/storage/data/' + isso.name, true);
             } else {
@@ -393,9 +393,10 @@ export default {
                 var isso = this;
                 var request = new XMLHttpRequest();
 
-                if (window.location.pathname == '/crack/public/dashboard') {
+                if (window.location.hostname == 'localhost') {
                     request.open('GET', '/crack/public/get?position=' + this.name);
                 } else {
+                    console.log('trying');
                     request.open('GET', '/get?position=' + this.name);
                 }
 
@@ -426,7 +427,7 @@ export default {
 
 
         //download link
-        if (window.location.pathname == '/crack/public/dashboard') {
+        if (window.location.hostname == 'localhost') {
             //local
             isso.dlref = window.location.origin + "/crack/public/dl?song=" + isso.name;
         } else {
