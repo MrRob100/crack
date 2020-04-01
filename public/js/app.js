@@ -1995,6 +1995,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     songClick: function songClick() {
       if (!this.dlding) {
         var abled = document.getElementsByClassName('dbld');
+        console.log(abled);
 
         if (abled.length == 0) {
           this.play();

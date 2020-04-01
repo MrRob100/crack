@@ -92,14 +92,17 @@ export default {
             setTimeout(function() {
                 isso.dlding = false;
             }, 500);
-
         },
 
         songClick: function() {
             if (!this.dlding) {
                 var abled = document.getElementsByClassName('dbld');
+
+
+                console.log(abled);
+
                 if (abled.length == 0) {
-                        this.play();
+                    this.play();
                 }
                 else if (this.playing) {
                     this.stop();
