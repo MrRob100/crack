@@ -44,11 +44,13 @@
             :name='name'
             ></tune-crop>
             <canvas class="canv" :id='"canvas-"+pos' :width="canvasWidth" height="40"></canvas>
-            <button 
-            class="dld"
-            v-on:click="dl">
+            <a :href="dlref">
+                <button 
+                class="dld"
+                v-on:click="dl">
                 <img class="crack-icon dl-icon" src="images/dld.png">
-            </button>
+                </button>
+            </a>
         </div>
     </div>
 </template>
@@ -60,6 +62,7 @@ export default {
 
     data: function () {
         return {
+            dlref: "",
             spp: 1,
             src: {},
             src2: {},
@@ -89,15 +92,6 @@ export default {
             setTimeout(function() {
                 isso.dlding = false;
             }, 500);
-
-            var request = new XMLHttpRequest();
-
-            if (window.location.pathname == '/crack/public/dashboard') {
-                request.open('GET', '/crack/public/dl?song=' + this.name);
-            } else {
-                request.open('GET', '/dl?song=' + this.name);
-            }
-            request.send();
 
         },
 
@@ -419,6 +413,15 @@ export default {
 
     mounted() {
         var isso = this;
+
+        //download link
+        if (window.location.pathname == '/crack/public/dashboard') {
+            //local
+            isso.dlref = window.location.origin + "/crack/public/dl?song=" + isso.name;
+        } else {
+            //prod
+            isso.dlref = window.location.origin + "/dl?song=" + isso.name;
+        }
 
         if (!this.nonMob) {
             this.wreckBallMeth(document.getElementById("mydiv-ball-"+this.pos));

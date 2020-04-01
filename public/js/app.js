@@ -1957,12 +1957,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['name', 'pos'],
   data: function data() {
     var _ref;
 
     return _ref = {
+      dlref: "",
       spp: 1,
       src: {},
       src2: {},
@@ -1988,15 +1991,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       setTimeout(function () {
         isso.dlding = false;
       }, 500);
-      var request = new XMLHttpRequest();
-
-      if (window.location.pathname == '/crack/public/dashboard') {
-        request.open('GET', '/crack/public/dl?song=' + this.name);
-      } else {
-        request.open('GET', '/dl?song=' + this.name);
-      }
-
-      request.send();
     },
     songClick: function songClick() {
       if (!this.dlding) {
@@ -2298,7 +2292,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    var isso = this;
+    var isso = this; //download link
+
+    if (window.location.pathname == '/crack/public/dashboard') {
+      //local
+      isso.dlref = window.location.origin + "/crack/public/dl?song=" + isso.name;
+    } else {
+      //prod
+      isso.dlref = window.location.origin + "/dl?song=" + isso.name;
+    }
 
     if (!this.nonMob) {
       this.wreckBallMeth(document.getElementById("mydiv-ball-" + this.pos));
@@ -40993,11 +40995,13 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _c("button", { staticClass: "dld", on: { click: _vm.dl } }, [
-              _c("img", {
-                staticClass: "crack-icon dl-icon",
-                attrs: { src: "images/dld.png" }
-              })
+            _c("a", { attrs: { href: _vm.dlref } }, [
+              _c("button", { staticClass: "dld", on: { click: _vm.dl } }, [
+                _c("img", {
+                  staticClass: "crack-icon dl-icon",
+                  attrs: { src: "images/dld.png" }
+                })
+              ])
             ])
           ],
           1

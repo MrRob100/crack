@@ -52,13 +52,10 @@ class DashboardController extends Controller
         return redirect('dashboard');
     }
 
-    // public function delete($file) {
-    //     storage::delete($file);
-    // }
-
     public function dl() {
         try {
-            Storage::download('storage/data/'.$_GET['song']);
+            // return Storage::download(app_path('../public/storage/data/'.$_GET['song']));
+            return Response()->download('storage/data/'.$_GET['song']);
         } catch (exception $e) {
             dump($e);
         }
