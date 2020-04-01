@@ -46,10 +46,10 @@ class DashboardController extends Controller
             // $path_full = '../public/storage/data/'.$path_bare; 
 
         } else {
-            return redirect('dashboard');
+            return redirect('');
         }
 
-        return redirect('dashboard');
+        return redirect('');
     }
 
     public function dl() {

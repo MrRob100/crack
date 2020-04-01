@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container">
-    <form class="upl" id="song-upload" action="dashboard" method="post" enctype="multipart/form-data">
+    <form class="upl" id="song-upload" action="" method="post" enctype="multipart/form-data">
         {!! csrf_field() !!}
         <input id="song-file-input" type="file" name="song" onchange="ch()">
         <div style="display:none" id="path">{{ $path_full }}</div>
