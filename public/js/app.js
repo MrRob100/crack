@@ -2057,8 +2057,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.ctx.resume();
       }
 
-      console.log('s1', this.src);
-      console.log('s2', this.src2);
       this.setBody('play');
       this.playing = true;
       this.started = true;
@@ -2138,8 +2136,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           var myBuffer = buffer;
           source.buffer = myBuffer;
           source2.buffer = myBuffer; //without filter
-
-          source2.connect(audioCtx.destination); //filter bit
+          // source2.connect(audioCtx.destination)
+          //filter bit
 
           var filter = audioCtx.createBiquadFilter();
           filter.type = 'highpass'; // filter.type = 'lowpass';
