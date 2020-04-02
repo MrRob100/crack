@@ -164,8 +164,8 @@ export default {
                 this.ctx.resume();
             }
 
-            console.log('s1', src);
-            console.log('s2', src2);
+            console.log('s1', this.src);
+            console.log('s2', this.src2);
 
             this.setBody('play');
 
