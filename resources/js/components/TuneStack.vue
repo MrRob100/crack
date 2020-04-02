@@ -141,8 +141,6 @@ export default {
         },
         play: function() {
 
-            console.log('pn');
-
             var leftStart = document.getElementById("div-start-" + this.pos).offsetLeft;
             var leftEnd = document.getElementById("div-end-" + this.pos).offsetLeft;
             var offsetPx = leftStart >0 ? leftStart : 0;
@@ -165,6 +163,9 @@ export default {
             } else {
                 this.ctx.resume();
             }
+
+            console.log('s1', src);
+            console.log('s2', src2);
 
             this.setBody('play');
 
