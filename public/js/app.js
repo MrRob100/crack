@@ -2274,7 +2274,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (window.location.hostname == 'localhost') {
         request.open('GET', '/crack/public/get?position=' + this.name);
       } else {
-        console.log('trying');
         request.open('GET', '/get?position=' + this.name);
       }
 
