@@ -2346,7 +2346,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           isso.src.playbackRate.value = formula;
           isso.src2.playbackRate.value = formula;
           isso.filter.frequency.value = freqFormula;
-          console.log(formula); // isso.filter.frequency.value = (-x * 20) + 10000;
+          console.log('form: ', formula);
+          console.log('Fform: ', freqFormula); // isso.filter.frequency.value = (-x * 20) + 10000;
         }
       }
     }
