@@ -1941,32 +1941,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['name', 'pos'],
   data: function data() {
@@ -2063,6 +2037,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     play: function play() {
+      console.log('pn');
       var leftStart = document.getElementById("div-start-" + this.pos).offsetLeft;
       var leftEnd = document.getElementById("div-end-" + this.pos).offsetLeft;
       var offsetPx = leftStart > 0 ? leftStart : 0;

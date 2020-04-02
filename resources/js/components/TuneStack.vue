@@ -3,32 +3,6 @@
         <div v-if="!nonMob" class="wb-top" :id='"mydiv-ball-"+pos' style="visibility:hidden">
             <div class="wb-header" :id='"mydiv-ball-"+pos+"-header"'></div>
         </div>
-
-        <!-- <div class="stack-slice stack-top">
-            <div v-if="loading" class="stack-play">
-                <button disabled>...</button>
-            </div>  
-            <div v-else class="stack-play">
-                <button
-                v-if="playing"
-                v-on:click="stop"
-                ><img class="crack-icon" src="images/stop.png"></button>
-                <button
-                class="btn-crack-play"
-                v-else
-                v-on:click="play"
-                ><img class="crack-icon" src="images/play.png"></button>
-            </div>
-            <div class="stack-top-sec stack-name">
-                {{ name }}
-            </div>
-            <div class="stack-top-sec stack-del">
-                <button
-                v-on:click="del">
-                <img class="crack-icon" src="images/waste.png">
-                </button>
-            </div>
-        </div> -->
         <div 
         class="delhide"
         v-on:click="del">
@@ -166,6 +140,8 @@ export default {
             }
         },
         play: function() {
+
+            console.log('pn');
 
             var leftStart = document.getElementById("div-start-" + this.pos).offsetLeft;
             var leftEnd = document.getElementById("div-end-" + this.pos).offsetLeft;
