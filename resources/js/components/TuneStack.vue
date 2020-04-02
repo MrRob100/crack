@@ -481,6 +481,7 @@ export default {
                     isso.src2.playbackRate.value = formula;
 
                     isso.filter.frequency.value = freqFormula;
+                    console.log(formula);
 
                     // isso.filter.frequency.value = (-x * 20) + 10000;
                 }      
