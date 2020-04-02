@@ -72,9 +72,11 @@ export default {
         return {
             dlref: "",
             spp: 1,
+            ctx: {},
             src: {},
             src2: {},
             loading: true,
+            started: false,
             playing: false,
             deleted: false,
             leftWall: 0,
@@ -175,17 +177,23 @@ export default {
 
             var resultantStartingTime = offsetPx * spp;
             var resultantLoopEnd = offsetPxEnd * spp;
+
             this.src.loopStart = resultantStartingTime;
             this.src2.loopStart = resultantStartingTime;
             this.src.loopEnd = resultantLoopEnd;
             this.src2.loopEnd = resultantLoopEnd;
 
-            this.src.start(0, resultantStartingTime);
-            this.src2.start(0, resultantStartingTime);
+            if (!this.started) {
+                this.src.start(0, resultantStartingTime);
+                this.src2.start(0, resultantStartingTime);
+            } else {
+                this.ctx.resume();
+            }
 
             this.setBody('play');
 
             this.playing = true;
+            this.started = true;
 
             if (!this.nonMob) {
 
@@ -196,12 +204,16 @@ export default {
         stop: function() {
 
             this.setBody('stop');
-            this.src.stop();
-            this.src2.stop();
+
+            //suspend test
+            this.ctx.suspend();
+
+            // this.src.stop();
+            // this.src2.stop();
             this.playing = false;
-            this.src = {};
-            this.src2 = {};
-            this.load();
+            // this.src = {};
+            // this.src2 = {};
+            // this.load();
 
             if (!this.nonMob) {
                 document.getElementById("mydiv-ball-"+this.pos).style.visibility = 'hidden';
@@ -243,6 +255,14 @@ export default {
                 request.open('GET', '../storage/data/' + isso.name, true);
             }
 
+            // setTimeout(function() {
+            //     audioCtx.suspend();
+            // }, 5000);
+
+            // setTimeout(function() {
+            //     audioCtx.resume();
+            // }, 6000);
+
             const source = audioCtx.createBufferSource();
     
             const source2 = audioCtx.createBufferSource();
@@ -262,8 +282,7 @@ export default {
                     source2.buffer = myBuffer;
 
                     //without filter
-                    source.connect(audioCtx.destination)
-                    // source2.connect(audioCtx.destination)
+                    source2.connect(audioCtx.destination)
 
                     //filter bit
                     var filter = audioCtx.createBiquadFilter();
@@ -280,7 +299,7 @@ export default {
                     source2.loop = true;
                     isso.src = source;
                     isso.src2 = source2;
-
+                    isso.ctx = audioCtx; //new
                     isso.filter = filter;
                 },
                 function (e) {
