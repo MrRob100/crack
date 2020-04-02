@@ -2136,8 +2136,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           var myBuffer = buffer;
           source.buffer = myBuffer;
           source2.buffer = myBuffer; //without filter
-          // source2.connect(audioCtx.destination)
-          //filter bit
+
+          source.connect(audioCtx.destination); //filter bit
 
           var filter = audioCtx.createBiquadFilter();
           filter.type = 'highpass'; // filter.type = 'lowpass';
@@ -2252,8 +2252,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         elmnt.style.top = elmnt.offsetTop - pos2 + "px";
         elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
         isso.src.playbackRate.value = (-(elmnt.offsetTop - pos2) + 600 + window.scrollY) / 450;
-        isso.src2.playbackRate.value = (-(elmnt.offsetTop - pos2) + 600 + window.scrollY) / 450; // isso.filter.frequency.value = ((elmnt.offsetLeft) * 25) + 10000;
-        // isso.filter.frequency.value = (elmnt.offsetLeft);
+        isso.src2.playbackRate.value = (-(elmnt.offsetTop - pos2) + 600 + window.scrollY) / 450;
+        var freqFormula = -elmnt.offsetLeft * 50 + 18000; //hipass                
+
+        isso.filter.frequency.value = freqFormula; // isso.filter.frequency.value = (elmnt.offsetLeft);
         // isso.filter.frequency.value = ((elmnt.offsetLeft) * 25) + 10000;
       } //finished moving
 
@@ -2345,9 +2347,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           isso.src.playbackRate.value = formula;
           isso.src2.playbackRate.value = formula;
-          isso.filter.frequency.value = freqFormula;
-          console.log('form: ', formula);
-          console.log('Fform: ', freqFormula); // isso.filter.frequency.value = (-x * 20) + 10000;
+          isso.filter.frequency.value = freqFormula; // isso.filter.frequency.value = (-x * 20) + 10000;
         }
       }
     }

@@ -256,7 +256,7 @@ export default {
                     source2.buffer = myBuffer;
 
                     //without filter
-                    // source2.connect(audioCtx.destination)
+                    source.connect(audioCtx.destination)
 
                     //filter bit
                     var filter = audioCtx.createBiquadFilter();
@@ -374,10 +374,12 @@ export default {
                 elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
                 isso.src.playbackRate.value = (-(elmnt.offsetTop - pos2) + 600 + window.scrollY) /450;
                 isso.src2.playbackRate.value = (-(elmnt.offsetTop - pos2) + 600 + window.scrollY) /450;
-                // isso.filter.frequency.value = ((elmnt.offsetLeft) * 25) + 10000;
+                
+                var freqFormula = (-elmnt.offsetLeft * 50) + 18000; //hipass                
+                isso.filter.frequency.value = freqFormula;
+
                 // isso.filter.frequency.value = (elmnt.offsetLeft);
                 // isso.filter.frequency.value = ((elmnt.offsetLeft) * 25) + 10000;
-
             }
 
             //finished moving
@@ -481,8 +483,6 @@ export default {
                     isso.src2.playbackRate.value = formula;
 
                     isso.filter.frequency.value = freqFormula;
-                    console.log('form: ', formula);
-                    console.log('Fform: ', freqFormula);
 
                     // isso.filter.frequency.value = (-x * 20) + 10000;
                 }      
