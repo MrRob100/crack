@@ -291,7 +291,6 @@ export default {
                     if (isso.playing) {
 
                         if (v == boundary) {
-                            console.log('bdry');
                             up = false;
                             isso.src2.playbackRate.value = isso.src.playbackRate.value;
                         }

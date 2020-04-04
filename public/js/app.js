@@ -2169,7 +2169,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       setInterval(function () {
         if (isso.playing) {
           if (v == boundary) {
-            console.log('bdry');
             up = false;
             isso.src2.playbackRate.value = isso.src.playbackRate.value;
           }
