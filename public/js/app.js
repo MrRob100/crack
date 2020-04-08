@@ -1829,15 +1829,25 @@ __webpack_require__.r(__webpack_exports__);
         var startx = nonHeadStart.offsetLeft;
         var endx = nonHeadEnd.offsetLeft;
 
+        if (startx < 0 && elmnt.id == "div-start-" + isso.setting) {
+          elmnt.style.left = "0px";
+        }
+
+        if (endx > window.innerWidth - 20 && elmnt.id == "div-end-" + isso.setting) {
+          elmnt.style.left = "calc(100% - 20px)";
+        }
+
         if (endx >= startx) {
           var posCalced = (elmnt.offsetLeft - pos1) / window.innerWidth * 100;
           elmnt.style.left = elmnt.offsetLeft - pos1;
         } else {
           if (elmnt.id == "div-end-" + isso.setting) {
+            //end
             elmnt.style.left = elmnt.offsetLeft + 1 + "px";
           }
 
           if (elmnt.id == "div-start-" + isso.setting) {
+            //start
             elmnt.style.left = elmnt.offsetLeft - 1 + "px";
           }
         }
