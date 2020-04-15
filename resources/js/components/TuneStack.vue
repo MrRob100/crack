@@ -405,10 +405,20 @@ export default {
                 // isso.filter.frequency.value = (elmnt.offsetLeft);
                 // isso.filter.frequency.value = ((elmnt.offsetLeft) * 25) + 10000;
 
-                isso.gn.gain.value = -(elmnt.offsetLeft / bp) + 1;
-                isso.gn2.gain.value = (elmnt.offsetLeft / bp) - 1.1;
+                if (elmnt.offsetLeft < bp) {
+                    //0.2 is gain range (0 to -0.2)
+                    isso.gn.gain.value = -elmnt.offsetLeft * (0.2 / bp);
 
-                console.log(isso.gn.gain.value);
+                    //0.8 is gain range (-1 to -0.2)
+                    isso.gn2.gain.value = (elmnt.offsetLeft * (0.8 / bp)) - 1;
+                } else {
+                    isso.gn.gain.value = - 0.2;
+                    isso.gn2.gain.value = - 0.2;
+                }
+
+                // console.log('g1', isso.gn.gain.value);
+                // console.log('g2', isso.gn2.gain.value);
+
             }
 
             //finished moving
@@ -525,8 +535,8 @@ export default {
                         isso.gn.gain.value = - 0.2;
                         isso.gn2.gain.value = - 0.2;
                     }
-                    console.log('g1', isso.gn.gain.value);
-                    console.log('g2', isso.gn2.gain.value);
+                    // console.log('g1', isso.gn.gain.value);
+                    // console.log('g2', isso.gn2.gain.value);
                 }      
             }  
         }
