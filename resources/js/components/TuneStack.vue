@@ -264,7 +264,7 @@ export default {
                     source.connect(audioCtx.destination);
 
                     gainNode2.gain.value = -1;
-                    gainNode.gain.value = 1;
+                    gainNode.gain.value = 0;
 
                     isso.gn = gainNode;
                     isso.gn2 = gainNode2;
@@ -516,12 +516,17 @@ export default {
                     // isso.filter.frequency.value = (-x * 20) + 10000;
                     
                     if (x < bp) {
-                        isso.gn.gain.value = -(x / bp) + 1.1;
-                        isso.gn2.gain.value = (x / bp) - 1.1;
+                        //0.2 is gain range (0 to -0.2)
+                        isso.gn.gain.value = -x * (0.2 / bp);
+
+                        //0.8 is gain range (-1 to -0.2)
+                        isso.gn2.gain.value = (x * (0.8 / bp)) - 1;
                     } else {
-                        isso.gn.gain.value = 0;
-                        isso.gn2.gain.value = 0;
+                        isso.gn.gain.value = - 0.2;
+                        isso.gn2.gain.value = - 0.2;
                     }
+                    console.log('g1', isso.gn.gain.value);
+                    console.log('g2', isso.gn2.gain.value);
                 }      
             }  
         }
