@@ -44,6 +44,8 @@ export default {
 
     data: function () {
         return {
+            gn: {},
+            gn2: {},
             dlref: "",
             spp: 1,
             ctx: {},
@@ -229,14 +231,6 @@ export default {
                 request.open('GET', '../storage/data/' + isso.name, true);
             }
 
-            // setTimeout(function() {
-            //     audioCtx.suspend();
-            // }, 5000);
-
-            // setTimeout(function() {
-            //     audioCtx.resume();
-            // }, 6000);
-
             const source = audioCtx.createBufferSource();
     
             const source2 = audioCtx.createBufferSource();
@@ -255,8 +249,26 @@ export default {
                     source.buffer = myBuffer;
                     source2.buffer = myBuffer;
 
-                    //without filter
-                    source.connect(audioCtx.destination)
+                    //gainz
+                    var gainNode = audioCtx.createGain();
+                    var gainNode2 = audioCtx.createGain();
+
+                    source.connect(gainNode);
+                    source2.connect(gainNode2);
+
+                    gainNode.connect(audioCtx.destination);
+                    gainNode2.connect(audioCtx.destination);
+
+                    //normal
+                    source2.connect(audioCtx.destination);
+                    source.connect(audioCtx.destination);
+
+                    gainNode2.gain.value = -1;
+                    gainNode.gain.value = 1;
+
+                    isso.gn = gainNode;
+                    isso.gn2 = gainNode2;
+                    
 
                     //filter bit
                     var filter = audioCtx.createBiquadFilter();
@@ -264,8 +276,8 @@ export default {
                     // filter.type = 'lowpass';
                     // filter.type = 'bandpass';
 
-                    source2.connect(filter);
-                    filter.connect(audioCtx.destination);
+                    // source2.connect(filter);
+                    // filter.connect(audioCtx.destination);
                     // filter.frequency.value = 0; 
                     filter.frequency.value = 20000;
 
@@ -275,6 +287,12 @@ export default {
                     isso.src2 = source2;
                     isso.ctx = audioCtx; //new
                     isso.filter = filter;
+
+                    // var analyser = audioCtx.createAnalyser();
+
+                    // console.log(analyser);
+
+                    isso.phaser();
                 },
                 function (e) {
                     "Error with decoding audio data"
@@ -282,35 +300,40 @@ export default {
             }
             request.send();
         },
-        osc: function() {
-            var isso = this;
-                var boundary = 80
-                var v = -boundary;
-                var up = true;
-                setInterval(function () {
-                    if (isso.playing) {
 
-                        if (v == boundary) {
-                            up = false;
-                            isso.src2.playbackRate.value = isso.src.playbackRate.value;
-                        }
-
-                        if (v == -boundary) {
-                            up = true;
-                        }
-
-                        if (up) {
-                            v++;
-                        } else {
-                            v--;
-                        }
-
-                        //snaking pan
-                        isso.src2.playbackRate.value += v / 1000000;
-                    }
-                }, 2);
-            // }
+        panToggle() {
+            if (!this.pan) {
+                this.pan = true;
+            } else {
+                this.pan = false;
+            }
+            console.log('pan state:', this.pan);
         },
+
+        phaser() {
+            var isso = this;
+
+            setInterval(function() {
+                //osc
+                if (isso.playing) {
+                    
+                    setTimeout(function() {
+                        isso.src2.playbackRate.value = isso.src.playbackRate.value * 1.01;
+                        setTimeout(function() {
+                            isso.src2.playbackRate.value = isso.src.playbackRate.value;
+                        }, 1000);
+                    }, 1);
+
+                    setTimeout(function() {
+                        isso.src2.playbackRate.value = isso.src.playbackRate.value * 0.99;
+                        setTimeout(function() {
+                            isso.src2.playbackRate.value = isso.src.playbackRate.value;
+                        }, 1000);
+                    }, 1100);
+                }
+            }, 2500);
+        },
+
         checkMob: function() {
             if (window.innerWidth < 800) {
                 this.nonMob = false;
@@ -321,6 +344,7 @@ export default {
         wreckBallMeth: function(elmnt) {
 
             var isso = this;
+            var bp = 300;
 
             var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
             if (document.getElementById(elmnt.id + "-header")) {
@@ -376,10 +400,15 @@ export default {
                 isso.src2.playbackRate.value = (-(elmnt.offsetTop - pos2) + 600 + window.scrollY) /450;
                 
                 var freqFormula = (-elmnt.offsetLeft * 50) + 18000; //hipass                
-                isso.filter.frequency.value = freqFormula;
+                // isso.filter.frequency.value = freqFormula;
 
                 // isso.filter.frequency.value = (elmnt.offsetLeft);
                 // isso.filter.frequency.value = ((elmnt.offsetLeft) * 25) + 10000;
+
+                isso.gn.gain.value = -(elmnt.offsetLeft / bp) + 1;
+                isso.gn2.gain.value = (elmnt.offsetLeft / bp) - 1.1;
+
+                console.log(isso.gn.gain.value);
             }
 
             //finished moving
@@ -391,31 +420,31 @@ export default {
                 document.ontouchmove = null;
             }
         },
-            setRange: function() {
-                var isso = this;
-                var request = new XMLHttpRequest();
+        setRange: function() {
+            var isso = this;
+            var request = new XMLHttpRequest();
 
-                if (window.location.hostname == 'localhost') {
-                    request.open('GET', '/crack/public/get?position=' + this.name);
-                } else {
-                    request.open('GET', '/get?position=' + this.name);
-                }
-
-                request.send();
-                request.onload = function() {
-                    if (request.response) {
-                        var jsonResp = JSON.parse(request.response);
-
-                        if (jsonResp.startScale) {
-                            isso.leftMarker.style.left = jsonResp.startScale * 100 + '%';
-                        }
-
-                        if (jsonResp.endScale) {
-                            isso.rightMarker.style.left = jsonResp.endScale * 100 + '%';
-                        }
-                    }
-                };
+            if (window.location.hostname == 'localhost') {
+                request.open('GET', '/crack/public/get?position=' + this.name);
+            } else {
+                request.open('GET', '/get?position=' + this.name);
             }
+
+            request.send();
+            request.onload = function() {
+                if (request.response) {
+                    var jsonResp = JSON.parse(request.response);
+
+                    if (jsonResp.startScale) {
+                        isso.leftMarker.style.left = jsonResp.startScale * 100 + '%';
+                    }
+
+                    if (jsonResp.endScale) {
+                        isso.rightMarker.style.left = jsonResp.endScale * 100 + '%';
+                    }
+                }
+            };
+        }
     },
 
     mounted() {
@@ -444,8 +473,6 @@ export default {
 
         this.checkMob();
 
-        this.osc();
-
         this.load();
 
         isso.leftMarker = document.getElementById("div-start-" + this.pos);
@@ -471,9 +498,11 @@ export default {
             if (isso.nonMob) {
                 x = e.pageX;
                 y = e.pageY;
+                var bp = 500;
 
                 if (isso.playing) {
 
+                    // var formula = (-y + 6600 + window.scrollY) / 6500;
                     var formula = (-y + 900 + window.scrollY) / 650;
 
                     var freqFormula = (-x * 30) + 15000; //hipass
@@ -482,9 +511,17 @@ export default {
                     isso.src.playbackRate.value = formula;
                     isso.src2.playbackRate.value = formula;
 
-                    isso.filter.frequency.value = freqFormula;
+                    // isso.filter.frequency.value = freqFormula;
 
                     // isso.filter.frequency.value = (-x * 20) + 10000;
+                    
+                    if (x < bp) {
+                        isso.gn.gain.value = -(x / bp) + 1.1;
+                        isso.gn2.gain.value = (x / bp) - 1.1;
+                    } else {
+                        isso.gn.gain.value = 0;
+                        isso.gn2.gain.value = 0;
+                    }
                 }      
             }  
         }

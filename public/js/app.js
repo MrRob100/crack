@@ -1957,6 +1957,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _ref;
 
     return _ref = {
+      gn: {},
+      gn2: {},
       dlref: "",
       spp: 1,
       ctx: {},
@@ -2123,13 +2125,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } else {
         //prod
         request.open('GET', '../storage/data/' + isso.name, true);
-      } // setTimeout(function() {
-      //     audioCtx.suspend();
-      // }, 5000);
-      // setTimeout(function() {
-      //     audioCtx.resume();
-      // }, 6000);
-
+      }
 
       var source = audioCtx.createBufferSource();
       var source2 = audioCtx.createBufferSource();
@@ -2145,16 +2141,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           isso.drawBuffer(canvas.width, canvas.height, canvas.getContext('2d'), buffer);
           var myBuffer = buffer;
           source.buffer = myBuffer;
-          source2.buffer = myBuffer; //without filter
+          source2.buffer = myBuffer; //gainz
 
-          source.connect(audioCtx.destination); //filter bit
+          var gainNode = audioCtx.createGain();
+          var gainNode2 = audioCtx.createGain();
+          source.connect(gainNode);
+          source2.connect(gainNode2);
+          gainNode.connect(audioCtx.destination);
+          gainNode2.connect(audioCtx.destination); //normal
+
+          source2.connect(audioCtx.destination);
+          source.connect(audioCtx.destination);
+          gainNode2.gain.value = -1;
+          gainNode.gain.value = 1;
+          isso.gn = gainNode;
+          isso.gn2 = gainNode2; //filter bit
 
           var filter = audioCtx.createBiquadFilter();
           filter.type = 'highpass'; // filter.type = 'lowpass';
           // filter.type = 'bandpass';
-
-          source2.connect(filter);
-          filter.connect(audioCtx.destination); // filter.frequency.value = 0; 
+          // source2.connect(filter);
+          // filter.connect(audioCtx.destination);
+          // filter.frequency.value = 0; 
 
           filter.frequency.value = 20000;
           source.loop = true;
@@ -2163,7 +2171,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           isso.src2 = source2;
           isso.ctx = audioCtx; //new
 
-          isso.filter = filter;
+          isso.filter = filter; // var analyser = audioCtx.createAnalyser();
+          // console.log(analyser);
+
+          isso.phaser();
         }, function (e) {
           "Error with decoding audio data";
         });
@@ -2171,32 +2182,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       request.send();
     },
-    osc: function osc() {
+    panToggle: function panToggle() {
+      if (!this.pan) {
+        this.pan = true;
+      } else {
+        this.pan = false;
+      }
+
+      console.log('pan state:', this.pan);
+    },
+    phaser: function phaser() {
       var isso = this;
-      var boundary = 80;
-      var v = -boundary;
-      var up = true;
       setInterval(function () {
+        //osc
         if (isso.playing) {
-          if (v == boundary) {
-            up = false;
-            isso.src2.playbackRate.value = isso.src.playbackRate.value;
-          }
-
-          if (v == -boundary) {
-            up = true;
-          }
-
-          if (up) {
-            v++;
-          } else {
-            v--;
-          } //snaking pan
-
-
-          isso.src2.playbackRate.value += v / 1000000;
+          setTimeout(function () {
+            isso.src2.playbackRate.value = isso.src.playbackRate.value * 1.01;
+            setTimeout(function () {
+              isso.src2.playbackRate.value = isso.src.playbackRate.value;
+            }, 1000);
+          }, 1);
+          setTimeout(function () {
+            isso.src2.playbackRate.value = isso.src.playbackRate.value * 0.99;
+            setTimeout(function () {
+              isso.src2.playbackRate.value = isso.src.playbackRate.value;
+            }, 1000);
+          }, 1100);
         }
-      }, 2); // }
+      }, 2500);
     },
     checkMob: function checkMob() {
       if (window.innerWidth < 800) {
@@ -2207,6 +2220,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     wreckBallMeth: function wreckBallMeth(elmnt) {
       var isso = this;
+      var bp = 300;
       var pos1 = 0,
           pos2 = 0,
           pos3 = 0,
@@ -2264,9 +2278,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         isso.src.playbackRate.value = (-(elmnt.offsetTop - pos2) + 600 + window.scrollY) / 450;
         isso.src2.playbackRate.value = (-(elmnt.offsetTop - pos2) + 600 + window.scrollY) / 450;
         var freqFormula = -elmnt.offsetLeft * 50 + 18000; //hipass                
-
-        isso.filter.frequency.value = freqFormula; // isso.filter.frequency.value = (elmnt.offsetLeft);
+        // isso.filter.frequency.value = freqFormula;
+        // isso.filter.frequency.value = (elmnt.offsetLeft);
         // isso.filter.frequency.value = ((elmnt.offsetLeft) * 25) + 10000;
+
+        isso.gn.gain.value = -(elmnt.offsetLeft / bp) + 1;
+        isso.gn2.gain.value = elmnt.offsetLeft / bp - 1.1;
+        console.log(isso.gn.gain.value);
       } //finished moving
 
 
@@ -2328,7 +2346,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     this.setRange();
     this.checkMob();
-    this.osc();
     this.load();
     isso.leftMarker = document.getElementById("div-start-" + this.pos);
     isso.rightMarker = document.getElementById("div-end-" + this.pos);
@@ -2348,16 +2365,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (isso.nonMob) {
         x = e.pageX;
         y = e.pageY;
+        var bp = 500;
 
         if (isso.playing) {
+          // var formula = (-y + 6600 + window.scrollY) / 6500;
           var formula = (-y + 900 + window.scrollY) / 650;
           var freqFormula = -x * 30 + 15000; //hipass
           // var freqFormula = (-x * 20) + 10000; //hipass
           // var freqFormula = (x * 1.2 - 100); //lopass
 
           isso.src.playbackRate.value = formula;
-          isso.src2.playbackRate.value = formula;
-          isso.filter.frequency.value = freqFormula; // isso.filter.frequency.value = (-x * 20) + 10000;
+          isso.src2.playbackRate.value = formula; // isso.filter.frequency.value = freqFormula;
+          // isso.filter.frequency.value = (-x * 20) + 10000;
+
+          if (x < bp) {
+            isso.gn.gain.value = -(x / bp) + 1.1;
+            isso.gn2.gain.value = x / bp - 1.1;
+          } else {
+            isso.gn.gain.value = 0;
+            isso.gn2.gain.value = 0;
+          }
         }
       }
     }

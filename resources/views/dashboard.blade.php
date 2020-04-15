@@ -41,6 +41,9 @@ body {
 .navbar {
     height: 20px;
 }
+.tit {
+    clear: left;
+}
 
 .stack-del button {
     display: none;
