@@ -77,7 +77,7 @@ export default {
 
             if (window.location.hostname == 'localhost') { 
                 //deleting if local
-                    isso.del();
+                // isso.del();
             } else {
                 isso.dlding = true;
                 setTimeout(function() {
@@ -324,7 +324,7 @@ export default {
                 if (isso.playing) {
                     
                     setTimeout(function() {
-                        isso.src2.playbackRate.value = isso.src.playbackRate.value * 1.01;
+                            isso.src2.playbackRate.value = isso.src.playbackRate.value * 1.01;
                         setTimeout(function() {
                             isso.src2.playbackRate.value = isso.src.playbackRate.value;
                         }, 1000);

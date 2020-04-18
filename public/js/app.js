@@ -1984,9 +1984,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     dl: function dl() {
       var isso = this;
 
-      if (window.location.hostname == 'localhost') {
-        //deleting if local
-        isso.del();
+      if (window.location.hostname == 'localhost') {//deleting if local
+        // isso.del();
       } else {
         isso.dlding = true;
         setTimeout(function () {

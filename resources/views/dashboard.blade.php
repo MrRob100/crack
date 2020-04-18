@@ -88,13 +88,6 @@ function ch() {
 }
 
 setInterval(function() {
-
-    //local del out the way
-    if (window.location.hostname == 'localhost') { 
-        var dlb = $('.dld');
-        dlb.css('right', '100px');
-    }
-
     //new
     var strp = $('.strip-play');
     var strs = $('.strip-stop');
