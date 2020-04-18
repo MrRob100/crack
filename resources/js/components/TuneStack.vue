@@ -77,7 +77,7 @@ export default {
 
             if (window.location.hostname == 'localhost') { 
                 //deleting if local
-                isso.del();
+                    isso.del();
             } else {
                 isso.dlding = true;
                 setTimeout(function() {
@@ -481,7 +481,8 @@ export default {
         //download link
         if (window.location.hostname == 'localhost') {
             //local
-            isso.dlref = window.location.origin + "/crack/public/dl?song=" + isso.name;
+            isso.dlref = "#";
+            // isso.dlref = window.location.origin + "/crack/public/dl?song=" + isso.name;
         } else {
             //prod
             isso.dlref = window.location.origin + "/dl?song=" + isso.name;

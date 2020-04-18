@@ -59,7 +59,9 @@ body {
 
 .dl-icon {
     position: absolute;
-    right: 20px;
+    right: 18px;
+    width: 40px;
+    top: 0px;
 }
 
 .dld {
@@ -87,20 +89,11 @@ function ch() {
 
 setInterval(function() {
 
-    //old
-    // var playing = false;
-    // var sp = $('.stack-play');
-
-    // sp.each(function(k, v) {
-    //     if (v.childNodes[0].innerHTML.includes('stop')) {
-    //         $('.btn-crack-play').hide();
-    //         playing = true;
-    //     } else {
-    //         if (!playing) {
-    //             $('.btn-crack-play').show();
-    //         }
-    //     }
-    // })
+    //local del out the way
+    if (window.location.hostname == 'localhost') { 
+        var dlb = $('.dld');
+        dlb.css('right', '100px');
+    }
 
     //new
     var strp = $('.strip-play');

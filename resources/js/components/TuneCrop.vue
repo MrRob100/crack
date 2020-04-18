@@ -175,6 +175,7 @@ export default {
   text-align: center;
 }
 
+
 .marker-start {
   border-right: none;
 }

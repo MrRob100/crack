@@ -25,7 +25,6 @@ Vue.config.devtools = true;
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('tune-crop', require('./components/TuneCrop.vue').default);
-Vue.component('tune-strip', require('./components/TuneStrip.vue').default);
 Vue.component('tune-stack', require('./components/TuneStack.vue').default);
 
 /**
