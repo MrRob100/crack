@@ -1,0 +1,8 @@
+.tunes {
+    cursor: pointer;
+    float: left;
+}
+
+.cd, .nd {
+    float: left;
+}

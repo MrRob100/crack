@@ -24,5 +24,6 @@
         "vue-template-compiler": "^2.6.4"
     },
     "dependencies": {
+        "audio-effects": "^1.2.4"
     }
 }

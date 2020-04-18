@@ -141,23 +141,10 @@ export default {
                 ht.style.position = 'fixed';
             }
         },
+
         play: function() {
 
-            var leftStart = document.getElementById("div-start-" + this.pos).offsetLeft;
-            var leftEnd = document.getElementById("div-end-" + this.pos).offsetLeft;
-            var offsetPx = leftStart >0 ? leftStart : 0;
-            var offsetPxEnd = leftEnd >0 ? leftEnd : 0;
-
-            var waveWidth = document.getElementsByClassName('canv')[0].offsetWidth;
-            var spp = this.src.buffer.duration / waveWidth;
-
-            var resultantStartingTime = offsetPx * spp;
-            var resultantLoopEnd = offsetPxEnd * spp;
-
-            this.src.loopStart = resultantStartingTime;
-            this.src2.loopStart = resultantStartingTime;
-            this.src.loopEnd = resultantLoopEnd;
-            this.src2.loopEnd = resultantLoopEnd;
+            var resultantStartingTime = this.loopUpdate();
 
             if (!this.started) {
                 this.src.start(0, resultantStartingTime);
@@ -181,15 +168,9 @@ export default {
 
             this.setBody('stop');
 
-            //suspend test
             this.ctx.suspend();
 
-            // this.src.stop();
-            // this.src2.stop();
             this.playing = false;
-            // this.src = {};
-            // this.src2 = {};
-            // this.load();
 
             if (!this.nonMob) {
                 document.getElementById("mydiv-ball-"+this.pos).style.visibility = 'hidden';
@@ -290,8 +271,7 @@ export default {
 
                     // var analyser = audioCtx.createAnalyser();
 
-                    // console.log(analyser);
-
+                    isso.loopUpdate();
                     isso.phaser();
                 },
                 function (e) {
@@ -307,8 +287,28 @@ export default {
             } else {
                 this.pan = false;
             }
-            console.log('pan state:', this.pan);
         },
+
+        loopUpdate() {
+
+            var leftStart = document.getElementById("div-start-" + this.pos).offsetLeft;
+            var leftEnd = document.getElementById("div-end-" + this.pos).offsetLeft;
+            var offsetPx = leftStart >0 ? leftStart : 0;
+            var offsetPxEnd = leftEnd >0 ? leftEnd : 0;
+
+            var waveWidth = document.getElementsByClassName('canv')[0].offsetWidth;
+            var spp = this.src.buffer.duration / waveWidth;
+
+            var resultantStartingTime = offsetPx * spp;
+            var resultantLoopEnd = offsetPxEnd * spp;
+
+            this.src.loopStart = resultantStartingTime;
+            this.src2.loopStart = resultantStartingTime;
+            this.src.loopEnd = resultantLoopEnd;
+            this.src2.loopEnd = resultantLoopEnd;
+
+            return resultantStartingTime;
+        },  
 
         phaser() {
             var isso = this;
@@ -460,11 +460,17 @@ export default {
     mounted() {
         var isso = this;
 
+        setInterval(function() {
+            if (isso.playing) {
+                isso.loopUpdate();
+            }
+        }, 1000);
+
+
         var tc = document.getElementById('tc-'+this.pos);
         tc.onclick = function() {
             isso.dl();
         }
-
 
         //download link
         if (window.location.hostname == 'localhost') {
