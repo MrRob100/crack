@@ -2175,7 +2175,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     loopUpdate: function loopUpdate() {
       var leftStart = document.getElementById("div-start-" + this.pos).offsetLeft;
-      var leftEnd = document.getElementById("div-end-" + this.pos).offsetRight;
+      var leftEnd = document.getElementById("div-end-" + this.pos).offsetLeft;
       var offsetPx = leftStart > 0 ? leftStart : 0;
       var offsetPxEnd = leftEnd > 0 ? leftEnd : 0;
       var waveWidth = document.getElementsByClassName('canv')[0].offsetWidth;
