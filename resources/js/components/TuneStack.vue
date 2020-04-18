@@ -74,10 +74,16 @@ export default {
 
         dl: function() {
             var isso = this;
-            isso.dlding = true;
-            setTimeout(function() {
-                isso.dlding = false;
-            }, 500);
+
+            if (window.location.hostname == 'localhost') { 
+                //deleting if local
+                isso.del();
+            } else {
+                isso.dlding = true;
+                setTimeout(function() {
+                    isso.dlding = false;
+                }, 500);
+            }
         },
 
         songClick: function() {

@@ -1983,10 +1983,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     dl: function dl() {
       var isso = this;
-      isso.dlding = true;
-      setTimeout(function () {
-        isso.dlding = false;
-      }, 500);
+
+      if (window.location.hostname == 'localhost') {
+        //deleting if local
+        isso.del();
+      } else {
+        isso.dlding = true;
+        setTimeout(function () {
+          isso.dlding = false;
+        }, 500);
+      }
     },
     songClick: function songClick() {
       if (!this.dlding) {
