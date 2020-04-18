@@ -7234,7 +7234,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.slider-house {\n  background-color: aqua;\n  padding-left: 0;\n}\n.marker {\n  width:20px;\n  height: 40px;\n  position: absolute;\n  z-index: 9;\n  /* background-color: #f1f1f1; */\n  border: 2px solid #d3d3d3;\n  text-align: center;\n}\n.markerheader {\n  height: 40px;\n  cursor: move;\n  z-index: 10;\n}\n\n", ""]);
+exports.push([module.i, "\n.slider-house {\n  background-color: aqua;\n  padding-left: 0;\n}\n.marker {\n  width:20px;\n  height: 40px;\n  position: absolute;\n  z-index: 9;\n  /* background-color: #f1f1f1; */\n  border: 2px solid #d3d3d3;\n  text-align: center;\n}\n.marker-start {\n  border-right: none;\n}\n.marker-end {\n  border-left: none;\n}\n.markerheader {\n  color: #d3d3d3;\n  height: 40px;\n  cursor: move;\n  z-index: 10;\n}\n\n", ""]);
 
 // exports
 
@@ -40949,7 +40949,7 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "marker",
+        staticClass: "marker marker-start",
         style: "left: " + _vm.canvasLeft + "px",
         attrs: { id: "div-start-" + _vm.setting }
       },
@@ -40967,7 +40967,10 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "marker", attrs: { id: "div-end-" + _vm.setting } },
+      {
+        staticClass: "marker marker-end",
+        attrs: { id: "div-end-" + _vm.setting }
+      },
       [
         _c(
           "div",

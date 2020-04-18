@@ -1,9 +1,9 @@
 <template>
   <div class="container slider-house">
-    <div class="marker" :id='"div-start-"+setting' :style="'left: '+ canvasLeft + 'px'">
+    <div class="marker marker-start" :id='"div-start-"+setting' :style="'left: '+ canvasLeft + 'px'">
       <div class="markerheader" :id='"div-start-"+setting+"-header"'>S</div>
     </div>
-    <div class="marker" :id='"div-end-"+setting'>
+    <div class="marker marker-end" :id='"div-end-"+setting'>
       <div class="markerheader" :id='"div-end-"+setting+"-header"'>E</div>
     </div>
   </div>
@@ -175,7 +175,16 @@ export default {
   text-align: center;
 }
 
+.marker-start {
+  border-right: none;
+}
+
+.marker-end {
+  border-left: none;
+}
+
 .markerheader {
+  color: #d3d3d3;
   height: 40px;
   cursor: move;
   z-index: 10;
