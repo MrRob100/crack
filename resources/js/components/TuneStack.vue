@@ -292,7 +292,7 @@ export default {
         loopUpdate() {
 
             var leftStart = document.getElementById("div-start-" + this.pos).offsetLeft;
-            var leftEnd = document.getElementById("div-end-" + this.pos).offsetLeft;
+            var leftEnd = document.getElementById("div-end-" + this.pos).offsetRight;
             var offsetPx = leftStart >0 ? leftStart : 0;
             var offsetPxEnd = leftEnd >0 ? leftEnd : 0;
 
