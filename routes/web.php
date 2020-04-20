@@ -13,16 +13,15 @@
 
 Route::get('/dl', 'DashboardController@dl');
 
-//index
-Route::get('/', 'DashboardController@index')->name('dashboard');
-
-//upload
-Route::post('/', 'DashboardController@upload')->name('upload-song');
-
 Route::get('/del', 'DashboardController@delete');
 Route::get('/get', 'DashboardController@getMarker');
 Route::get('/set', 'DashboardController@setMarker');
 
+//index
+Route::get('/{para?}', 'DashboardController@index')->name('dashboard');
+
+//upload
+Route::post('/', 'DashboardController@upload')->name('upload-song');
 
 
 //unused
