@@ -15,17 +15,21 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-    public function index() {
+    public function index($para = null) {
 
         ini_set('max_post_size', 0);
 
-        $path_full = 'nopath';
-        
-        $tunes = scandir('storage/data/');
+        if (!file_exists('storage/data/'.$para)) {
+            //make it self destruct
+            mkdir('storage/data/'.$para);
+        }
+
+        $tunes = scandir('storage/data/'.$para);
+
         array_shift($tunes);
         array_shift($tunes);
 
-        return view('dashboard', compact('path_full', 'tunes'));
+        return view('dashboard', compact('tunes'));
     }
 
     public function upload(Request $request) {

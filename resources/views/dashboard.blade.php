@@ -6,7 +6,6 @@
     <form class="upl" id="song-upload" action="" method="post" enctype="multipart/form-data">
         {!! csrf_field() !!}
         <input id="song-file-input" type="file" name="song" onchange="ch()">
-        <div style="display:none" id="path">{{ $path_full }}</div>
     </form>
     <h2 class="tit">CRACK MANINOFF</h2>
     {{-- @foreach ($tunes as $tune)
