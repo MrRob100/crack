@@ -2292,9 +2292,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         } else {
           isso.gn.gain.value = -0.2;
           isso.gn2.gain.value = -0.2;
-        } // console.log('g1', isso.gn.gain.value);
-        // console.log('g2', isso.gn2.gain.value);
-
+        }
       } //finished moving
 
 
