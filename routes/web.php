@@ -21,7 +21,7 @@ Route::get('/set', 'DashboardController@setMarker');
 Route::get('/{para?}', 'DashboardController@index')->name('dashboard');
 
 //upload
-Route::post('/', 'DashboardController@upload')->name('upload-song');
+Route::post('/{para?}', 'DashboardController@upload')->name('upload-song');
 
 
 //unused

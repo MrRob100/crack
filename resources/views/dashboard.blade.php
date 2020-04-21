@@ -3,24 +3,19 @@
 @section('content')
 
 <div class="container">
-    <form class="upl" id="song-upload" action="" method="post" enctype="multipart/form-data">
+<form class="upl" id="song-upload" action="{{ $para }}" method="post" enctype="multipart/form-data">
         {!! csrf_field() !!}
         <input id="song-file-input" type="file" name="song" onchange="ch()">
     </form>
     <h2 class="tit">CRACK MANINOFF</h2>
-    {{-- @foreach ($tunes as $tune)
-    <Tune-Strip
+</div>
+    @foreach ($tunes as $tune)
+    <Tune-Stack
+    para={{ $para }}
     name={{ $tune }}
     pos={{ array_search($tune, $tunes) }}
-    ></Tune-Strip>
-    @endforeach --}}
-</div>
-@foreach ($tunes as $tune)
-<Tune-Stack
-name={{ $tune }}
-pos={{ array_search($tune, $tunes) }}
-></Tune-Stack>
-@endforeach
+    ></Tune-Stack>
+    @endforeach
 @endsection
 
 <style>

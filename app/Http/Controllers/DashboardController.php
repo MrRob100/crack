@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\App;
+use App\Services\UrlService;
 
 class DashboardController extends Controller
 {
@@ -15,24 +17,47 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-    public function index($para = null) {
+    public function index($para = "") {
+
+        $checker = App::make('App\Services\UrlService');
+        $checked = $checker->checkUrl($para);
+
+        if (!$checked) {
+            return redirect('');
+        }
 
         ini_set('max_post_size', 0);
 
         if (!file_exists('storage/data/'.$para)) {
             //make it self destruct
             mkdir('storage/data/'.$para);
+            chmod('storage/data/'.$para, 0777);
         }
 
-        $tunes = scandir('storage/data/'.$para);
+        $items = scandir('storage/data/'.$para);
 
-        array_shift($tunes);
-        array_shift($tunes);
+        array_shift($items);
+        array_shift($items);
 
-        return view('dashboard', compact('tunes'));
+        $tunes = [];
+        foreach ($items as $item) {
+            if (strpos($item, '.mp3') !== false) {
+                $tunes[] = $item;
+            }
+        }
+
+        $para = $para == "" ? '-' : $para;
+
+        return view('dashboard', compact('tunes', 'para'));
     }
 
-    public function upload(Request $request) {
+    public function upload(Request $request, $para) {
+
+        if ($para === '-' || $para === '') {
+            $subdir = '';
+        } else {
+            $subdir = $para."/";
+        }
 
         $file = $request->file('song');
         $typ = $file->getMimeType(); 
@@ -43,17 +68,16 @@ class DashboardController extends Controller
 
             $path = $request->file('song')->store('upload');
 
-            $file->move('storage/data/', $song_name);
+            $file->move('storage/data/'.$subdir, $song_name);
 
             $path_bare = substr($path, 7);
-            $path_full = '../storage/data/'.$path_bare; 
-            // $path_full = '../public/storage/data/'.$path_bare; 
+            $path_full = '../storage/data/'.$subdir.$path_bare; 
 
         } else {
-            return redirect('');
+            return redirect($para);
         }
 
-        return redirect('');
+        return redirect($para);
     }
 
     public function dl() {
@@ -66,8 +90,11 @@ class DashboardController extends Controller
     }
 
     public function delete() {
+
+        $para = $_GET['para'] == '-' ? '' : $_GET['para'].'/';
+
         try {
-            unlink('storage/data/'.$_GET['song']);
+            unlink('storage/data/'.$para.$_GET['song']);
         } catch (exception $e) {
             //log exep
             return "";

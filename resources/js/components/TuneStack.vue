@@ -1,5 +1,8 @@
 <template>
-    <div v-if="!deleted" class="stack-house">
+    <div 
+        v-if="!deleted" 
+        class="stack-house"
+        >
         <div v-if="!nonMob" class="wb-top" :id='"mydiv-ball-"+pos' style="visibility:hidden">
             <div class="wb-header" :id='"mydiv-ball-"+pos+"-header"'></div>
         </div>
@@ -38,9 +41,11 @@
 </template>
 <script>
 
+import Meths from '../meths.js';
+
 export default {
 
-    props: ['name', 'pos'],
+    props: ['para', 'name', 'pos'],
 
     data: function () {
         return {
@@ -118,11 +123,18 @@ export default {
         del: function() {
             var request = new XMLHttpRequest();
 
-            if (window.location.hostname == 'localhost') {
-                request.open('GET', '/crack/public/del?song=' + this.name, true);
-            } else {
-               request.open('GET', '/del?song=' + this.name, true);
-            }
+            console.log('del');
+
+            // if (window.location.hostname == 'localhost') {
+            //     request.open('GET', '/crack/public/del?song=' + this.name, true);
+            // } else {
+            //     request.open('GET', '/del?song=' + this.name, true);
+            // }
+
+            var delPath = Meths.deleteSongPath(this.para, this.name);
+
+            request.open('GET', delPath, true);
+
             request.send();
             var isso = this;
             request.onload = function () {
@@ -208,15 +220,10 @@ export default {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
             const audioCtx = new AudioContext();
             var request = new XMLHttpRequest();
-            // const set = this.pos;
 
-            if (window.location.hostname == 'localhost') {
-                //local
-                request.open('GET', '../public/storage/data/' + isso.name, true);
-            } else {
-                //prod
-                request.open('GET', '../storage/data/' + isso.name, true);
-            }
+            var path = Meths.getSong(isso.para, isso.name);
+
+            request.open('GET', path, true);
 
             const source = audioCtx.createBufferSource();
     
@@ -461,6 +468,9 @@ export default {
     },
 
     mounted() {
+
+        // Meths.Check();
+
         var isso = this;
 
         setInterval(function() {
