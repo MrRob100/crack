@@ -1,6 +1,9 @@
 /node_modules
 /public/hot
 /public/storage
+/public/data/siteColorData.json
+/public/data/markerData.json
+public/data/markerData.json
 /storage/*.key
 /vendor
 .env

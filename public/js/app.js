@@ -1911,6 +1911,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _meths_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../meths.js */ "./resources/js/meths.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 //
@@ -1951,8 +1952,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['name', 'pos'],
+  props: ['para', 'name', 'pos'],
   data: function data() {
     var _ref;
 
@@ -2021,13 +2026,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     del: function del() {
       var request = new XMLHttpRequest();
+      console.log('del'); // if (window.location.hostname == 'localhost') {
+      //     request.open('GET', '/crack/public/del?song=' + this.name, true);
+      // } else {
+      //     request.open('GET', '/del?song=' + this.name, true);
+      // }
 
-      if (window.location.hostname == 'localhost') {
-        request.open('GET', '/crack/public/del?song=' + this.name, true);
-      } else {
-        request.open('GET', '/del?song=' + this.name, true);
-      }
-
+      var delPath = _meths_js__WEBPACK_IMPORTED_MODULE_0__["default"].deleteSongPath(this.para, this.name);
+      request.open('GET', delPath, true);
       request.send();
       var isso = this;
 
@@ -2106,16 +2112,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var isso = this;
       var AudioContext = window.AudioContext || window.webkitAudioContext;
       var audioCtx = new AudioContext();
-      var request = new XMLHttpRequest(); // const set = this.pos;
-
-      if (window.location.hostname == 'localhost') {
-        //local
-        request.open('GET', '../public/storage/data/' + isso.name, true);
-      } else {
-        //prod
-        request.open('GET', '../storage/data/' + isso.name, true);
-      }
-
+      var request = new XMLHttpRequest();
+      var path = _meths_js__WEBPACK_IMPORTED_MODULE_0__["default"].getSong(isso.para, isso.name);
+      request.open('GET', path, true);
       var source = audioCtx.createBufferSource();
       var source2 = audioCtx.createBufferSource();
       request.responseType = 'arraybuffer';
@@ -2292,9 +2291,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         } else {
           isso.gn.gain.value = -0.2;
           isso.gn2.gain.value = -0.2;
-        } // console.log('g1', isso.gn.gain.value);
-        // console.log('g2', isso.gn2.gain.value);
-
+        }
       } //finished moving
 
 
@@ -2334,6 +2331,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
+    // Meths.Check();
     var isso = this;
     setInterval(function () {
       if (isso.playing) {
@@ -52818,11 +52816,7 @@ Vue.component('tune-stack', __webpack_require__(/*! ./components/TuneStack.vue *
 
 var app = new Vue({
   el: '#app'
-}); //canvas sizing
-
-window.onresize = function () {// $('.canv').css('width', '100%');
-  // $('.canv').css('height', '40px');
-};
+});
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
@@ -53126,6 +53120,46 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TuneStack_vue_vue_type_template_id_020e00d6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/meths.js":
+/*!*******************************!*\
+  !*** ./resources/js/meths.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  //returns path
+  //deals with env and possible subdirs
+  getSong: function getSong(para, name) {
+    var subdir = para !== "-" ? para + "/" + name : "" + name;
+
+    if (window.location.hostname == 'localhost') {
+      //local
+      // return './../../crack/public/storage/data/' + subdir;
+      return '/crack/public/storage/data/' + subdir;
+    } else {
+      //prod
+      // return '../../storage/data/' + subdir;
+      return '/storage/data/' + subdir;
+    }
+  },
+  deleteSongPath: function deleteSongPath(para, name) {
+    if (window.location.hostname == 'localhost') {
+      //local
+      // return './../../crack/public/storage/data/' + subdir;
+      return '/crack/public/del?song=' + name + '&para=' + para;
+    } else {
+      //prod
+      // return '../../storage/data/' + subdir;
+      return '/storage/data/' + subdir;
+    }
+  }
+});
 
 /***/ }),
 

@@ -37,12 +37,3 @@ const app = new Vue({
     el: '#app'
 });
 
-//canvas sizing
-
-window.onresize = function() {
-
-    // $('.canv').css('width', '100%');
-    // $('.canv').css('height', '40px');
-
-
-}
