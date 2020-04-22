@@ -20,6 +20,7 @@
                 <h3>{{ name }}</h3>
             </div>
             <tune-crop
+            @clicked="cropClick"
             :id='"tc-"+pos'
             :setting='pos'
             v-bind:canvasWidth='canvasWidth'
@@ -72,10 +73,20 @@ export default {
             wreckBall: {},
             deleted: false,
             dlding: false,
+            cropping: false,
         }
     },
 
     methods: {
+
+        cropClick: function() {
+            var isso = this;
+            isso.cropping = true;
+
+            setTimeout(function() {
+                isso.cropping = false;
+            }, 200)
+        },
 
         dl: function() {
             var isso = this;
@@ -92,7 +103,7 @@ export default {
         },
 
         songClick: function() {
-            if (!this.dlding) {
+            if (!this.dlding && !this.cropping) {
                 var slc = document.getElementsByClassName('stack-slice');
                 var abled = document.getElementsByClassName('dbld');
 

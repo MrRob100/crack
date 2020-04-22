@@ -53,6 +53,7 @@ export default {
 
       //first touch
       function dragMouseDown(e) {
+        
         e = e || window.event;
         if (e.touches) {
           pos3 = e.touches[0].clientX;
@@ -106,6 +107,9 @@ export default {
       }
 
       function closeDragElement(e) {
+
+        //telling parent that drag is starting
+        isso.$emit('clicked');
 
         elmnt.style.left = ((elmnt.offsetLeft - pos1) / window.innerWidth) * 100 + "%";
 

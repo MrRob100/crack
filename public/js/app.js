@@ -1854,6 +1854,8 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       function closeDragElement(e) {
+        //telling parent that drag is starting
+        isso.$emit('clicked');
         elmnt.style.left = (elmnt.offsetLeft - pos1) / window.innerWidth * 100 + "%";
 
         if (e.toElement) {
@@ -1955,6 +1957,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['para', 'name', 'pos'],
@@ -1983,9 +1986,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       canvasWidth: 0,
       nonMob: true,
       wreckBall: {}
-    }, _defineProperty(_ref, "deleted", false), _defineProperty(_ref, "dlding", false), _ref;
+    }, _defineProperty(_ref, "deleted", false), _defineProperty(_ref, "dlding", false), _defineProperty(_ref, "cropping", false), _ref;
   },
   methods: {
+    cropClick: function cropClick() {
+      var isso = this;
+      isso.cropping = true;
+      setTimeout(function () {
+        isso.cropping = false;
+      }, 200);
+    },
     dl: function dl() {
       var isso = this;
 
@@ -1999,7 +2009,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     songClick: function songClick() {
-      if (!this.dlding) {
+      if (!this.dlding && !this.cropping) {
         var slc = document.getElementsByClassName('stack-slice');
         var abled = document.getElementsByClassName('dbld');
 
@@ -40731,7 +40741,8 @@ var render = function() {
                 canvasWidth: _vm.canvasWidth,
                 canvasLeft: _vm.canvasLeft,
                 name: _vm.name
-              }
+              },
+              on: { clicked: _vm.cropClick }
             }),
             _vm._v(" "),
             _c("canvas", {
