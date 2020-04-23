@@ -2035,8 +2035,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return slug;
     },
     del: function del() {
-      var request = new XMLHttpRequest();
-      console.log('del'); // if (window.location.hostname == 'localhost') {
+      var request = new XMLHttpRequest(); // if (window.location.hostname == 'localhost') {
       //     request.open('GET', '/crack/public/del?song=' + this.name, true);
       // } else {
       //     request.open('GET', '/del?song=' + this.name, true);
@@ -2070,6 +2069,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     play: function play() {
+      var speedPlayback = document.getElementsByClassName("playback-speed")[0];
+      var phasePlayback = document.getElementsByClassName("playback-phase")[0];
+      speedPlayback.innerHTML = "Speed: 100%";
+      phasePlayback.innerHTML = "Phaser: 0%";
       var resultantStartingTime = this.loopUpdate();
 
       if (!this.started) {
@@ -2077,7 +2080,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.src2.start(0, resultantStartingTime);
       } else {
         this.ctx.resume();
-      }
+      } //set 
+
 
       this.setBody('play');
       this.playing = true;
@@ -2089,6 +2093,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     stop: function stop() {
+      var speedPlayback = document.getElementsByClassName("playback-speed")[0];
+      var phasePlayback = document.getElementsByClassName("playback-phase")[0];
+      speedPlayback.innerHTML = "Speed: --";
+      phasePlayback.innerHTML = "Phaser: --";
       this.setBody('stop');
       this.ctx.suspend();
       this.playing = false;
@@ -2267,6 +2275,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
       function elementDrag(e, touch) {
+        var speedPlayback = document.getElementsByClassName("playback-speed")[0];
+        var phasePlayback = document.getElementsByClassName("playback-phase")[0];
         e = e || window.event;
 
         if (e.touches) {
@@ -2298,10 +2308,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           isso.gn.gain.value = -elmnt.offsetLeft * (0.2 / bp); //0.8 is gain range (-1 to -0.2)
 
           isso.gn2.gain.value = elmnt.offsetLeft * (0.8 / bp) - 1;
+          phasePlayback.innerHTML = "Phaser: " + Math.floor(elmnt.offsetLeft / bp * 100) + "%";
         } else {
           isso.gn.gain.value = -0.2;
           isso.gn2.gain.value = -0.2;
+          phasePlayback.innerHTML = "Phaser: 100%";
         }
+
+        speedPlayback.innerHTML = "Speed: " + Math.floor(isso.src.playbackRate.value * 100) + "%";
       } //finished moving
 
 
@@ -2391,27 +2405,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var bp = 500;
 
         if (isso.playing) {
-          // var formula = (-y + 6600 + window.scrollY) / 6500;
+          var speedPlayback = document.getElementsByClassName("playback-speed")[0];
+          var phasePlayback = document.getElementsByClassName("playback-phase")[0]; // var formula = (-y + 6600 + window.scrollY) / 6500;
+
           var formula = (-y + 900 + window.scrollY) / 650;
           var freqFormula = -x * 30 + 15000; //hipass
           // var freqFormula = (-x * 20) + 10000; //hipass
           // var freqFormula = (x * 1.2 - 100); //lopass
 
           isso.src.playbackRate.value = formula;
-          isso.src2.playbackRate.value = formula; // isso.filter.frequency.value = freqFormula;
+          isso.src2.playbackRate.value = formula;
+          speedPlayback.innerHTML = "Speed: " + Math.floor(formula * 100) + "%"; // isso.filter.frequency.value = freqFormula;
           // isso.filter.frequency.value = (-x * 20) + 10000;
 
           if (x < bp) {
-            //0.2 is gain range (0 to -0.2)
+            phasePlayback.innerHTML = "Phaser: " + Math.floor(x / bp * 100) + "%"; //0.2 is gain range (0 to -0.2)
+
             isso.gn.gain.value = -x * (0.2 / bp); //0.8 is gain range (-1 to -0.2)
 
             isso.gn2.gain.value = x * (0.8 / bp) - 1;
           } else {
             isso.gn.gain.value = -0.2;
             isso.gn2.gain.value = -0.2;
-          } // console.log('g1', isso.gn.gain.value);
-          // console.log('g2', isso.gn2.gain.value);
-
+            phasePlayback.innerHTML = "Phaser: 100%";
+          }
         }
       }
     }

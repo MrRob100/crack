@@ -134,8 +134,6 @@ export default {
         del: function() {
             var request = new XMLHttpRequest();
 
-            console.log('del');
-
             // if (window.location.hostname == 'localhost') {
             //     request.open('GET', '/crack/public/del?song=' + this.name, true);
             // } else {
@@ -173,6 +171,12 @@ export default {
 
         play: function() {
 
+            var speedPlayback = document.getElementsByClassName("playback-speed")[0];
+            var phasePlayback = document.getElementsByClassName("playback-phase")[0];
+
+            speedPlayback.innerHTML = "Speed: 100%";
+            phasePlayback.innerHTML = "Phaser: 0%";
+
             var resultantStartingTime = this.loopUpdate();
 
             if (!this.started) {
@@ -181,6 +185,8 @@ export default {
             } else {
                 this.ctx.resume();
             }
+
+            //set 
 
             this.setBody('play');
 
@@ -194,10 +200,16 @@ export default {
             }
         },
         stop: function() {
+            var speedPlayback = document.getElementsByClassName("playback-speed")[0];
+            var phasePlayback = document.getElementsByClassName("playback-phase")[0];
+            
+            speedPlayback.innerHTML = "Speed: --";
+            phasePlayback.innerHTML = "Phaser: --";
 
             this.setBody('stop');
 
             this.ctx.suspend();
+            
 
             this.playing = false;
 
@@ -402,6 +414,10 @@ export default {
 
             //while moving
             function elementDrag(e, touch) {
+
+                var speedPlayback = document.getElementsByClassName("playback-speed")[0];
+                var phasePlayback = document.getElementsByClassName("playback-phase")[0];
+
                 e = e || window.event;
                 if (e.touches) {
                     pos1 = pos3 - e.touches[0].clientX;
@@ -435,10 +451,15 @@ export default {
 
                     //0.8 is gain range (-1 to -0.2)
                     isso.gn2.gain.value = (elmnt.offsetLeft * (0.8 / bp)) - 1;
+                    phasePlayback.innerHTML = "Phaser: " + Math.floor((elmnt.offsetLeft / bp) * 100) + "%";
                 } else {
                     isso.gn.gain.value = - 0.2;
                     isso.gn2.gain.value = - 0.2;
+                    phasePlayback.innerHTML = "Phaser: 100%";
+
                 }
+
+                speedPlayback.innerHTML = "Speed: " + Math.floor(isso.src.playbackRate.value * 100) + "%";
 
             }
 
@@ -542,6 +563,8 @@ export default {
                 var bp = 500;
 
                 if (isso.playing) {
+                    var speedPlayback = document.getElementsByClassName("playback-speed")[0];
+                    var phasePlayback = document.getElementsByClassName("playback-phase")[0];
 
                     // var formula = (-y + 6600 + window.scrollY) / 6500;
                     var formula = (-y + 900 + window.scrollY) / 650;
@@ -552,11 +575,15 @@ export default {
                     isso.src.playbackRate.value = formula;
                     isso.src2.playbackRate.value = formula;
 
+                    speedPlayback.innerHTML = "Speed: " + Math.floor(formula * 100) + "%";
+
                     // isso.filter.frequency.value = freqFormula;
 
                     // isso.filter.frequency.value = (-x * 20) + 10000;
                     
                     if (x < bp) {
+                        phasePlayback.innerHTML = "Phaser: " + Math.floor((x / bp) * 100) + "%";
+                    
                         //0.2 is gain range (0 to -0.2)
                         isso.gn.gain.value = -x * (0.2 / bp);
 
@@ -565,9 +592,12 @@ export default {
                     } else {
                         isso.gn.gain.value = - 0.2;
                         isso.gn2.gain.value = - 0.2;
+
+                        phasePlayback.innerHTML = "Phaser: 100%";
+
                     }
-                    // console.log('g1', isso.gn.gain.value);
-                    // console.log('g2', isso.gn2.gain.value);
+
+
                 }      
             }  
         }

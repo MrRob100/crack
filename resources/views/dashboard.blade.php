@@ -7,7 +7,10 @@
         {!! csrf_field() !!}
         <input id="song-file-input" type="file" name="song" onchange="ch()">
     </form>
-    <h2 class="tit">CRACK MANINOFF</h2>
+    <div class=playback>
+        <p class="playback-item playback-speed">Speed: --</p><p class="playback-item playback-phase">Phaser: --</p>
+    </div>
+
 </div>
     @foreach ($tunes as $tune)
     <Tune-Stack
@@ -19,6 +22,19 @@
 @endsection
 
 <style>
+
+.playback {
+    clear: left;
+}
+
+.playback-item {
+    display: inline;
+    font-size: 18px;
+}
+
+.playback-phase {
+    margin-left: 15px;
+}
 
 html, body {
     height: 100%;
@@ -34,9 +50,6 @@ body {
 
 .navbar {
     height: 20px;
-}
-.tit {
-    clear: left;
 }
 
 .stack-del button {
