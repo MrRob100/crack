@@ -27,6 +27,10 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('tune-crop', require('./components/TuneCrop.vue').default);
 Vue.component('tune-stack', require('./components/TuneStack.vue').default);
 
+Vue.component('ctx', require('./components/Ctx.vue').default);
+Vue.component('tune', require('./components/Tune.vue').default);
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

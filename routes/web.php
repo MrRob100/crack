@@ -11,6 +11,11 @@
 |
 */
 
+
+//ctx test
+Route::get('/ctx', 'DashboardController@ctx');
+
+
 Route::get('/dl', 'DashboardController@dl');
 
 Route::get('/del', 'DashboardController@delete');

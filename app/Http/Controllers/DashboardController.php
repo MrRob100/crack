@@ -118,5 +118,24 @@ class DashboardController extends Controller
         file_put_contents('../public/data/markerData.json', json_encode($markers));  
 
     }
+
+    public function ctx() {
+
+        $items = scandir('storage/data/');
+
+        array_shift($items);
+        array_shift($items);
+
+        $tunes = [];
+        foreach ($items as $item) {
+            if (strpos($item, '.mp3') !== false) {
+                $tunes[] = $item;
+            }
+        }
+
+        $t_string = implode(' ', $tunes); 
+
+        return view('ctx', compact('t_string'));
+    }
  
 }
