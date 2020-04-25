@@ -1733,8 +1733,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['tunes'],
+  props: ['tunes', 'para'],
   data: function data() {
     return {
       ctx: {},
@@ -1746,7 +1747,6 @@ __webpack_require__.r(__webpack_exports__);
     var audioCtx = new AudioContext();
     this.ctx = audioCtx;
     this.tunesFormatted = this.tunes.split(" ");
-    console.log('tunes', this.tunesFormatted);
   }
 });
 
@@ -2083,7 +2083,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['para', 'name', 'pos'],
+  props: ['ctx', 'para', 'name', 'pos'],
   data: function data() {
     var _ref;
 
@@ -2092,7 +2092,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       gn2: {},
       dlref: "",
       spp: 1,
-      ctx: {},
       src: {},
       src2: {},
       loading: true,
@@ -2158,12 +2157,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return slug;
     },
     del: function del() {
-      var request = new XMLHttpRequest(); // if (window.location.hostname == 'localhost') {
-      //     request.open('GET', '/crack/public/del?song=' + this.name, true);
-      // } else {
-      //     request.open('GET', '/del?song=' + this.name, true);
-      // }
-
+      var request = new XMLHttpRequest();
       var delPath = _meths_js__WEBPACK_IMPORTED_MODULE_0__["default"].deleteSongPath(this.para, this.name);
       request.open('GET', delPath, true);
       request.send();
@@ -2198,13 +2192,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       phasePlayback.innerHTML = "Phaser: 0%";
       var resultantStartingTime = this.loopUpdate();
 
-      if (!this.started) {
+      try {
         this.src.start(0, resultantStartingTime);
         this.src2.start(0, resultantStartingTime);
-      } else {
-        this.ctx.resume();
-      } //set 
+      } catch (err) {
+        console.log(err);
+      }
 
+      this.ctx.resume();
+      this.gn.gain.value = -0.2;
+      this.gn2.gain.value = -0.2; //set 
 
       this.setBody('play');
       this.playing = true;
@@ -2222,6 +2219,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       phasePlayback.innerHTML = "Phaser: --";
       this.setBody('stop');
       this.ctx.suspend();
+      this.gn.gain.value = -1;
+      this.gn2.gain.value = -1;
       this.playing = false;
 
       if (!this.nonMob) {
@@ -2250,21 +2249,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.canvasWidth = window.innerWidth;
     },
     load: function load() {
-      var isso = this;
-      var AudioContext = window.AudioContext || window.webkitAudioContext;
-      var audioCtx = new AudioContext();
+      var isso = this; // const AudioContext = window.AudioContext || window.webkitAudioContext;
+      // const audioCtx = new AudioContext();
+
       var request = new XMLHttpRequest();
       var path = _meths_js__WEBPACK_IMPORTED_MODULE_0__["default"].getSong(isso.para, isso.name);
       request.open('GET', path, true);
-      var source = audioCtx.createBufferSource();
-      var source2 = audioCtx.createBufferSource();
+      var source = isso.ctx.createBufferSource();
+      var source2 = isso.ctx.createBufferSource();
       request.responseType = 'arraybuffer';
 
       request.onload = function () {
         isso.loading = false; //make further down
 
         var audioData = request.response;
-        audioCtx.decodeAudioData(audioData, function (buffer) {
+        isso.ctx.decodeAudioData(audioData, function (buffer) {
           //canvas bit
           var canvas = document.getElementById("canvas-" + isso.pos);
           isso.drawBuffer(canvas.width, canvas.height, canvas.getContext('2d'), buffer);
@@ -2272,21 +2271,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           source.buffer = myBuffer;
           source2.buffer = myBuffer; //gainz
 
-          var gainNode = audioCtx.createGain();
-          var gainNode2 = audioCtx.createGain();
+          var gainNode = isso.ctx.createGain();
+          var gainNode2 = isso.ctx.createGain();
           source.connect(gainNode);
           source2.connect(gainNode2);
-          gainNode.connect(audioCtx.destination);
-          gainNode2.connect(audioCtx.destination); //normal
+          gainNode.connect(isso.ctx.destination);
+          gainNode2.connect(isso.ctx.destination); //normal
 
-          source2.connect(audioCtx.destination);
-          source.connect(audioCtx.destination);
+          source2.connect(isso.ctx.destination);
+          source.connect(isso.ctx.destination);
           gainNode2.gain.value = -1;
           gainNode.gain.value = 0;
           isso.gn = gainNode;
           isso.gn2 = gainNode2; //filter bit
 
-          var filter = audioCtx.createBiquadFilter();
+          var filter = isso.ctx.createBiquadFilter();
           filter.type = 'highpass'; // filter.type = 'lowpass';
           // filter.type = 'bandpass';
           // source2.connect(filter);
@@ -2298,8 +2297,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           source2.loop = true;
           isso.src = source;
           isso.src2 = source2;
-          isso.ctx = audioCtx; //new
-
           isso.filter = filter; // var analyser = audioCtx.createAnalyser();
 
           isso.loopUpdate();
@@ -40733,7 +40730,11 @@ var render = function() {
       return _c(
         "div",
         { key: tune, staticClass: "slither" },
-        [_c("tune", { attrs: { ctx: _vm.ctx, name: tune, pos: index } })],
+        [
+          _c("tune-stack", {
+            attrs: { ctx: _vm.ctx, para: _vm.para, name: tune, pos: index }
+          })
+        ],
         1
       )
     }),

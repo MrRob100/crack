@@ -48,7 +48,9 @@ class DashboardController extends Controller
 
         $para = $para == "" ? '-' : $para;
 
-        return view('dashboard', compact('tunes', 'para'));
+        $t_string = implode(' ', $tunes); 
+
+        return view('dashboard', compact('t_string', 'para'));
     }
 
     public function upload(Request $request, $para) {

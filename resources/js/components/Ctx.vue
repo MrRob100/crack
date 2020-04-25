@@ -1,22 +1,23 @@
 <template>
     <div>
       <div class="slither" v-for="(tune, index) in tunesFormatted" :key="tune">
-        <tune
-          :ctx="ctx"
-          :name="tune"
-          :pos="index"
-        ></tune>
+
+        <tune-stack
+        :ctx="ctx"
+        :para="para"
+        :name="tune"
+        :pos="index"
+        ></tune-stack>
+
       </div>
-
     </div>
-
 </template>
 
 <script>
 
 export default {
 
-    props: ['tunes'],
+    props: ['tunes', 'para'],
 
     data: function() {
         return {
@@ -29,11 +30,7 @@ export default {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         const audioCtx = new AudioContext();
         this.ctx = audioCtx;
-
         this.tunesFormatted = this.tunes.split(" ");
-
-        console.log('tunes', this.tunesFormatted);
-
     }
 
 }
