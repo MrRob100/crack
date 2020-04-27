@@ -75,7 +75,13 @@ class DashboardController extends Controller
             $path_bare = substr($path, 7);
             $path_full = '../storage/data/'.$subdir.$path_bare; 
 
-            exec('ffmpeg -i public/storage/data/'.$subdir.$song_name . ' -ab 64 public/storage/data/'.$subdir.'cmp-'.$song_name, $o, $r);
+            $path = 'storage/data/';
+
+            exec('/usr/bin/ffmpeg -i '.$path.$song_name' -ab 64 '.$path.'_'.$song_name, $o, $r);
+            // exec('/usr/local/bin/ffmpeg -i '.$path.'mass.mp3 -ab 64 '.$path.rand().'.mp3', $o, $r);
+
+            // exec("/usr/local/bin/ffmpeg",$o, $r);
+            dump($r);
 
         } else {
             return redirect($para);
