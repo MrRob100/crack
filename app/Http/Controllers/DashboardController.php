@@ -77,11 +77,17 @@ class DashboardController extends Controller
 
             $path = 'storage/data/';
 
-            exec('/usr/bin/ffmpeg -i '.$path.$song_name.' -ab 64 '.$path.'_'.$song_name, $o, $r);
+            //compresses file
+            exec('/usr/bin/ffmpeg -i '.$path.$subdir.$song_name.' -ab 64 '.$path.$subdir.'_'.$song_name, $o, $r);
             // exec('/usr/local/bin/ffmpeg -i '.$path.'mass.mp3 -ab 64 '.$path.rand().'.mp3', $o, $r);
 
+            //deletes raw if compression worked
+            if ($r === 0) {
+                unlink($path.$subdir.$song_name);
+            }
+
             // exec("/usr/local/bin/ffmpeg",$o, $r);
-            dump($r);
+            // dump($r);
 
         } else {
             return redirect($para);
