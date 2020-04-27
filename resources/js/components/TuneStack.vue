@@ -17,7 +17,7 @@
         v-on:click="songClick()"
         >
             <div class="inln-btn">
-                <h3>{{ name }}</h3>
+                <h3>{{ nameTrim(name) }}</h3>
             </div>
             <tune-crop
             @clicked="cropClick"
@@ -77,6 +77,10 @@ export default {
     },
 
     methods: {
+
+        nameTrim: function(name) {
+            return name.length > 22 ? name.substr(0, 22) + "..." : name;
+        },
 
         cropClick: function() {
             var isso = this;

@@ -2111,6 +2111,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }, _defineProperty(_ref, "deleted", false), _defineProperty(_ref, "dlding", false), _defineProperty(_ref, "cropping", false), _ref;
   },
   methods: {
+    nameTrim: function nameTrim(name) {
+      return name.length > 22 ? name.substr(0, 22) + "..." : name;
+    },
     cropClick: function cropClick() {
       var isso = this;
       isso.cropping = true;
@@ -40937,7 +40940,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "inln-btn" }, [
-              _c("h3", [_vm._v(_vm._s(_vm.name))])
+              _c("h3", [_vm._v(_vm._s(_vm.nameTrim(_vm.name)))])
             ]),
             _vm._v(" "),
             _c("tune-crop", {
