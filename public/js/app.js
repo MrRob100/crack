@@ -53512,12 +53512,10 @@ __webpack_require__.r(__webpack_exports__);
   deleteSongPath: function deleteSongPath(para, name) {
     if (window.location.hostname == 'localhost') {
       //local
-      // return './../../crack/public/storage/data/' + subdir;
       return '/crack/public/del?song=' + name + '&para=' + para;
     } else {
       //prod
-      // return '../../storage/data/' + subdir;
-      return '/storage/data/' + subdir;
+      return '/del?song=' + name + '&para=' + para;
     }
   }
 });
