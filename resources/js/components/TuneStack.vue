@@ -43,6 +43,7 @@
 <script>
 
 import Meths from '../meths.js';
+import Keys from '../keys.js';
 
 export default {
 
@@ -503,9 +504,20 @@ export default {
 
     mounted() {
 
-        // Meths.Check();
-
         var isso = this;
+
+        document.addEventListener("keydown", function(event) {
+            if (Keys.handle(event.code, isso.pos)) {
+                if (isso.playing) {
+                    isso.stop();
+                } else if (document.querySelectorAll('.strip-play').length === 0) {
+
+                    isso.play();
+                }
+            } else if (event.code === "Space") {
+                isso.stop();
+            }
+        });
 
         setInterval(function() {
             if (isso.playing) {
