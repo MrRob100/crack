@@ -28,14 +28,13 @@
             :name='name'
             ></tune-crop>
             <canvas class="canv" :id='"canvas-"+pos' :width="canvasWidth" height="40"></canvas>
-            <a :href="dlref"
+            <a  
+                class="dld"
+                v-on:click="dl"
+                :href="dlref"
                 v-if="nonMob"
             >
-                <button 
-                class="dld"
-                v-on:click="dl">
                 <img class="crack-icon dl-icon" src="images/dld.png">
-                </button>
             </a>
         </div>
     </div>
@@ -681,6 +680,7 @@ export default {
         background-color: rgb(79, 56, 114);
     }
     .canv {
+        float: left;
         width: 100%;
         height: 40px !important;
     }

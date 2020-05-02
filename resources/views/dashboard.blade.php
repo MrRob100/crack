@@ -71,8 +71,9 @@ body {
 }
 
 .dl-icon {
+    filter: brightness(30%);
     position: absolute;
-    right: 18px;
+    right: 0;
     width: 40px;
     top: 0px;
 }
