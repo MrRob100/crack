@@ -3,6 +3,7 @@
       <div class="slither" v-for="(tune, index) in tunesFormatted" :key="tune">
 
         <tune-stack
+        v-if="tune !== ''"
         :ctx="ctx"
         :para="para"
         :name="tune"
