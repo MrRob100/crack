@@ -1,5 +1,5 @@
 <template>
-  <div class="container slider-house">
+  <div class="contr slider-house">
     <div class="marker marker-start" :id='"div-start-"+setting' :style="'left: '+ canvasLeft + 'px'">
       <div class="markerheader" :id='"div-start-"+setting+"-header"'>S</div>
     </div>

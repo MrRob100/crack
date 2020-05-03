@@ -640,9 +640,6 @@ export default {
         color: rgba(50, 2, 95, 0) !important;
     }
 
-    .container {
-        padding: 0!important;
-    }
     button {
         -webkit-appearance: none;
         height: 40px;
