@@ -50,6 +50,7 @@ html, body {
     font-family: 'Courier New', Courier, monospace !important;
 }
 body {
+    width: 100%;
     position: relative;
     color: #B27FFF !important;
 }
