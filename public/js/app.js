@@ -2805,6 +2805,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var isso = this;
+    var body = document.querySelector("body");
     isso.dlref = window.location.origin + "/dl?song=" + isso.name;
     var source;
     var request;
@@ -2909,7 +2910,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
     play.onclick = function () {
-      document.querySelector("body").style.position = "fixed";
+      body.style.position = "fixed";
+      body.style.overflowY = "hidden";
       var prevent = document.getElementById('prevent-' + isso.pos);
 
       if (!isso.playing && isso.ableToPlay && !prevent) {
@@ -2929,7 +2931,8 @@ __webpack_require__.r(__webpack_exports__);
     };
 
     stop.onclick = function () {
-      document.querySelector("body").style.position = "relative";
+      body.style.position = "relative";
+      body.style.overflowY = "scroll";
       source.stop(0);
       convolver.disconnect();
       isso.playing = false;

@@ -55,6 +55,7 @@ export default {
 
   mounted() {
     var isso = this;
+    var body = document.querySelector("body");
 
     isso.dlref = window.location.origin + "/dl?song=" + isso.name;
 
@@ -193,7 +194,8 @@ export default {
 
     //can remove abletoplay
     play.onclick = function() {
-      document.querySelector("body").style.position = "fixed";
+      body.style.position = "fixed";
+      body.style.overflowY = "hidden";
 
       var prevent = document.getElementById('prevent-' + isso.pos);
       if (!isso.playing && isso.ableToPlay && !prevent) {
@@ -216,7 +218,8 @@ export default {
     };
 
     stop.onclick = function() {
-      document.querySelector("body").style.position = "relative";
+      body.style.position = "relative";
+      body.style.overflowY = "scroll";
 
       source.stop(0);
       convolver.disconnect();
