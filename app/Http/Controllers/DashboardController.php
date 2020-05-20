@@ -63,7 +63,7 @@ class DashboardController extends Controller
 
         $file = $request->file('song');
         $typ = $file->getMimeType(); 
-        if ($typ !=== 'audio/mpeg') {
+        // if ($typ === 'audio/mpeg') {
 
             //removes spaces in name
             $song_name = str_replace(" ", "_", $file->getClientOriginalName()); 
@@ -89,9 +89,9 @@ class DashboardController extends Controller
             // exec("/usr/local/bin/ffmpeg",$o, $r);
             // dump($r);
 
-        } else {
-            return redirect($para);
-        }
+        // } else {
+        //     return redirect($para);
+        // }
 
         return redirect($para);
     }
