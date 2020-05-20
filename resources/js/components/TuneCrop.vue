@@ -1,21 +1,31 @@
 <template>
+<<<<<<< HEAD
   <div class="contr slider-house">
     <div class="marker marker-start" :id='"div-start-"+setting' :style="'left: '+ canvasLeft + 'px'">
+=======
+  <div id="bar" class="container slider-house">
+    <div class="marker marker-start" :id='"div-start-"+setting' :style="'left: '+ start + '%'">
+>>>>>>> fx
       <div class="markerheader" :id='"div-start-"+setting+"-header"'>S</div>
     </div>
-    <div class="marker marker-end" :id='"div-end-"+setting'>
+    <div class="marker marker-end" :id='"div-end-"+setting' :style="'left: '+ end + '%'">
       <div class="markerheader" :id='"div-end-"+setting+"-header"'>E</div>
     </div>
   </div>
 </template>
 <script>
 
-export default {
+import Meths from '../meths.js';
 
-  props: ['setting', 'canvasWidth', 'canvasLeft', 'name'],
+export default {
+  
+  props: ['setting', 'name'],
 
   data: function() {
     return {
+      startString: "startScale",
+      endString: "endScale",
+      start: 0,
       end: 0,
     }
   },
@@ -25,12 +35,11 @@ export default {
 
     var isso = this;
 
+    isso.getMarker("startScale");
+    isso.getMarker("endScale");
+
     var nonHeadStart = document.getElementById("div-start-" + isso.setting); 
     var nonHeadEnd = document.getElementById("div-end-" + isso.setting); 
-
-    nonHeadEnd.style.left = "calc(100% - 20px)";
-
-    // nonHeadEnd.style.left = this.canvasWidth; 
 
     // Make the DIV element draggable:
     dragElement(nonHeadStart);
@@ -111,6 +120,13 @@ export default {
         //telling parent that drag is starting
         isso.$emit('clicked');
 
+        var addPrevent = document.getElementsByClassName('container')[0];
+        addPrevent.setAttribute('id', 'prevent-' + isso.setting);
+
+        setTimeout(function() {
+          addPrevent.removeAttribute('id');
+        }, 500);
+
         elmnt.style.left = ((elmnt.offsetLeft - pos1) / window.innerWidth) * 100 + "%";
 
         if (e.toElement) {
@@ -131,8 +147,6 @@ export default {
           }
         }
 
-
-
         // stop moving when mouse button is released:
         document.onmouseup = null;
         document.onmousemove = null;
@@ -142,23 +156,41 @@ export default {
     }
   },
   methods: {
-    setMarkers: function(which, ol) {
+
+    //return numeric
+    getMarker: function(which) {
+
       var isso = this;
+
       var request = new XMLHttpRequest();
+      var path = Meths.getMarkersPath(this.para, this.name, which);
 
-      var value = ol / window.innerWidth;
-
-      if (window.location.hostname == 'localhost') {
-        request.open('GET', '/crack/public/set?which=' + which + "&position=" + isso.name + "&value=" + value);
-      
-      } else {
-        request.open('GET', '/set?which=' + which + "&position=" + isso.name + "&value=" + value);
-      }
-      
+      request.open('GET', path, true);
       request.send();
-      // request.onload = function () {
+      request.onload = function() {
+        
+        if (which == "startScale") {
+          var startPoint = JSON.parse(request.response)[which]; 
+          isso.start = startPoint * 100;
+          isso.$emit('setStart', which, startPoint);
+        }
 
-      //   }
+        if (which == "endScale") {
+          var endPoint = JSON.parse(request.response)[which];
+          isso.end = endPoint * 100;
+          isso.$emit('setEnd', which, endPoint);
+        }
+      }
+
+    },
+
+    setMarkers: function(which, value) {
+      var scaledValue = value / window.innerWidth;
+      var request = new XMLHttpRequest();
+      var path = Meths.setMarkersPath(this.para, this.name, which, scaledValue);
+      request.open('GET', path, true);
+      request.send();
+      this.$emit('value', which, scaledValue);
       }
   }
 };
@@ -182,10 +214,12 @@ export default {
 
 .marker-start {
   border-right: none;
+  /* left: 0; */
 }
 
 .marker-end {
   border-left: none;
+  /* left: calc(100% - 20px); */
 }
 
 .markerheader {
