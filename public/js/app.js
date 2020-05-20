@@ -2022,11 +2022,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['setting', 'name'],
@@ -2756,6 +2751,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -41559,9 +41555,64 @@ render._withStripped = true
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TuneCrop.vue?vue&type=template&id=c81917da& ***!
   \***********************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):\nRangeError: Invalid string length\n    at repeat$1 (/Applications/MAMP/htdocs/crack/node_modules/vue-template-compiler/build.js:4558:28)\n    at Object.generateCodeFrame (/Applications/MAMP/htdocs/crack/node_modules/vue-template-compiler/build.js:4540:52)\n    at loaderContext.emitError.compiled.errors.map (/Applications/MAMP/htdocs/crack/node_modules/vue-loader/lib/loaders/templateLoader.js:64:34)\n    at Array.map (<anonymous>)\n    at Object.module.exports (/Applications/MAMP/htdocs/crack/node_modules/vue-loader/lib/loaders/templateLoader.js:63:25)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container slider-house", attrs: { id: "bar" } },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "marker marker-start",
+          style: "left: " + _vm.start + "%",
+          attrs: { id: "div-start-" + _vm.setting }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "markerheader",
+              attrs: { id: "div-start-" + _vm.setting + "-header" }
+            },
+            [_vm._v("S")]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "marker marker-end",
+          style: "left: " + _vm.end + "%",
+          attrs: { id: "div-end-" + _vm.setting }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "markerheader",
+              attrs: { id: "div-end-" + _vm.setting + "-header" }
+            },
+            [_vm._v("E")]
+          )
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
 
 /***/ }),
 

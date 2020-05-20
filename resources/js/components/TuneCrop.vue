@@ -1,11 +1,6 @@
 <template>
-<<<<<<< HEAD
-  <div class="contr slider-house">
-    <div class="marker marker-start" :id='"div-start-"+setting' :style="'left: '+ canvasLeft + 'px'">
-=======
   <div id="bar" class="container slider-house">
     <div class="marker marker-start" :id='"div-start-"+setting' :style="'left: '+ start + '%'">
->>>>>>> fx
       <div class="markerheader" :id='"div-start-"+setting+"-header"'>S</div>
     </div>
     <div class="marker marker-end" :id='"div-end-"+setting' :style="'left: '+ end + '%'">
