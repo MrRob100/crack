@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="crow cstop" v-for="(tune, index) in tunesFormatted" :key="tune">
-            <button :id='"stbutton-"+index'>Stop Icon</button>
+            <button :id='"stbutton-"+index'>Stop</button>
         </div>
         
       </div>
@@ -168,7 +168,7 @@ export default {
 
 .cstop button{
     border: none;
-    /* background-color: rgb(110, 78, 158); */
+    background-color: #fff;
 }
 /* sliders */
 

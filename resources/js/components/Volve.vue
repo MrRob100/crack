@@ -154,6 +154,7 @@ export default {
       var duration = source.buffer.duration;
       var offset = duration * isso.playFrom;
       source.start(0, offset);
+      source.loopStart(offset);
     }
 
     function getImpulse() {
@@ -190,6 +191,8 @@ export default {
 
     //can remove abletoplay
     play.onclick = function() {
+      document.querySelector("body").style.position = "fixed";
+
       var prevent = document.getElementById('prevent-' + isso.pos);
       if (!isso.playing && isso.ableToPlay && !prevent) {
         convolver.disconnect();
@@ -211,6 +214,8 @@ export default {
     };
 
     stop.onclick = function() {
+      document.querySelector("body").style.position = "relative";
+
       source.stop(0);
       convolver.disconnect();
       isso.playing = false;
@@ -309,7 +314,11 @@ export default {
         // var loopEnd = duration * newVal;
         // this.src.loopEnd = loopEnd;
       // }
-    }
+    },
+
+    // playing: function(newState, oldState) {
+
+    // }
   },
 
   methods: {
