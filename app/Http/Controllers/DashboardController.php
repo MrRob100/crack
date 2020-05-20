@@ -63,7 +63,7 @@ class DashboardController extends Controller
 
         $file = $request->file('song');
         $typ = $file->getMimeType(); 
-        if ($typ === 'audio/mpeg') {
+        if ($typ !=== 'audio/mpeg') {
 
             //removes spaces in name
             $song_name = str_replace(" ", "_", $file->getClientOriginalName()); 
