@@ -20,10 +20,15 @@
     ></Tune-Stack>
     @endforeach --}}
 
-    <Ctx
+    {{-- <Ctx
     tunes="{{ $t_string }}"
     para="{{ $para }}"
-    ></Ctx>
+    ></Ctx> --}}
+
+    <Ctx2
+    tunes="{{ $t_string }}"
+    para="{{ $para }}"
+    ></Ctx2>
 
 @endsection
 
