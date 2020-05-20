@@ -153,8 +153,10 @@ export default {
       //start from
       var duration = source.buffer.duration;
       var offset = duration * isso.playFrom;
+      var endset = duration * isso.playTo;
       source.start(0, offset);
-      source.loopStart(offset);
+      source.loopStart = offset;
+      source.loopEnd = endset;
     }
 
     function getImpulse() {
