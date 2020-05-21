@@ -119,7 +119,9 @@ export default {
 @media (max-width: 600px) {
     .control-box {
         width: 100%;
-        transform: translate(-50%, -48px);
+        transform: translate(-50%, 0);
+        bottom: 48px;
+        top: initial;
     }
 }
 
@@ -144,7 +146,7 @@ export default {
 
 .ctop-row {
     display: flex;
-    height: 180px;
+    height: 350px;
 }
 
 .cbottom-row {
@@ -154,11 +156,11 @@ export default {
 .fx-container {
     flex: 1;
     padding-left: 13.5%;
-    padding-top: 157px;
+    padding-top: 300px;
 }
 
 .fx {
-    width: 180px;
+    width: 320px;
     transform: rotate(-90deg);
     transform-origin: 0%;
     position: absolute;
