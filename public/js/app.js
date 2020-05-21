@@ -2792,6 +2792,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ["ctx", "para", "name", "pos"],
   data: function data() {
     return {
+      nameTrimmed: "",
       playFrom: "",
       playTo: "",
       ableToPlay: true,
@@ -2887,6 +2888,32 @@ __webpack_require__.r(__webpack_exports__);
 
       try {
         source.start(0, offset);
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = toBlur[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var item = _step.value;
+            item.style.filter = "blur(5px)";
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return != null) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
+        body.style.position = "fixed";
+        body.style.overflowY = "hidden";
         isso.playing = true;
         isso.loaded = true;
         stop.style.display = "block";
@@ -2926,32 +2953,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
     play.onclick = function () {
-      body.style.position = "fixed";
-      body.style.overflowY = "hidden";
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        for (var _iterator = toBlur[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var item = _step.value;
-          item.style.filter = "blur(5px)";
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return != null) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-
       var prevent = document.getElementById('prevent-' + isso.pos);
 
       if (!isso.playing && isso.ableToPlay && !prevent) {
@@ -3055,6 +3056,8 @@ __webpack_require__.r(__webpack_exports__);
       } catch (_unused2) {//
       }
     }, 2);
+    this.nameTrim();
+    window.addEventListener("resize", this.nameTrim);
   },
   watch: {
     // whenever question changes, this function will run, also does it on init
@@ -3099,8 +3102,9 @@ __webpack_require__.r(__webpack_exports__);
         this.playTo = value;
       }
     },
-    nameTrim: function nameTrim(name) {
-      return name.length > 22 ? name.substr(0, 22) + "..." : name;
+    nameTrim: function nameTrim() {
+      var scale = window.innerWidth / 15.16;
+      this.nameTrimmed = this.name.length > scale - 5 ? this.name.substr(0, scale - 5) + "..." : this.name;
     },
     dl: function dl() {
       var isso = this;
@@ -41813,7 +41817,7 @@ var render = function() {
         },
         [
           _c("div", { staticClass: "inln-btn" }, [
-            _c("h3", [_vm._v(_vm._s(_vm.nameTrim(_vm.name)))])
+            _c("h3", [_vm._v(_vm._s(_vm.nameTrimmed))])
           ]),
           _vm._v(" "),
           _c("tune-crop", {

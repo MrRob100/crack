@@ -7,7 +7,7 @@
       :class="playClass()"
       >
         <div class="inln-btn">
-            <h3>{{ nameTrim(name) }}</h3>
+            <h3>{{ nameTrimmed }}</h3>
         </div>
         <tune-crop
         @value="cropVal"
@@ -37,6 +37,7 @@ export default {
 
   data: function() {
     return {
+      nameTrimmed: "",
       playFrom: "",
       playTo: "",
       ableToPlay: true,
@@ -161,6 +162,14 @@ export default {
       try {
         
         source.start(0, offset);
+
+        for (let item of toBlur) {
+          item.style.filter = "blur(5px)";
+        }
+
+        body.style.position = "fixed";
+        body.style.overflowY = "hidden";
+
         isso.playing = true;
         isso.loaded = true;
         stop.style.display = "block";
@@ -208,12 +217,6 @@ export default {
 
     //can remove abletoplay
     play.onclick = function() {
-      body.style.position = "fixed";
-      body.style.overflowY = "hidden";
-
-      for (let item of toBlur) {
-        item.style.filter = "blur(5px)";
-      }
 
       var prevent = document.getElementById('prevent-' + isso.pos);
       if (!isso.playing && isso.ableToPlay && !prevent) {
@@ -315,6 +318,9 @@ export default {
 
     }, 2);
 
+    this.nameTrim();
+    window.addEventListener("resize", this.nameTrim);
+
   },
 
   watch: {
@@ -372,8 +378,9 @@ export default {
       }
     },
 
-    nameTrim: function(name) {
-      return name.length > 22 ? name.substr(0, 22) + "..." : name;
+    nameTrim: function() {
+      var scale = window.innerWidth / 15.16;
+      this.nameTrimmed = this.name.length > scale - 5 ? this.name.substr(0, scale - 5) + "..." : this.name;
     },
 
     dl: function() {
