@@ -53924,7 +53924,7 @@ var app = new Vue({
  */
 
 try {
-  window.Popper = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js").default;
+  // window.Popper = require('popper.js').default;
   global.$ = global.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
 
   __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
