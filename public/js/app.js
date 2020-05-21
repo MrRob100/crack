@@ -3019,8 +3019,8 @@ __webpack_require__.r(__webpack_exports__);
           speedValue.innerHTML = Math.floor(speedControl.value * 100) + "%";
           convolverGain.gain.value = reverbControl.value;
           reverbValue.innerHTML = Math.floor(reverbControl.value * 100) + "%";
-          isso.filter.frequency.value = filterControl.value;
-          filterValue.innerHTML = filterControl.value + " Hz";
+          isso.filter.frequency.value = filterControl.value < 20000 ? filterControl.value / 4 : filterControl.value;
+          filterValue.innerHTML = Math.floor(isso.filter.frequency.value) + " Hz";
           isso.amt = phaserControl.value;
           phaserValue.innerHTML = Math.floor(phaserControl.value * 100) + "%";
         } catch (_unused) {//
