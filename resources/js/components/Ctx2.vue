@@ -146,7 +146,7 @@ export default {
 
 .ctop-row {
     display: flex;
-    height: 350px;
+    height: 300px;
 }
 
 .cbottom-row {
@@ -156,11 +156,11 @@ export default {
 .fx-container {
     flex: 1;
     padding-left: 13.5%;
-    padding-top: 300px;
+    padding-top: 270px;
 }
 
 .fx {
-    width: 320px;
+    width: 280px;
     transform: rotate(-90deg);
     transform-origin: 0%;
     position: absolute;
