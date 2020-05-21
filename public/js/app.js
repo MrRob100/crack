@@ -2829,10 +2829,11 @@ __webpack_require__.r(__webpack_exports__);
     notch.frequency.value = 100;
     filter.Q.value = 1.5;
     var masterCompression = isso.ctx.createDynamicsCompressor();
-    masterCompression.threshold.value = -10; //need source and impulse
+    masterCompression.threshold.value = -10; //source and impulse
 
+    var subdir = isso.para !== "-" ? isso.para + "/" + isso.name : "" + isso.name;
+    var sourceUrl = "storage/data/" + subdir;
     var impulseUrl = "storage/data/tenniscourt.wav";
-    var sourceUrl = "storage/data/" + isso.name;
     var box = document.getElementsByClassName("control-box")[0];
     var play = document.getElementById("stack-" + isso.pos);
     var stop = document.getElementById("stbutton-" + isso.pos);

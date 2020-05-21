@@ -83,9 +83,11 @@ export default {
     var masterCompression = isso.ctx.createDynamicsCompressor();
     masterCompression.threshold.value = -10;
 
-    //need source and impulse
+    //source and impulse
+    var subdir = isso.para !== "-" ? isso.para + "/" + isso.name : "" + isso.name;
+    var sourceUrl = "storage/data/" + subdir;
+
     var impulseUrl = "storage/data/tenniscourt.wav";
-    var sourceUrl = "storage/data/" + isso.name;
 
     var box = document.getElementsByClassName("control-box")[0];
     var play = document.getElementById("stack-" + isso.pos);
