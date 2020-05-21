@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="contr">
+<div class="contr to-blur">
     <form class="upl" id="song-upload" action="{{ $para }}" method="post" enctype="multipart/form-data">
         {!! csrf_field() !!}
         <input id="song-file-input" type="file" name="song" onchange="ch()">

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="stack-house">
+    <div class="stack-house to-blur">
       <div 
       :id='"stack-" + pos'
       class="stack-slice stack-bottom"
@@ -56,6 +56,7 @@ export default {
   mounted() {
     var isso = this;
     var body = document.querySelector("body");
+    var toBlur = document.getElementsByClassName("to-blur");
 
     isso.dlref = window.location.origin + "/dl?song=" + isso.name;
 
@@ -197,6 +198,10 @@ export default {
       body.style.position = "fixed";
       body.style.overflowY = "hidden";
 
+      for (let item of toBlur) {
+        item.style.filter = "blur(5px)";
+      }
+
       var prevent = document.getElementById('prevent-' + isso.pos);
       if (!isso.playing && isso.ableToPlay && !prevent) {
         convolver.disconnect();
@@ -220,6 +225,10 @@ export default {
     stop.onclick = function() {
       body.style.position = "relative";
       body.style.overflowY = "scroll";
+
+      for (let item of toBlur) {
+        item.style.filter = "none";
+      }
 
       source.stop(0);
       convolver.disconnect();

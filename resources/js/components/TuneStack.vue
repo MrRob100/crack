@@ -171,6 +171,10 @@ export default {
             var speedPlayback = document.getElementsByClassName("playback-speed")[0];
             var phasePlayback = document.getElementsByClassName("playback-phase")[0];
 
+            var toBlur = document.getElementsByClassName('to-blur');
+            toBlur[0].style.filter = "blur(5px)";
+            toBlur[1].style.filter = "blur(5px)";
+
             speedPlayback.innerHTML = "Speed: 100%";
             phasePlayback.innerHTML = "Phaser: 0%";
 
@@ -207,6 +211,8 @@ export default {
             
             speedPlayback.innerHTML = "Speed: --";
             phasePlayback.innerHTML = "Phaser: --";
+
+
 
             this.setBody('stop');
 

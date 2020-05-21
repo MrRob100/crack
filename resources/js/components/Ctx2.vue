@@ -8,6 +8,7 @@
         :pos="index"
         ></volve>
       </div>
+      <!-- <div id="screen"></div> -->
 
       <div class="control-box">
 
@@ -73,6 +74,11 @@ export default {
 
 </script>
 <style>
+
+
+/* #screen {
+    position: absolute;
+} */
 
 .dbld {
     /* background-color: aqua !important; */
