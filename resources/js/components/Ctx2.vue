@@ -136,7 +136,7 @@ export default {
 }
 
 .bottom-container {
-    background-color: #000;
+    background-color: #111;
 }
 
 .crow button {
