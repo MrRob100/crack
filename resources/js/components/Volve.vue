@@ -158,7 +158,18 @@ export default {
       var duration = source.buffer.duration;
       var offset = duration * isso.playFrom;
       var endset = duration * isso.playTo;
-      source.start(0, offset);
+      try {
+        
+        source.start(0, offset);
+        isso.playing = true;
+        isso.loaded = true;
+        stop.style.display = "block";
+        box.style.display = "block";
+
+      } catch(err) {
+        console.log(err);
+      }
+
       source.loopStart = offset;
       source.loopEnd = endset;
     }
@@ -216,10 +227,6 @@ export default {
           connectandplay();
         }
 
-        isso.playing = true;
-        isso.loaded = true;
-        stop.style.display = "block";
-        box.style.display = "block";
       }
     };
 
