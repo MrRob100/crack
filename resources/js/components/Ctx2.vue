@@ -119,8 +119,7 @@ export default {
 @media (max-width: 600px) {
     .control-box {
         width: 100%;
-        transform: translate(-50%, 0);
-        bottom: 0;
+        transform: translate(-50%, -48px);
     }
 }
 

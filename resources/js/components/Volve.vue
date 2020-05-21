@@ -208,7 +208,6 @@ export default {
 
         //if not cached
 
-
         if (!source) {
           getSource();
         } else {
