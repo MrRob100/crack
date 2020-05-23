@@ -10,25 +10,12 @@
     <div class=playback>
         <p class="playback-item playback-speed">Speed: --</p><p class="playback-item playback-phase">Phaser: --</p>
     </div>
-
 </div>
-    {{-- @foreach ($tunes as $tune)
-    <Tune-Stack
-    para={{ $para }}
-    name={{ $tune }}
-    pos={{ array_search($tune, $tunes) }}
-    ></Tune-Stack>
-    @endforeach --}}
 
-    {{-- <Ctx
-    tunes="{{ $t_string }}"
-    para="{{ $para }}"
-    ></Ctx> --}}
-
-    <Ctx2
-    tunes="{{ $t_string }}"
-    para="{{ $para }}"
-    ></Ctx2>
+<Ctx2
+tunes="{{ $t_string }}"
+para="{{ $para }}"
+></Ctx2>
 
 @endsection
 
@@ -88,11 +75,6 @@ body {
     position: absolute;
 }
 
-.bld:hover {
-    cursor: pointer;
-    background-color: rgb(110, 78, 158) !important;
-}
-
 .strip-play {
     cursor: pointer;
     background-color: rgb(110, 78, 158) !important;
@@ -106,20 +88,5 @@ body {
 function ch() {
     $('#song-upload').submit();
 }
-
-setInterval(function() {
-    //new
-    var strp = $('.strip-play');
-    var strs = $('.strip-stop');
-
-    if (strp.length == 1) {
-        strs.addClass('dbld');
-        strs.removeClass('bld');
-    } else {
-        strs.addClass('bld');
-        strs.removeClass('dbld');
-    }
-
-}, 500);
 
 </script>

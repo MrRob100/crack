@@ -1814,12 +1814,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['tunes', 'para'],
   data: function data() {
     return {
       ctx: {},
-      tunesFormatted: {}
+      tunesFormatted: {},
+      playable: true
     };
   },
   mounted: function mounted() {
@@ -1827,6 +1830,11 @@ __webpack_require__.r(__webpack_exports__);
     var audioCtx = new AudioContext();
     this.ctx = audioCtx;
     this.tunesFormatted = this.tunes.split(" ");
+  },
+  methods: {
+    setPlayable: function setPlayable(playable) {
+      this.playable = playable;
+    }
   }
 });
 
@@ -2789,7 +2797,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["ctx", "para", "name", "pos"],
+  props: ["playable", "ctx", "para", "name", "pos"],
   data: function data() {
     return {
       nameTrimmed: "",
@@ -2800,6 +2808,7 @@ __webpack_require__.r(__webpack_exports__);
       dlref: "",
       dlding: false,
       playing: false,
+      loading: false,
       loaded: false,
       src: {},
       gain: {},
@@ -2888,6 +2897,7 @@ __webpack_require__.r(__webpack_exports__);
 
       try {
         source.start(0, offset);
+        isso.loading = false;
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
         var _iteratorError = undefined;
@@ -2918,12 +2928,12 @@ __webpack_require__.r(__webpack_exports__);
         isso.loaded = true;
         stop.style.display = "block";
         box.style.display = "block";
+        source.loopStart = offset;
+        source.loopEnd = endset;
       } catch (err) {
+        isso.$emit('able', true);
         console.log(err);
       }
-
-      source.loopStart = offset;
-      source.loopEnd = endset;
     }
 
     function getImpulse() {
@@ -2953,9 +2963,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
     play.onclick = function () {
+      isso.$emit('able', false);
       var prevent = document.getElementById('prevent-' + isso.pos);
 
-      if (!isso.playing && isso.ableToPlay && !prevent) {
+      if (!isso.playing && isso.ableToPlay && !prevent && isso.playable) {
+        isso.ableToPlay = false;
         convolver.disconnect(); //if not cached
 
         if (!source) {
@@ -2967,6 +2979,8 @@ __webpack_require__.r(__webpack_exports__);
     };
 
     stop.onclick = function () {
+      isso.$emit('able', true);
+      isso.ableToPlay = true;
       body.style.position = "relative";
       body.style.overflowY = "scroll";
       var _iteratorNormalCompletion2 = true;
@@ -3058,25 +3072,6 @@ __webpack_require__.r(__webpack_exports__);
     }, 2);
     this.nameTrim();
     window.addEventListener("resize", this.nameTrim);
-  },
-  watch: {
-    // whenever question changes, this function will run, also does it on init
-    playFrom: function playFrom(newVal, oldVal) {// if (this.playing) {
-      // console.log('update playfrom');
-      // var duration = this.src.buffer.duration;
-      // var loopStart = duration * newVal;
-      // this.src.loopStart = loopStart;
-      // }
-    },
-    playTo: function playTo(newVal, oldVal) {// if (this.playing) {
-      // console.log('update playto');
-      // var duration = this.src.buffer.duration;
-      // var loopEnd = duration * newVal;
-      // this.src.loopEnd = loopEnd;
-      // }
-    } // playing: function(newState, oldState) {
-    // }
-
   },
   methods: {
     canvasWidth: function canvasWidth() {
@@ -7684,7 +7679,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* #screen {\n    position: absolute;\n} */\n.dbld {\n    /* background-color: aqua !important; */\n}\n.stack-house {\n    width: 100%;\n    margin-bottom: 10px;\n}\n.bld:hover {\n    cursor: pointer;\n    background-color: rgb(110, 78, 158) !important;\n}\n.dld {\n    position: absolute;\n}\n.dl-icon {\n    -webkit-filter: brightness(30%);\n            filter: brightness(30%);\n    position: absolute;\n    right: 18px;\n    width: 40px;\n    top: 0px;\n}\n.control-box {\n    z-index: 10;\n    display: none;\n    overflow: hidden;\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n}\n@media (max-width: 600px) {\n.control-box {\n        width: 100%;\n        -webkit-transform: translate(-50%, 0);\n                transform: translate(-50%, 0);\n        bottom: 48px;\n        top: initial;\n}\n}\n@media (min-width: 601px) {\n.control-box {\n        width: 400px;\n}\n}\n.crow {\n}\n.bottom-container {\n    background-color: #111;\n}\n.crow button {\n    display: none;\n    width: 100%;\n}\n.ctop-row {\n    display: flex;\n    height: 300px;\n}\n.cbottom-row {\n    padding: 5px;\n    display: flex;\n}\n.fx-container {\n    flex: 1;\n    padding-left: 13.5%;\n    padding-top: 270px;\n}\n.fx {\n    width: 280px;\n    -webkit-transform: rotate(-90deg);\n            transform: rotate(-90deg);\n    -webkit-transform-origin: 0%;\n            transform-origin: 0%;\n    position: absolute;\n}\n.cbottom-row span {\n    text-align: center;\n    flex: 1;\n}\n.stbutton {\n    width: 100%;\n}\n.cstop button{\n    border: none;\n    background-color: #fff;\n}\n/* sliders */\n\n/* Hides the slider so that custom slider can be made */\n/* Otherwise white in Chrome */\ninput[type=range] {\n  -webkit-appearance: none; \n  background: transparent;\n}\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n}\ninput[type=range]:focus {\n  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */\n}\ninput[type=range]::-ms-track {\n  width: 100%;\n  cursor: pointer;\n\n  /* Hides the slider so custom styles can be added */\n  background: transparent; \n  border-color: transparent;\n  color: transparent;\n}\n\n/* thumb */\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n  margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n}\n\n/* All the same stuff for Firefox */\ninput[type=range]::-moz-range-thumb {\n\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n}\n\n/* All the same stuff for IE */\ninput[type=range]::-ms-thumb {\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  cursor: pointer;\n}\n\n", ""]);
+exports.push([module.i, "\n.stack-house {\n    width: 100%;\n    margin-bottom: 10px;\n    cursor: pointer;\n    background-color: rgb(110, 78, 158);\n}\n.stack-slice:hover {\n    cursor: pointer;\n    -webkit-filter: brightness(110%);\n            filter: brightness(110%);\n}\n.dld {\n    position: absolute;\n}\n.dl-icon {\n    -webkit-filter: brightness(30%);\n            filter: brightness(30%);\n    position: absolute;\n    right: 18px;\n    width: 40px;\n    top: 0px;\n}\n.control-box {\n    z-index: 10;\n    display: none;\n    overflow: hidden;\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n}\n@media (max-width: 600px) {\n.control-box {\n        width: 100%;\n        -webkit-transform: translate(-50%, 0);\n                transform: translate(-50%, 0);\n        bottom: 48px;\n        top: initial;\n}\n}\n@media (min-width: 601px) {\n.control-box {\n        width: 400px;\n}\n}\n.crow {\n}\n.bottom-container {\n    background-color: #111;\n}\n.crow button {\n    display: none;\n    width: 100%;\n}\n.ctop-row {\n    display: flex;\n    height: 300px;\n}\n.cbottom-row {\n    padding: 5px;\n    display: flex;\n}\n.fx-container {\n    flex: 1;\n    padding-left: 13.5%;\n    padding-top: 270px;\n}\n.fx {\n    width: 280px;\n    -webkit-transform: rotate(-90deg);\n            transform: rotate(-90deg);\n    -webkit-transform-origin: 0%;\n            transform-origin: 0%;\n    position: absolute;\n}\n.cbottom-row span {\n    text-align: center;\n    flex: 1;\n}\n.stbutton {\n    width: 100%;\n}\n.cstop button{\n    border: none;\n    background-color: #fff;\n}\n/* sliders */\n\n/* Hides the slider so that custom slider can be made */\n/* Otherwise white in Chrome */\ninput[type=range] {\n  -webkit-appearance: none; \n  background: transparent;\n}\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n}\ninput[type=range]:focus {\n  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */\n}\ninput[type=range]::-ms-track {\n  width: 100%;\n  cursor: pointer;\n\n  /* Hides the slider so custom styles can be added */\n  background: transparent; \n  border-color: transparent;\n  color: transparent;\n}\n\n/* thumb */\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n  margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n}\n\n/* All the same stuff for Firefox */\ninput[type=range]::-moz-range-thumb {\n\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n}\n\n/* All the same stuff for IE */\ninput[type=range]::-ms-thumb {\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  cursor: pointer;\n}\n\n", ""]);
 
 // exports
 
@@ -41398,7 +41393,14 @@ var render = function() {
           { key: tune, staticClass: "slither" },
           [
             _c("volve", {
-              attrs: { ctx: _vm.ctx, para: _vm.para, name: tune, pos: index }
+              attrs: {
+                playable: _vm.playable,
+                ctx: _vm.ctx,
+                para: _vm.para,
+                name: tune,
+                pos: index
+              },
+              on: { able: _vm.setPlayable }
             })
           ],
           1

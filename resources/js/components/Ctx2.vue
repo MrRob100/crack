@@ -2,6 +2,8 @@
     <div>
       <div class="slither" v-for="(tune, index) in tunesFormatted" :key="tune">
         <volve
+        @able="setPlayable"
+        :playable="playable"
         :ctx="ctx"
         :para="para"
         :name="tune"
@@ -59,7 +61,8 @@ export default {
     data: function() {
         return {
             ctx: {},
-            tunesFormatted: {}
+            tunesFormatted: {},
+            playable: true,
         }
     },
 
@@ -68,6 +71,12 @@ export default {
         const audioCtx = new AudioContext();
         this.ctx = audioCtx;
         this.tunesFormatted = this.tunes.split(" ");
+    },
+
+    methods: {
+        setPlayable(playable) {
+            this.playable = playable;
+        }
     }
 
 }
@@ -75,23 +84,16 @@ export default {
 </script>
 <style>
 
-
-/* #screen {
-    position: absolute;
-} */
-
-.dbld {
-    /* background-color: aqua !important; */
-}
-
 .stack-house {
     width: 100%;
     margin-bottom: 10px;
+    cursor: pointer;
+    background-color: rgb(110, 78, 158);
 }
 
-.bld:hover {
+.stack-slice:hover {
     cursor: pointer;
-    background-color: rgb(110, 78, 158) !important;
+    filter: brightness(110%);
 }
 
 .dld {

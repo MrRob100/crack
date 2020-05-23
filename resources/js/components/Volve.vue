@@ -33,7 +33,7 @@
 
 <script>
 export default {
-  props: ["ctx", "para", "name", "pos"],
+  props: ["playable", "ctx", "para", "name", "pos"],
 
   data: function() {
     return {
@@ -45,6 +45,7 @@ export default {
       dlref: "",
       dlding: false,
       playing: false,
+      loading: false,
       loaded: false,
       src: {},
       gain: {},
@@ -159,9 +160,10 @@ export default {
       var duration = source.buffer.duration;
       var offset = duration * isso.playFrom;
       var endset = duration * isso.playTo;
+
       try {
-        
         source.start(0, offset);
+        isso.loading = false;
 
         for (let item of toBlur) {
           item.style.filter = "blur(5px)";
@@ -175,12 +177,14 @@ export default {
         stop.style.display = "block";
         box.style.display = "block";
 
+        source.loopStart = offset;
+        source.loopEnd = endset;
+
       } catch(err) {
+        isso.$emit('able', true);
         console.log(err);
       }
 
-      source.loopStart = offset;
-      source.loopEnd = endset;
     }
 
     function getImpulse() {
@@ -218,8 +222,11 @@ export default {
     //can remove abletoplay
     play.onclick = function() {
 
+      isso.$emit('able', false);
+
       var prevent = document.getElementById('prevent-' + isso.pos);
-      if (!isso.playing && isso.ableToPlay && !prevent) {
+      if (!isso.playing && isso.ableToPlay && !prevent && isso.playable) {
+        isso.ableToPlay = false;
         convolver.disconnect();
 
         //if not cached
@@ -234,6 +241,8 @@ export default {
     };
 
     stop.onclick = function() {
+      isso.$emit('able', true);
+      isso.ableToPlay = true;
       body.style.position = "relative";
       body.style.overflowY = "scroll";
 
@@ -322,32 +331,6 @@ export default {
     this.nameTrim();
     window.addEventListener("resize", this.nameTrim);
 
-  },
-
-  watch: {
-    // whenever question changes, this function will run, also does it on init
-    playFrom: function (newVal, oldVal) {
-      // if (this.playing) {
-        // console.log('update playfrom');
-        // var duration = this.src.buffer.duration;
-        // var loopStart = duration * newVal;
-        // this.src.loopStart = loopStart;
-      // }
-
-    },
-
-    playTo: function (newVal, oldVal) {
-      // if (this.playing) {
-        // console.log('update playto');
-        // var duration = this.src.buffer.duration;
-        // var loopEnd = duration * newVal;
-        // this.src.loopEnd = loopEnd;
-      // }
-    },
-
-    // playing: function(newState, oldState) {
-
-    // }
   },
 
   methods: {
