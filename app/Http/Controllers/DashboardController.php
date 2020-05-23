@@ -86,9 +86,6 @@ class DashboardController extends Controller
                 unlink($path.$subdir.$song_name);
             }
 
-            // exec("/usr/local/bin/ffmpeg",$o, $r);
-            // dump($r);
-
         } else {
             return redirect($para);
         }
@@ -121,7 +118,6 @@ class DashboardController extends Controller
     public function getMarker() {
 
         $position = $_GET['position'];
-        $which = $_GET['which'];
         $markers = json_decode(file_get_contents('../public/data/markerData.json'), true);
         return array_key_exists($position, $markers) ? $markers[$position] : null;
     }
@@ -130,6 +126,7 @@ class DashboardController extends Controller
         $position = $_GET['position'];
         $which = $_GET['which'];
         $val = $_GET['value'];
+
         $markers = json_decode(file_get_contents('../public/data/markerData.json'), true);
         $markers[$position][$which] = $val;
         file_put_contents('../public/data/markerData.json', json_encode($markers));  

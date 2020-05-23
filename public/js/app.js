@@ -1926,10 +1926,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["playable", "ctx", "para", "name", "pos"],
   data: function data() {
     return {
+      screenWidth: "",
       nameTrimmed: "",
       playFrom: "",
       playTo: "",
@@ -1987,7 +1989,8 @@ __webpack_require__.r(__webpack_exports__);
         var audioData = request.response;
         isso.ctx.decodeAudioData(audioData, function (buffer) {
           //canvas
-          var canvas = document.getElementById("canvas-" + isso.pos);
+          var canvas = document.getElementById("canvas-" + isso.pos); // isso.drawBuffer( isso.screenWidth, canvas.height, canvas.getContext('2d'), buffer );
+
           isso.drawBuffer(canvas.width, canvas.height, canvas.getContext('2d'), buffer); //audio
 
           myBuffer = buffer;
@@ -2201,11 +2204,13 @@ __webpack_require__.r(__webpack_exports__);
       }
     }, 2);
     this.nameTrim();
+    this.canvasWidth();
     window.addEventListener("resize", this.nameTrim);
+    window.addEventListener("resize", this.canvasWidth);
   },
   methods: {
     canvasWidth: function canvasWidth() {
-      return window.innerWidth;
+      this.screenWidth = window.innerWidth;
     },
     cropVal: function cropVal(which, value) {
       var isso = this;
@@ -2420,25 +2425,41 @@ __webpack_require__.r(__webpack_exports__);
     getMarker: function getMarker(which) {
       var isso = this;
       var request = new XMLHttpRequest();
-      var path = _meths_js__WEBPACK_IMPORTED_MODULE_0__["default"].getMarkersPath(this.para, this.name, which);
+      var path = _meths_js__WEBPACK_IMPORTED_MODULE_0__["default"].getMarkersPath(this.para, this.name);
       request.open('GET', path, true);
       request.send();
 
       request.onload = function () {
-        if (which == "startScale") {
-          var startPoint = JSON.parse(request.response)[which];
+        if (request.response === "") {}
+
+        if (which === "startScale") {
+          var startPoint;
+          var endPoint;
+
+          if (request.response === "") {
+            startPoint = 0;
+          } else {
+            var startPoint = JSON.parse(request.response)[which];
+          }
+
           isso.start = startPoint * 100;
           isso.$emit('setStart', which, startPoint);
         }
 
-        if (which == "endScale") {
-          var endPoint = JSON.parse(request.response)[which];
+        if (which === "endScale") {
+          if (request.response === "") {
+            endPoint = 0.98;
+          } else {
+            endPoint = JSON.parse(request.response)[which];
+          }
+
           isso.end = endPoint * 100;
           isso.$emit('setEnd', which, endPoint);
         }
       };
     },
     setMarkers: function setMarkers(which, value) {
+      console.log('which', which);
       var scaledValue = value / window.innerWidth;
       var request = new XMLHttpRequest();
       var path = _meths_js__WEBPACK_IMPORTED_MODULE_0__["default"].setMarkersPath(this.para, this.name, which, scaledValue);
@@ -6994,7 +7015,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.playback {\n    clear: left;\n}\n.playback-item {\n    display: inline;\n    font-size: 18px;\n}\n.playback-phase {\n    margin-left: 15px;\n}\nhtml, body {\n    height: 100%;\n    overflow-x: hidden;\n    touch-action: none;\n    background-color: rgb(50, 2, 95) !important;\n    font-family: 'Courier New', Courier, monospace !important;\n}\nbody {\n    width: 100%;\n    position: relative;\n    color: #B27FFF !important;\n}\n.navbar {\n    height: 20px;\n}\n.stack-del button {\n    display: none;\n}\n.upl {\n    float: left;\n}\n.dl-icon {\n    -webkit-filter: brightness(30%);\n            filter: brightness(30%);\n    position: absolute;\n    right: 0;\n    width: 40px;\n    top: 0px;\n}\n.dld {\n    position: absolute;\n}\n.stack-house {\n    width: 100%;\n    margin-bottom: 10px;\n    cursor: pointer;\n    background-color: rgb(110, 78, 158);\n}\n.stack-slice:hover {\n    cursor: pointer;\n    -webkit-filter: brightness(110%);\n            filter: brightness(110%);\n}\n.dld {\n    position: absolute;\n}\n.dl-icon {\n    -webkit-filter: brightness(30%);\n            filter: brightness(30%);\n    position: absolute;\n    right: 18px;\n    width: 40px;\n    top: 0px;\n}\n.control-box {\n    z-index: 10;\n    display: none;\n    overflow: hidden;\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n}\n@media (max-width: 600px) {\n.control-box {\n        width: 100%;\n        -webkit-transform: translate(-50%, 0);\n                transform: translate(-50%, 0);\n        bottom: 48px;\n        top: initial;\n}\n}\n@media (min-width: 601px) {\n.control-box {\n        width: 400px;\n}\n}\n.bottom-container {\n    background-color: #111;\n}\n.crow button {\n    display: none;\n    width: 100%;\n}\n.ctop-row {\n    display: flex;\n    height: 300px;\n}\n.cbottom-row {\n    padding: 5px;\n    display: flex;\n}\n.stack-bottom {\n    height: 40px;\n    background-color: rgb(79, 56, 114);\n}\n.fx-container {\n    flex: 1;\n    padding-left: 13.5%;\n    padding-top: 270px;\n}\n.inln-btn {\n    position: absolute;\n}\n.fx {\n    width: 280px;\n    -webkit-transform: rotate(-90deg);\n            transform: rotate(-90deg);\n    -webkit-transform-origin: 0%;\n            transform-origin: 0%;\n    position: absolute;\n}\n.cbottom-row span {\n    text-align: center;\n    flex: 1;\n}\n.stbutton {\n    width: 100%;\n}\n.cstop button{\n    border: none;\n    background-color: #fff;\n}\n/* sliders */\n\n/* Hides the slider so that custom slider can be made */\n/* Otherwise white in Chrome */\ninput[type=range] {\n  -webkit-appearance: none; \n  background: transparent;\n}\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n}\ninput[type=range]:focus {\n  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */\n}\ninput[type=range]::-ms-track {\n  width: 100%;\n  cursor: pointer;\n\n  /* Hides the slider so custom styles can be added */\n  background: transparent; \n  border-color: transparent;\n  color: transparent;\n}\n\n/* thumb */\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n  margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n}\n\n/* All the same stuff for Firefox */\ninput[type=range]::-moz-range-thumb {\n\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n}\n\n/* All the same stuff for IE */\ninput[type=range]::-ms-thumb {\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  cursor: pointer;\n}\n\n", ""]);
+exports.push([module.i, "\n.playback {\n    clear: left;\n}\n.playback-item {\n    display: inline;\n    font-size: 18px;\n}\n.playback-phase {\n    margin-left: 15px;\n}\nhtml, body {\n    height: 100%;\n    overflow-x: hidden;\n    touch-action: none;\n    background-color: rgb(50, 2, 95) !important;\n    font-family: 'Courier New', Courier, monospace !important;\n}\nbody {\n    width: 100%;\n    position: relative;\n    color: #B27FFF !important;\n}\n.navbar {\n    height: 20px;\n}\n.stack-del button {\n    display: none;\n}\n.upl {\n    float: left;\n}\n.dl-icon {\n    -webkit-filter: brightness(30%);\n            filter: brightness(30%);\n    position: absolute;\n    right: 0;\n    width: 40px;\n    top: 0px;\n}\n.dld {\n    position: absolute;\n    right: 0;\n}\n.stack-house {\n    width: 100%;\n    margin-bottom: 10px;\n    cursor: pointer;\n    background-color: rgb(110, 78, 158);\n}\n.stack-slice:hover {\n    cursor: pointer;\n    -webkit-filter: brightness(110%);\n            filter: brightness(110%);\n}\n.control-box {\n    z-index: 10;\n    display: none;\n    overflow: hidden;\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n}\n@media (max-width: 600px) {\n.control-box {\n        width: 100%;\n        -webkit-transform: translate(-50%, 0);\n                transform: translate(-50%, 0);\n        bottom: 48px;\n        top: initial;\n}\n}\n@media (min-width: 601px) {\n.control-box {\n        width: 400px;\n}\n}\n.bottom-container {\n    background-color: #111;\n}\n.crow button {\n    display: none;\n    width: 100%;\n}\n.ctop-row {\n    display: flex;\n    height: 300px;\n}\n.cbottom-row {\n    padding: 5px;\n    display: flex;\n}\n.stack-bottom {\n    height: 40px;\n    background-color: rgb(79, 56, 114);\n}\n.fx-container {\n    flex: 1;\n    padding-left: 13.5%;\n    padding-top: 270px;\n}\n.inln-btn {\n    position: absolute;\n}\n.canv {\n    width: 100%;\n    height: 40px;\n}\n.fx {\n    width: 280px;\n    -webkit-transform: rotate(-90deg);\n            transform: rotate(-90deg);\n    -webkit-transform-origin: 0%;\n            transform-origin: 0%;\n    position: absolute;\n}\n.cbottom-row span {\n    text-align: center;\n    flex: 1;\n}\n.stbutton {\n    width: 100%;\n}\n.cstop button{\n    border: none;\n    background-color: #fff;\n}\n/* sliders */\n\n/* Hides the slider so that custom slider can be made */\n/* Otherwise white in Chrome */\ninput[type=range] {\n  -webkit-appearance: none; \n  background: transparent;\n}\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n}\ninput[type=range]:focus {\n  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */\n}\ninput[type=range]::-ms-track {\n  width: 100%;\n  cursor: pointer;\n\n  /* Hides the slider so custom styles can be added */\n  background: transparent; \n  border-color: transparent;\n  color: transparent;\n}\n\n/* thumb */\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n  margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n}\n\n/* All the same stuff for Firefox */\ninput[type=range]::-moz-range-thumb {\n\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n}\n\n/* All the same stuff for IE */\ninput[type=range]::-ms-thumb {\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  cursor: pointer;\n}\n\n", ""]);
 
 // exports
 
@@ -7013,7 +7034,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.slider-house {\n  background-color: aqua;\n  padding-left: 0;\n}\n.marker {\n  width:20px;\n  height: 40px;\n  position: absolute;\n  z-index: 9;\n  /* background-color: #f1f1f1; */\n  border: 2px solid #d3d3d3;\n  text-align: center;\n}\n.marker-start {\n  border-right: none;\n  /* left: 0; */\n}\n.marker-end {\n  border-left: none;\n  /* left: calc(100% - 20px); */\n}\n.markerheader {\n  color: #d3d3d3;\n  height: 40px;\n  cursor: move;\n  z-index: 10;\n}\n\n", ""]);
+exports.push([module.i, "\n.slider-house {\n  background-color: aqua;\n  padding-left: 0;\n}\n.marker {\n  width:20px;\n  height: 40px;\n  position: absolute;\n  z-index: 9;\n  /* background-color: #f1f1f1; */\n  border: 2px solid #d3d3d3;\n  text-align: center;\n}\n.marker-start {\n  border-right: none;\n}\n.marker-end {\n  border-left: none;\n}\n.markerheader {\n  color: #d3d3d3;\n  height: 40px;\n  cursor: move;\n  z-index: 10;\n}\n\n", ""]);
 
 // exports
 
@@ -40858,11 +40879,7 @@ var render = function() {
           _vm._v(" "),
           _c("canvas", {
             staticClass: "canv",
-            attrs: {
-              id: "canvas-" + _vm.pos,
-              width: _vm.canvasWidth(),
-              height: "40"
-            }
+            attrs: { id: "canvas-" + _vm.pos }
           }),
           _vm._v(" "),
           _c("a", { attrs: { href: _vm.dlref } }, [

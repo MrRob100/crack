@@ -130,6 +130,7 @@ body {
 
 .dld {
     position: absolute;
+    right: 0;
 }
 
 .stack-house {
@@ -142,18 +143,6 @@ body {
 .stack-slice:hover {
     cursor: pointer;
     filter: brightness(110%);
-}
-
-.dld {
-    position: absolute;
-}
-
-.dl-icon {
-    filter: brightness(30%);
-    position: absolute;
-    right: 18px;
-    width: 40px;
-    top: 0px;
 }
 
 .control-box {
@@ -213,6 +202,11 @@ body {
 
 .inln-btn {
     position: absolute;
+}
+
+.canv {
+    width: 100%;
+    height: 40px;
 }
 
 .fx {

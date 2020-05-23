@@ -158,20 +158,35 @@ export default {
       var isso = this;
 
       var request = new XMLHttpRequest();
-      var path = Meths.getMarkersPath(this.para, this.name, which);
+      var path = Meths.getMarkersPath(this.para, this.name);
 
       request.open('GET', path, true);
       request.send();
       request.onload = function() {
+
+        if (request.response === "") {
+
+        }
         
-        if (which == "startScale") {
-          var startPoint = JSON.parse(request.response)[which]; 
+        if (which === "startScale") {
+          var startPoint;
+          var endPoint;
+
+          if (request.response === "") {
+            startPoint = 0;
+          } else {
+            var startPoint = JSON.parse(request.response)[which]; 
+          }
           isso.start = startPoint * 100;
           isso.$emit('setStart', which, startPoint);
         }
 
-        if (which == "endScale") {
-          var endPoint = JSON.parse(request.response)[which];
+        if (which === "endScale") {
+          if (request.response === "") {
+            endPoint = 0.98;
+          } else {
+            endPoint = JSON.parse(request.response)[which];
+          }
           isso.end = endPoint * 100;
           isso.$emit('setEnd', which, endPoint);
         }
@@ -180,6 +195,9 @@ export default {
     },
 
     setMarkers: function(which, value) {
+
+      console.log('which', which);
+
       var scaledValue = value / window.innerWidth;
       var request = new XMLHttpRequest();
       var path = Meths.setMarkersPath(this.para, this.name, which, scaledValue);
@@ -209,12 +227,10 @@ export default {
 
 .marker-start {
   border-right: none;
-  /* left: 0; */
 }
 
 .marker-end {
   border-left: none;
-  /* left: calc(100% - 20px); */
 }
 
 .markerheader {

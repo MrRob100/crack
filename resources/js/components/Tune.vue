@@ -16,7 +16,8 @@
         :setting='pos'
         :name='name'
         ></tune-crop>
-        <canvas class="canv" :id='"canvas-"+pos' :width="canvasWidth()" height="40"></canvas>
+        <canvas class="canv" :id='"canvas-"+pos'></canvas>
+        <!-- <canvas class="canv" :id='"canvas-"+pos' :width="screenWidth" height="40"></canvas> -->
         <a :href="dlref"
         >
         <button 
@@ -36,6 +37,7 @@ export default {
 
   data: function() {
     return {
+      screenWidth: "",
       nameTrimmed: "",
       playFrom: "",
       playTo: "",
@@ -109,6 +111,7 @@ export default {
 
             //canvas
             var canvas = document.getElementById("canvas-" + isso.pos);
+            // isso.drawBuffer( isso.screenWidth, canvas.height, canvas.getContext('2d'), buffer );
             isso.drawBuffer( canvas.width, canvas.height, canvas.getContext('2d'), buffer );
 
             //audio
@@ -328,14 +331,16 @@ export default {
     }, 2);
 
     this.nameTrim();
+    this.canvasWidth();
     window.addEventListener("resize", this.nameTrim);
+    window.addEventListener("resize", this.canvasWidth);
 
   },
 
   methods: {
 
     canvasWidth() {
-      return window.innerWidth;
+      this.screenWidth = window.innerWidth;
     },
 
     cropVal: function(which, value) {
@@ -378,7 +383,6 @@ export default {
     },
 
     drawBuffer: function( width, height, context, buffer ) {
-
       var data = buffer.getChannelData( 0 );
       var step = Math.ceil( data.length / width );
       var amp = height / 2;
