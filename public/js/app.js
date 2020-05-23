@@ -3083,6 +3083,7 @@ __webpack_require__.r(__webpack_exports__);
       isso.ableToPlay = false;
       setTimeout(function () {
         isso.ableToPlay = true;
+        isso.$emit('able', true);
       }, 500);
       this.playSelection(which, value);
     },

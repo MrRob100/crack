@@ -348,6 +348,7 @@ export default {
       isso.ableToPlay = false;
       setTimeout(function() {
           isso.ableToPlay = true;
+          isso.$emit('able', true);
       }, 500);
       this.playSelection(which, value);
     },
