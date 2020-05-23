@@ -7,9 +7,6 @@
         {!! csrf_field() !!}
         <input id="song-file-input" type="file" name="song" onchange="ch()">
     </form>
-    <div class=playback>
-        <p class="playback-item playback-speed">Speed: --</p><p class="playback-item playback-phase">Phaser: --</p>
-    </div>
 </div>
 
 <Ctx

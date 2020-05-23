@@ -145,6 +145,10 @@ body {
     filter: brightness(110%);
 }
 
+.contr {
+    height: 50px;
+}
+
 .control-box {
     z-index: 10;
     display: none;
