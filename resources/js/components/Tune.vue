@@ -111,7 +111,7 @@ export default {
 
             //canvas
             var canvas = document.getElementById("canvas-" + isso.pos);
-            // isso.drawBuffer( isso.screenWidth, canvas.height, canvas.getContext('2d'), buffer );
+            canvas.width = window.innerWidth;
             isso.drawBuffer( canvas.width, canvas.height, canvas.getContext('2d'), buffer );
 
             //audio

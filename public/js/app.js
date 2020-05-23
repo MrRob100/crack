@@ -1989,8 +1989,8 @@ __webpack_require__.r(__webpack_exports__);
         var audioData = request.response;
         isso.ctx.decodeAudioData(audioData, function (buffer) {
           //canvas
-          var canvas = document.getElementById("canvas-" + isso.pos); // isso.drawBuffer( isso.screenWidth, canvas.height, canvas.getContext('2d'), buffer );
-
+          var canvas = document.getElementById("canvas-" + isso.pos);
+          canvas.width = window.innerWidth;
           isso.drawBuffer(canvas.width, canvas.height, canvas.getContext('2d'), buffer); //audio
 
           myBuffer = buffer;
