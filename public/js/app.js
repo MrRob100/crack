@@ -2793,7 +2793,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["playable", "ctx", "para", "name", "pos"],
   data: function data() {
@@ -3074,9 +3073,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     canvasWidth: function canvasWidth() {
       return window.innerWidth;
-    },
-    playClass: function playClass() {
-      return this.playing ? 'strip-play' : 'strip-stop';
     },
     cropVal: function cropVal(which, value) {
       var isso = this;
@@ -41813,7 +41809,6 @@ var render = function() {
         "div",
         {
           staticClass: "stack-slice stack-bottom",
-          class: _vm.playClass(),
           attrs: { id: "stack-" + _vm.pos }
         },
         [

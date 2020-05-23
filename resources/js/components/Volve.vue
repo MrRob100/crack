@@ -4,7 +4,6 @@
       <div 
       :id='"stack-" + pos'
       class="stack-slice stack-bottom"
-      :class="playClass()"
       >
         <div class="inln-btn">
             <h3>{{ nameTrimmed }}</h3>
@@ -337,10 +336,6 @@ export default {
 
     canvasWidth() {
       return window.innerWidth;
-    },
-
-    playClass: function() {
-        return this.playing ? 'strip-play' : 'strip-stop';
     },
 
     cropVal: function(which, value) {

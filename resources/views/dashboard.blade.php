@@ -75,11 +75,6 @@ body {
     position: absolute;
 }
 
-.strip-play {
-    cursor: pointer;
-    background-color: rgb(110, 78, 158) !important;
-}
-
 </style>
 
 <script>
