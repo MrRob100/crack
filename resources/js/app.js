@@ -25,11 +25,8 @@ Vue.config.devtools = true;
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('tune-crop', require('./components/TuneCrop.vue').default);
-Vue.component('tune-stack', require('./components/TuneStack.vue').default);
-Vue.component('ctx', require('./components/Ctx.vue').default);
-Vue.component('ctx2', require('./components/Ctx2.vue').default);
-Vue.component('volve', require('./components/Volve.vue').default);
 Vue.component('tune', require('./components/Tune.vue').default);
+Vue.component('ctx', require('./components/Ctx.vue').default);
 Vue.component('slider', require('./components/Slider.vue').default);
 
 /**

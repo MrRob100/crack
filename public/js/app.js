@@ -1735,49 +1735,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['tunes', 'para'],
-  data: function data() {
-    return {
-      ctx: {},
-      tunesFormatted: {}
-    };
-  },
-  mounted: function mounted() {
-    var AudioContext = window.AudioContext || window.webkitAudioContext;
-    var audioCtx = new AudioContext();
-    this.ctx = audioCtx;
-    this.tunesFormatted = this.tunes.split(" ");
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Ctx2.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Ctx2.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -1932,830 +1889,6 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Tune.vue?vue&type=script&lang=js& ***!
   \***************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _meths_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../meths.js */ "./resources/js/meths.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['ctx', 'name', 'pos'],
-  data: function data() {
-    return {
-      source: {},
-      started: false,
-      gn: {}
-    };
-  },
-  mounted: function mounted() {
-    var isso = this;
-    var request = new XMLHttpRequest();
-    var path = _meths_js__WEBPACK_IMPORTED_MODULE_0__["default"].getSong('-', isso.name);
-    request.open('GET', path, true);
-    var source = isso.ctx.createBufferSource();
-    request.responseType = 'arraybuffer';
-
-    request.onload = function () {
-      isso.loading = false; //make further down
-
-      var audioData = request.response;
-      isso.ctx.decodeAudioData(audioData, function (buffer) {
-        var myBuffer = buffer;
-        source.buffer = myBuffer; //gain
-
-        var gainNode = isso.ctx.createGain();
-        source.connect(gainNode);
-        gainNode.connect(isso.ctx.destination);
-        isso.gn = gainNode;
-        source.connect(isso.ctx.destination);
-        isso.source = source;
-      }, function (e) {
-        "Error with decoding audio data";
-      });
-    };
-
-    request.send();
-  },
-  methods: {
-    play: function play() {
-      try {
-        this.source.start();
-      } catch (err) {
-        console.log(err);
-      }
-
-      this.ctx.resume();
-      this.gn.gain.value = 0;
-    },
-    pause: function pause() {
-      this.ctx.suspend();
-      this.gn.gain.value = -1;
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TuneCrop.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TuneCrop.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _meths_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../meths.js */ "./resources/js/meths.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['setting', 'name'],
-  data: function data() {
-    return {
-      startString: "startScale",
-      endString: "endScale",
-      start: 0,
-      end: 0
-    };
-  },
-  //when component has mounted
-  mounted: function mounted() {
-    var isso = this;
-    isso.getMarker("startScale");
-    isso.getMarker("endScale");
-    var nonHeadStart = document.getElementById("div-start-" + isso.setting);
-    var nonHeadEnd = document.getElementById("div-end-" + isso.setting); // Make the DIV element draggable:
-
-    dragElement(nonHeadStart);
-    dragElement(nonHeadEnd);
-
-    function dragElement(elmnt) {
-      var pos1 = 0,
-          pos2 = 0,
-          pos3 = 0,
-          pos4 = 0;
-
-      if (document.getElementById(elmnt.id + "-header")) {
-        // if present, the header is where you move the DIV from:
-        var mHead = document.getElementById(elmnt.id + "-header");
-        mHead.onmousedown = dragMouseDown;
-        mHead.ontouchstart = dragMouseDown;
-      } else {
-        // otherwise, move the DIV from anywhere inside the DIV:
-        elmnt.onmousedown = dragMouseDown;
-      } //first touch
-
-
-      function dragMouseDown(e) {
-        e = e || window.event;
-
-        if (e.touches) {
-          pos3 = e.touches[0].clientX;
-          document.ontouchend = closeDragElement;
-          document.ontouchmove = elementDrag;
-        } else {
-          e.preventDefault();
-          pos3 = e.clientX;
-          document.onmouseup = closeDragElement;
-          document.onmousemove = elementDrag;
-          document.ontouchend = closeDragElement;
-          document.ontouchmove = elementDrag;
-        }
-      }
-
-      function elementDrag(e) {
-        e = e || window.event;
-
-        if (e.touches) {
-          pos1 = pos3 - e.touches[0].clientX;
-          pos3 = e.touches[0].clientX;
-        } else {
-          e.preventDefault();
-          pos1 = pos3 - e.clientX;
-          pos3 = e.clientX;
-        }
-
-        var startx = nonHeadStart.offsetLeft;
-        var endx = nonHeadEnd.offsetLeft;
-
-        if (startx < 0 && elmnt.id == "div-start-" + isso.setting) {
-          elmnt.style.left = "0px";
-        }
-
-        if (endx > window.innerWidth - 20 && elmnt.id == "div-end-" + isso.setting) {
-          elmnt.style.left = "calc(100% - 20px)";
-        }
-
-        if (endx >= startx) {
-          var posCalced = (elmnt.offsetLeft - pos1) / window.innerWidth * 100;
-          elmnt.style.left = elmnt.offsetLeft - pos1;
-        } else {
-          if (elmnt.id == "div-end-" + isso.setting) {
-            //end
-            elmnt.style.left = elmnt.offsetLeft + 1 + "px";
-          }
-
-          if (elmnt.id == "div-start-" + isso.setting) {
-            //start
-            elmnt.style.left = elmnt.offsetLeft - 1 + "px";
-          }
-        }
-      }
-
-      function closeDragElement(e) {
-        //telling parent that drag is starting
-        isso.$emit('clicked');
-        var addPrevent = document.getElementsByClassName('container')[0];
-        addPrevent.setAttribute('id', 'prevent-' + isso.setting);
-        setTimeout(function () {
-          addPrevent.removeAttribute('id');
-        }, 500);
-        elmnt.style.left = (elmnt.offsetLeft - pos1) / window.innerWidth * 100 + "%";
-
-        if (e.toElement) {
-          if (e.toElement.id == "div-start-" + isso.setting + "-header") {
-            isso.setMarkers('startScale', e.clientX);
-          }
-
-          if (e.toElement.id == "div-end-" + isso.setting + "-header") {
-            isso.setMarkers('endScale', e.clientX);
-          }
-        } else {
-          if (e.target.id == "div-start-" + isso.setting + "-header") {
-            isso.setMarkers('startScale', e.pageX);
-          }
-
-          if (e.target.id == "div-end-" + isso.setting + "-header") {
-            isso.setMarkers('endScale', e.pageX);
-          }
-        } // stop moving when mouse button is released:
-
-
-        document.onmouseup = null;
-        document.onmousemove = null;
-        document.ontouchend = null;
-        document.ontouchmove = null;
-      }
-    }
-  },
-  methods: {
-    //return numeric
-    getMarker: function getMarker(which) {
-      var isso = this;
-      var request = new XMLHttpRequest();
-      var path = _meths_js__WEBPACK_IMPORTED_MODULE_0__["default"].getMarkersPath(this.para, this.name, which);
-      request.open('GET', path, true);
-      request.send();
-
-      request.onload = function () {
-        if (which == "startScale") {
-          var startPoint = JSON.parse(request.response)[which];
-          isso.start = startPoint * 100;
-          isso.$emit('setStart', which, startPoint);
-        }
-
-        if (which == "endScale") {
-          var endPoint = JSON.parse(request.response)[which];
-          isso.end = endPoint * 100;
-          isso.$emit('setEnd', which, endPoint);
-        }
-      };
-    },
-    setMarkers: function setMarkers(which, value) {
-      var scaledValue = value / window.innerWidth;
-      var request = new XMLHttpRequest();
-      var path = _meths_js__WEBPACK_IMPORTED_MODULE_0__["default"].setMarkersPath(this.para, this.name, which, scaledValue);
-      request.open('GET', path, true);
-      request.send();
-      this.$emit('value', which, scaledValue);
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TuneStack.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TuneStack.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _meths_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../meths.js */ "./resources/js/meths.js");
-/* harmony import */ var _keys_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../keys.js */ "./resources/js/keys.js");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['ctx', 'para', 'name', 'pos'],
-  data: function data() {
-    var _ref;
-
-    return _ref = {
-      gn: {},
-      gn2: {},
-      dlref: "",
-      spp: 1,
-      src: {},
-      src2: {},
-      loading: true,
-      started: false,
-      playing: false,
-      deleted: false,
-      leftWall: 0,
-      rightWall: 0,
-      leftMarker: {},
-      rightMarker: {},
-      leftMarkerScale: 0,
-      rightMarkerScale: 0,
-      canvasLeft: 0,
-      canvasWidth: 0,
-      nonMob: true,
-      wreckBall: {}
-    }, _defineProperty(_ref, "deleted", false), _defineProperty(_ref, "dlding", false), _defineProperty(_ref, "cropping", false), _ref;
-  },
-  methods: {
-    nameTrim: function nameTrim(name) {
-      return name.length > 22 ? name.substr(0, 22) + "..." : name;
-    },
-    cropClick: function cropClick() {
-      var isso = this;
-      isso.cropping = true;
-      setTimeout(function () {
-        isso.cropping = false;
-      }, 200);
-    },
-    dl: function dl() {
-      var isso = this;
-
-      if (window.location.hostname == 'localhost') {//deleting if local
-        // isso.del();
-      } else {
-        isso.dlding = true;
-        setTimeout(function () {
-          isso.dlding = false;
-        }, 500);
-      }
-    },
-    songClick: function songClick() {
-      if (!this.dlding && !this.cropping) {
-        var slc = document.getElementsByClassName('stack-slice');
-        var abled = document.getElementsByClassName('dbld');
-
-        if (slc.length == 1 && this.playing) {
-          this.stop();
-        } else if (abled.length == 0) {
-          this.play();
-        } else if (this.playing) {
-          this.stop();
-        }
-      }
-    },
-    playClass: function playClass() {
-      return this.playing ? 'strip-play' : 'strip-stop';
-    },
-    path: function path() {
-      var slug = '';
-
-      if (window.location.hostname == 'localhost') {
-        slug = '/crack/public';
-      }
-
-      return slug;
-    },
-    del: function del() {
-      var request = new XMLHttpRequest();
-      var delPath = _meths_js__WEBPACK_IMPORTED_MODULE_0__["default"].deleteSongPath(this.para, this.name);
-      request.open('GET', delPath, true);
-      request.send();
-      var isso = this;
-
-      request.onload = function () {
-        if (request.response == 'deleted') {
-          isso.deleted = true;
-        }
-      };
-    },
-    setBody: function setBody(state) {
-      var ht = document.querySelector('html');
-      var bod = document.querySelector('body');
-
-      if (state === 'stop') {
-        var off = ht.offsetTop;
-        ht.style.top = 'initial';
-        bod.style.position = 'relative';
-        ht.style.position = 'relative';
-        window.scrollTo(0, off - off * 2);
-      } else {
-        ht.style.top = -window.scrollY + 'px';
-        bod.style.position = 'fixed';
-        ht.style.position = 'fixed';
-      }
-    },
-    play: function play() {
-      var speedPlayback = document.getElementsByClassName("playback-speed")[0];
-      var phasePlayback = document.getElementsByClassName("playback-phase")[0];
-      var toBlur = document.getElementsByClassName('to-blur');
-      toBlur[0].style.filter = "blur(5px)";
-      toBlur[1].style.filter = "blur(5px)";
-      speedPlayback.innerHTML = "Speed: 100%";
-      phasePlayback.innerHTML = "Phaser: 0%";
-      var resultantStartingTime = this.loopUpdate();
-
-      try {
-        this.src.start(0, resultantStartingTime);
-        this.src2.start(0, resultantStartingTime);
-      } catch (err) {
-        console.log(err);
-      }
-
-      this.ctx.resume();
-      this.gn.gain.value = -0.2;
-      this.gn2.gain.value = -0.2; //set 
-
-      this.setBody('play');
-      this.playing = true;
-      this.started = true;
-
-      if (!this.nonMob) {
-        document.getElementById("mydiv-ball-" + this.pos).style.visibility = 'visible';
-        this.wreckBallMeth(document.getElementById("mydiv-ball-" + this.pos));
-      }
-    },
-    stop: function stop() {
-      var speedPlayback = document.getElementsByClassName("playback-speed")[0];
-      var phasePlayback = document.getElementsByClassName("playback-phase")[0];
-      speedPlayback.innerHTML = "Speed: --";
-      phasePlayback.innerHTML = "Phaser: --";
-      this.setBody('stop');
-      this.ctx.suspend();
-      this.gn.gain.value = -1;
-      this.gn2.gain.value = -1;
-      this.playing = false;
-
-      if (!this.nonMob) {
-        document.getElementById("mydiv-ball-" + this.pos).style.visibility = 'hidden';
-      }
-    },
-    drawBuffer: function drawBuffer(width, height, context, buffer) {
-      var data = buffer.getChannelData(0);
-      var step = Math.ceil(data.length / width);
-      var amp = height / 2;
-
-      for (var i = 0; i < width; i++) {
-        var min = 1.0;
-        var max = -1.0;
-
-        for (var j = 0; j < step; j++) {
-          var datum = data[i * step + j];
-          if (datum < min) min = datum;
-          if (datum > max) max = datum;
-        }
-
-        context.fillRect(i, (1 + min) * amp, 1, Math.max(1, (max - min) * amp));
-      }
-    },
-    setCanvasWidth: function setCanvasWidth() {
-      this.canvasWidth = window.innerWidth;
-    },
-    load: function load() {
-      var isso = this; // const AudioContext = window.AudioContext || window.webkitAudioContext;
-      // const audioCtx = new AudioContext();
-
-      var request = new XMLHttpRequest();
-      var path = _meths_js__WEBPACK_IMPORTED_MODULE_0__["default"].getSong(isso.para, isso.name);
-      request.open('GET', path, true);
-      var source = isso.ctx.createBufferSource();
-      var source2 = isso.ctx.createBufferSource();
-      request.responseType = 'arraybuffer';
-
-      request.onload = function () {
-        isso.loading = false; //make further down
-
-        var audioData = request.response;
-        isso.ctx.decodeAudioData(audioData, function (buffer) {
-          //canvas bit
-          var canvas = document.getElementById("canvas-" + isso.pos);
-          isso.drawBuffer(canvas.width, canvas.height, canvas.getContext('2d'), buffer);
-          var myBuffer = buffer;
-          source.buffer = myBuffer;
-          source2.buffer = myBuffer; //gainz
-
-          var gainNode = isso.ctx.createGain();
-          var gainNode2 = isso.ctx.createGain();
-          source.connect(gainNode);
-          source2.connect(gainNode2);
-          gainNode.connect(isso.ctx.destination);
-          gainNode2.connect(isso.ctx.destination); //normal
-
-          source2.connect(isso.ctx.destination);
-          source.connect(isso.ctx.destination);
-          gainNode2.gain.value = -1;
-          gainNode.gain.value = 0;
-          isso.gn = gainNode;
-          isso.gn2 = gainNode2; //filter bit
-
-          var filter = isso.ctx.createBiquadFilter();
-          filter.type = 'highpass'; // filter.type = 'lowpass';
-          // filter.type = 'bandpass';
-          // source2.connect(filter);
-          // filter.connect(audioCtx.destination);
-          // filter.frequency.value = 0; 
-
-          filter.frequency.value = 20000;
-          source.loop = true;
-          source2.loop = true;
-          isso.src = source;
-          isso.src2 = source2;
-          isso.filter = filter; // var analyser = audioCtx.createAnalyser();
-
-          isso.loopUpdate();
-          isso.phaser();
-        }, function (e) {
-          "Error with decoding audio data";
-        });
-      };
-
-      request.send();
-    },
-    panToggle: function panToggle() {
-      if (!this.pan) {
-        this.pan = true;
-      } else {
-        this.pan = false;
-      }
-    },
-    loopUpdate: function loopUpdate() {
-      var leftStart = document.getElementById("div-start-" + this.pos).offsetLeft;
-      var leftEnd = document.getElementById("div-end-" + this.pos).offsetLeft + 20;
-      var offsetPx = leftStart > 0 ? leftStart : 0;
-      var offsetPxEnd = leftEnd > 0 ? leftEnd : 0;
-      var waveWidth = document.getElementsByClassName('canv')[0].offsetWidth;
-      var spp = this.src.buffer.duration / waveWidth;
-      var resultantStartingTime = offsetPx * spp;
-      var resultantLoopEnd = offsetPxEnd * spp;
-      this.src.loopStart = resultantStartingTime;
-      this.src2.loopStart = resultantStartingTime;
-      this.src.loopEnd = resultantLoopEnd;
-      this.src2.loopEnd = resultantLoopEnd;
-      return resultantStartingTime;
-    },
-    phaser: function phaser() {
-      var isso = this;
-      setInterval(function () {
-        //osc
-        if (isso.playing) {
-          setTimeout(function () {
-            isso.src2.playbackRate.value = isso.src.playbackRate.value * 1.01;
-            setTimeout(function () {
-              isso.src2.playbackRate.value = isso.src.playbackRate.value;
-            }, 1000);
-          }, 1);
-          setTimeout(function () {
-            isso.src2.playbackRate.value = isso.src.playbackRate.value * 0.99;
-            setTimeout(function () {
-              isso.src2.playbackRate.value = isso.src.playbackRate.value;
-            }, 1000);
-          }, 1100);
-        }
-      }, 2500);
-    },
-    checkMob: function checkMob() {
-      if (window.innerWidth < 800) {
-        this.nonMob = false;
-      } else {
-        this.nonMob = true;
-      }
-    },
-    wreckBallMeth: function wreckBallMeth(elmnt) {
-      var isso = this;
-      var bp = 300;
-      var pos1 = 0,
-          pos2 = 0,
-          pos3 = 0,
-          pos4 = 0;
-
-      if (document.getElementById(elmnt.id + "-header")) {
-        // if present, the header is where you move the DIV from:
-        var ballHead = document.getElementById(elmnt.id + "-header");
-        ballHead.onmousedown = dragMouseDown;
-        ballHead.ontouchstart = dragMouseDown;
-      } else {
-        // otherwise, move the DIV from anywhere inside the DIV:
-        elmnt.onmousedown = dragMouseDown;
-      } //first touch
-
-
-      function dragMouseDown(e) {
-        e = e || window.event; // get the mouse cursor position at startup:
-
-        if (e.touches) {
-          pos3 = e.touches[0].clientX;
-          pos4 = e.touches[0].clientY;
-          document.ontouchend = closeDragElement;
-          document.ontouchmove = elementDrag;
-        } else {
-          e.preventDefault();
-          pos3 = e.clientX;
-          pos4 = e.clientY;
-          document.onmouseup = closeDragElement;
-          document.onmousemove = elementDrag;
-        }
-      } //while moving
-
-
-      function elementDrag(e, touch) {
-        var speedPlayback = document.getElementsByClassName("playback-speed")[0];
-        var phasePlayback = document.getElementsByClassName("playback-phase")[0];
-        e = e || window.event;
-
-        if (e.touches) {
-          pos1 = pos3 - e.touches[0].clientX;
-          pos2 = pos4 - e.touches[0].clientY;
-          pos3 = e.touches[0].clientX;
-          pos4 = e.touches[0].clientY;
-        } else {
-          e.preventDefault(); // calculate the new cursor position:
-
-          pos1 = pos3 - e.clientX;
-          pos2 = pos4 - e.clientY;
-          pos3 = e.clientX;
-          pos4 = e.clientY;
-        } // set the element's new position:
-
-
-        elmnt.style.top = elmnt.offsetTop - pos2 + "px";
-        elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
-        isso.src.playbackRate.value = (-(elmnt.offsetTop - pos2) + 600 + window.scrollY) / 450;
-        isso.src2.playbackRate.value = (-(elmnt.offsetTop - pos2) + 600 + window.scrollY) / 450;
-        var freqFormula = -elmnt.offsetLeft * 50 + 18000; //hipass                
-        // isso.filter.frequency.value = freqFormula;
-        // isso.filter.frequency.value = (elmnt.offsetLeft);
-        // isso.filter.frequency.value = ((elmnt.offsetLeft) * 25) + 10000;
-
-        if (elmnt.offsetLeft < bp) {
-          //0.2 is gain range (0 to -0.2)
-          isso.gn.gain.value = -elmnt.offsetLeft * (0.2 / bp); //0.8 is gain range (-1 to -0.2)
-
-          isso.gn2.gain.value = elmnt.offsetLeft * (0.8 / bp) - 1;
-          phasePlayback.innerHTML = "Phaser: " + Math.floor(elmnt.offsetLeft / bp * 100) + "%";
-        } else {
-          isso.gn.gain.value = -0.2;
-          isso.gn2.gain.value = -0.2;
-          phasePlayback.innerHTML = "Phaser: 100%";
-        }
-
-        speedPlayback.innerHTML = "Speed: " + Math.floor(isso.src.playbackRate.value * 100) + "%";
-      } //finished moving
-
-
-      function closeDragElement() {
-        // stop moving when mouse button is released:
-        // document.onmouseup = null;
-        document.ontouchend = null; // document.onmousemove = null;
-
-        document.ontouchmove = null;
-      }
-    },
-    setRange: function setRange() {
-      var isso = this;
-      var request = new XMLHttpRequest();
-
-      if (window.location.hostname == 'localhost') {
-        request.open('GET', '/crack/public/get?position=' + this.name);
-      } else {
-        request.open('GET', '/get?position=' + this.name);
-      }
-
-      request.send();
-
-      request.onload = function () {
-        if (request.response) {
-          var jsonResp = JSON.parse(request.response);
-
-          if (jsonResp.startScale) {
-            isso.leftMarker.style.left = jsonResp.startScale * 100 + '%';
-          }
-
-          if (jsonResp.endScale) {
-            isso.rightMarker.style.left = jsonResp.endScale * 100 + '%';
-          }
-        }
-      };
-    }
-  },
-  mounted: function mounted() {
-    var isso = this;
-    document.addEventListener("keydown", function (event) {
-      if (_keys_js__WEBPACK_IMPORTED_MODULE_1__["default"].handle(event.code, isso.pos)) {
-        if (isso.playing) {
-          isso.stop();
-        } else if (document.querySelectorAll('.strip-play').length === 0) {
-          isso.play();
-        }
-      } else if (event.code === "Space") {
-        isso.stop();
-      }
-    });
-    setInterval(function () {
-      if (isso.playing) {
-        isso.loopUpdate();
-      }
-    }, 1000);
-    var tc = document.getElementById('tc-' + this.pos);
-
-    tc.onclick = function () {
-      isso.dl();
-    }; //download link
-
-
-    if (window.location.hostname == 'localhost') {
-      //local
-      isso.dlref = "#"; // isso.dlref = window.location.origin + "/crack/public/dl?song=" + isso.name;
-    } else {
-      //prod
-      isso.dlref = window.location.origin + "/dl?song=" + isso.name;
-    }
-
-    if (!this.nonMob) {
-      this.wreckBallMeth(document.getElementById("mydiv-ball-" + this.pos));
-    }
-
-    this.setRange();
-    this.checkMob();
-    this.load();
-    isso.leftMarker = document.getElementById("div-start-" + this.pos);
-    isso.rightMarker = document.getElementById("div-end-" + this.pos);
-    window.addEventListener('resize', function () {
-      isso.checkMob();
-    });
-    var canvas = document.getElementById("canvas-" + this.pos);
-    this.canvasLeft = canvas.offsetLeft;
-    this.setCanvasWidth(); //mousemove
-
-    var x = null;
-    var y = null;
-    document.addEventListener('mousemove', onMouseUpdate, false);
-    document.addEventListener('mouseenter', onMouseUpdate, false);
-
-    function onMouseUpdate(e) {
-      if (isso.nonMob) {
-        x = e.pageX;
-        y = e.pageY;
-        var bp = 500;
-
-        if (isso.playing) {
-          var speedPlayback = document.getElementsByClassName("playback-speed")[0];
-          var phasePlayback = document.getElementsByClassName("playback-phase")[0]; // var formula = (-y + 6600 + window.scrollY) / 6500;
-
-          var formula = (-y + 900 + window.scrollY) / 650;
-          var freqFormula = -x * 30 + 15000; //hipass
-          // var freqFormula = (-x * 20) + 10000; //hipass
-          // var freqFormula = (x * 1.2 - 100); //lopass
-
-          isso.src.playbackRate.value = formula;
-          isso.src2.playbackRate.value = formula;
-          speedPlayback.innerHTML = "Speed: " + Math.floor(formula * 100) + "%"; // isso.filter.frequency.value = freqFormula;
-          // isso.filter.frequency.value = (-x * 20) + 10000;
-
-          if (x < bp) {
-            phasePlayback.innerHTML = "Phaser: " + Math.floor(x / bp * 100) + "%"; //0.2 is gain range (0 to -0.2)
-
-            isso.gn.gain.value = -x * (0.2 / bp); //0.8 is gain range (-1 to -0.2)
-
-            isso.gn2.gain.value = x * (0.8 / bp) - 1;
-          } else {
-            isso.gn.gain.value = -0.2;
-            isso.gn2.gain.value = -0.2;
-            phasePlayback.innerHTML = "Phaser: 100%";
-          }
-        }
-      }
-    }
-
-    function getMouseX() {
-      return x;
-    }
-
-    function getMouseY() {
-      return y;
-    } //drag ball
-
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Volve.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Volve.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3125,6 +2258,193 @@ __webpack_require__.r(__webpack_exports__);
 
         context.fillRect(i, (1 + min) * amp, 1, Math.max(1, (max - min) * amp));
       }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TuneCrop.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TuneCrop.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _meths_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../meths.js */ "./resources/js/meths.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['setting', 'name'],
+  data: function data() {
+    return {
+      startString: "startScale",
+      endString: "endScale",
+      start: 0,
+      end: 0
+    };
+  },
+  //when component has mounted
+  mounted: function mounted() {
+    var isso = this;
+    isso.getMarker("startScale");
+    isso.getMarker("endScale");
+    var nonHeadStart = document.getElementById("div-start-" + isso.setting);
+    var nonHeadEnd = document.getElementById("div-end-" + isso.setting); // Make the DIV element draggable:
+
+    dragElement(nonHeadStart);
+    dragElement(nonHeadEnd);
+
+    function dragElement(elmnt) {
+      var pos1 = 0,
+          pos2 = 0,
+          pos3 = 0,
+          pos4 = 0;
+
+      if (document.getElementById(elmnt.id + "-header")) {
+        // if present, the header is where you move the DIV from:
+        var mHead = document.getElementById(elmnt.id + "-header");
+        mHead.onmousedown = dragMouseDown;
+        mHead.ontouchstart = dragMouseDown;
+      } else {
+        // otherwise, move the DIV from anywhere inside the DIV:
+        elmnt.onmousedown = dragMouseDown;
+      } //first touch
+
+
+      function dragMouseDown(e) {
+        e = e || window.event;
+
+        if (e.touches) {
+          pos3 = e.touches[0].clientX;
+          document.ontouchend = closeDragElement;
+          document.ontouchmove = elementDrag;
+        } else {
+          e.preventDefault();
+          pos3 = e.clientX;
+          document.onmouseup = closeDragElement;
+          document.onmousemove = elementDrag;
+          document.ontouchend = closeDragElement;
+          document.ontouchmove = elementDrag;
+        }
+      }
+
+      function elementDrag(e) {
+        e = e || window.event;
+
+        if (e.touches) {
+          pos1 = pos3 - e.touches[0].clientX;
+          pos3 = e.touches[0].clientX;
+        } else {
+          e.preventDefault();
+          pos1 = pos3 - e.clientX;
+          pos3 = e.clientX;
+        }
+
+        var startx = nonHeadStart.offsetLeft;
+        var endx = nonHeadEnd.offsetLeft;
+
+        if (startx < 0 && elmnt.id == "div-start-" + isso.setting) {
+          elmnt.style.left = "0px";
+        }
+
+        if (endx > window.innerWidth - 20 && elmnt.id == "div-end-" + isso.setting) {
+          elmnt.style.left = "calc(100% - 20px)";
+        }
+
+        if (endx >= startx) {
+          var posCalced = (elmnt.offsetLeft - pos1) / window.innerWidth * 100;
+          elmnt.style.left = elmnt.offsetLeft - pos1;
+        } else {
+          if (elmnt.id == "div-end-" + isso.setting) {
+            //end
+            elmnt.style.left = elmnt.offsetLeft + 1 + "px";
+          }
+
+          if (elmnt.id == "div-start-" + isso.setting) {
+            //start
+            elmnt.style.left = elmnt.offsetLeft - 1 + "px";
+          }
+        }
+      }
+
+      function closeDragElement(e) {
+        //telling parent that drag is starting
+        isso.$emit('clicked');
+        var addPrevent = document.getElementsByClassName('container')[0];
+        addPrevent.setAttribute('id', 'prevent-' + isso.setting);
+        setTimeout(function () {
+          addPrevent.removeAttribute('id');
+        }, 500);
+        elmnt.style.left = (elmnt.offsetLeft - pos1) / window.innerWidth * 100 + "%";
+
+        if (e.toElement) {
+          if (e.toElement.id == "div-start-" + isso.setting + "-header") {
+            isso.setMarkers('startScale', e.clientX);
+          }
+
+          if (e.toElement.id == "div-end-" + isso.setting + "-header") {
+            isso.setMarkers('endScale', e.clientX);
+          }
+        } else {
+          if (e.target.id == "div-start-" + isso.setting + "-header") {
+            isso.setMarkers('startScale', e.pageX);
+          }
+
+          if (e.target.id == "div-end-" + isso.setting + "-header") {
+            isso.setMarkers('endScale', e.pageX);
+          }
+        } // stop moving when mouse button is released:
+
+
+        document.onmouseup = null;
+        document.onmousemove = null;
+        document.ontouchend = null;
+        document.ontouchmove = null;
+      }
+    }
+  },
+  methods: {
+    //return numeric
+    getMarker: function getMarker(which) {
+      var isso = this;
+      var request = new XMLHttpRequest();
+      var path = _meths_js__WEBPACK_IMPORTED_MODULE_0__["default"].getMarkersPath(this.para, this.name, which);
+      request.open('GET', path, true);
+      request.send();
+
+      request.onload = function () {
+        if (which == "startScale") {
+          var startPoint = JSON.parse(request.response)[which];
+          isso.start = startPoint * 100;
+          isso.$emit('setStart', which, startPoint);
+        }
+
+        if (which == "endScale") {
+          var endPoint = JSON.parse(request.response)[which];
+          isso.end = endPoint * 100;
+          isso.$emit('setEnd', which, endPoint);
+        }
+      };
+    },
+    setMarkers: function setMarkers(which, value) {
+      var scaledValue = value / window.innerWidth;
+      var request = new XMLHttpRequest();
+      var path = _meths_js__WEBPACK_IMPORTED_MODULE_0__["default"].setMarkersPath(this.para, this.name, which, scaledValue);
+      request.open('GET', path, true);
+      request.send();
+      this.$emit('value', which, scaledValue);
     }
   }
 });
@@ -7662,10 +6982,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Ctx2.vue?vue&type=style&index=0&lang=css&":
-/*!**********************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Ctx2.vue?vue&type=style&index=0&lang=css& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Ctx.vue?vue&type=style&index=0&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Ctx.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7674,7 +6994,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.stack-house {\n    width: 100%;\n    margin-bottom: 10px;\n    cursor: pointer;\n    background-color: rgb(110, 78, 158);\n}\n.stack-slice:hover {\n    cursor: pointer;\n    -webkit-filter: brightness(110%);\n            filter: brightness(110%);\n}\n.dld {\n    position: absolute;\n}\n.dl-icon {\n    -webkit-filter: brightness(30%);\n            filter: brightness(30%);\n    position: absolute;\n    right: 18px;\n    width: 40px;\n    top: 0px;\n}\n.control-box {\n    z-index: 10;\n    display: none;\n    overflow: hidden;\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n}\n@media (max-width: 600px) {\n.control-box {\n        width: 100%;\n        -webkit-transform: translate(-50%, 0);\n                transform: translate(-50%, 0);\n        bottom: 48px;\n        top: initial;\n}\n}\n@media (min-width: 601px) {\n.control-box {\n        width: 400px;\n}\n}\n.crow {\n}\n.bottom-container {\n    background-color: #111;\n}\n.crow button {\n    display: none;\n    width: 100%;\n}\n.ctop-row {\n    display: flex;\n    height: 300px;\n}\n.cbottom-row {\n    padding: 5px;\n    display: flex;\n}\n.fx-container {\n    flex: 1;\n    padding-left: 13.5%;\n    padding-top: 270px;\n}\n.fx {\n    width: 280px;\n    -webkit-transform: rotate(-90deg);\n            transform: rotate(-90deg);\n    -webkit-transform-origin: 0%;\n            transform-origin: 0%;\n    position: absolute;\n}\n.cbottom-row span {\n    text-align: center;\n    flex: 1;\n}\n.stbutton {\n    width: 100%;\n}\n.cstop button{\n    border: none;\n    background-color: #fff;\n}\n/* sliders */\n\n/* Hides the slider so that custom slider can be made */\n/* Otherwise white in Chrome */\ninput[type=range] {\n  -webkit-appearance: none; \n  background: transparent;\n}\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n}\ninput[type=range]:focus {\n  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */\n}\ninput[type=range]::-ms-track {\n  width: 100%;\n  cursor: pointer;\n\n  /* Hides the slider so custom styles can be added */\n  background: transparent; \n  border-color: transparent;\n  color: transparent;\n}\n\n/* thumb */\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n  margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n}\n\n/* All the same stuff for Firefox */\ninput[type=range]::-moz-range-thumb {\n\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n}\n\n/* All the same stuff for IE */\ninput[type=range]::-ms-thumb {\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  cursor: pointer;\n}\n\n", ""]);
+exports.push([module.i, "\n.stack-house {\n    width: 100%;\n    margin-bottom: 10px;\n    cursor: pointer;\n    background-color: rgb(110, 78, 158);\n}\n.stack-slice:hover {\n    cursor: pointer;\n    -webkit-filter: brightness(110%);\n            filter: brightness(110%);\n}\n.dld {\n    position: absolute;\n}\n.dl-icon {\n    -webkit-filter: brightness(30%);\n            filter: brightness(30%);\n    position: absolute;\n    right: 18px;\n    width: 40px;\n    top: 0px;\n}\n.control-box {\n    z-index: 10;\n    display: none;\n    overflow: hidden;\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n}\n@media (max-width: 600px) {\n.control-box {\n        width: 100%;\n        -webkit-transform: translate(-50%, 0);\n                transform: translate(-50%, 0);\n        bottom: 48px;\n        top: initial;\n}\n}\n@media (min-width: 601px) {\n.control-box {\n        width: 400px;\n}\n}\n.crow {\n}\n.bottom-container {\n    background-color: #111;\n}\n.crow button {\n    display: none;\n    width: 100%;\n}\n.ctop-row {\n    display: flex;\n    height: 300px;\n}\n.cbottom-row {\n    padding: 5px;\n    display: flex;\n}\n.stack-bottom {\n    height: 40px;\n    background-color: rgb(79, 56, 114);\n}\n.fx-container {\n    flex: 1;\n    padding-left: 13.5%;\n    padding-top: 270px;\n}\n.inln-btn {\n    position: absolute;\n}\n.fx {\n    width: 280px;\n    -webkit-transform: rotate(-90deg);\n            transform: rotate(-90deg);\n    -webkit-transform-origin: 0%;\n            transform-origin: 0%;\n    position: absolute;\n}\n.cbottom-row span {\n    text-align: center;\n    flex: 1;\n}\n.stbutton {\n    width: 100%;\n}\n.cstop button{\n    border: none;\n    background-color: #fff;\n}\n/* sliders */\n\n/* Hides the slider so that custom slider can be made */\n/* Otherwise white in Chrome */\ninput[type=range] {\n  -webkit-appearance: none; \n  background: transparent;\n}\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n}\ninput[type=range]:focus {\n  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */\n}\ninput[type=range]::-ms-track {\n  width: 100%;\n  cursor: pointer;\n\n  /* Hides the slider so custom styles can be added */\n  background: transparent; \n  border-color: transparent;\n  color: transparent;\n}\n\n/* thumb */\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n  margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n}\n\n/* All the same stuff for Firefox */\ninput[type=range]::-moz-range-thumb {\n\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n}\n\n/* All the same stuff for IE */\ninput[type=range]::-ms-thumb {\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  cursor: pointer;\n}\n\n", ""]);
 
 // exports
 
@@ -7694,25 +7014,6 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, "\n.slider-house {\n  background-color: aqua;\n  padding-left: 0;\n}\n.marker {\n  width:20px;\n  height: 40px;\n  position: absolute;\n  z-index: 9;\n  /* background-color: #f1f1f1; */\n  border: 2px solid #d3d3d3;\n  text-align: center;\n}\n.marker-start {\n  border-right: none;\n  /* left: 0; */\n}\n.marker-end {\n  border-left: none;\n  /* left: calc(100% - 20px); */\n}\n.markerheader {\n  color: #d3d3d3;\n  height: 40px;\n  cursor: move;\n  z-index: 10;\n}\n\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TuneStack.vue?vue&type=style&index=0&lang=css&":
-/*!***************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TuneStack.vue?vue&type=style&index=0&lang=css& ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.inln-btn {\n    position: absolute;\n}\n.delhide {\n    position: absolute;\n}\n.delhide h1 {\n    color: rgba(50, 2, 95, 0) !important;\n}\nbutton {\n    -webkit-appearance: none;\n    height: 40px;\n}\n.stack-play {\n    flex: 1;\n}\n.stack-name {\n    flex: 4;\n}\n.stack-del {\n    flex: 1;\n}\n.stack-del button {\n    float: right;\n}\n.stack-top-sec {\n    display: inline;\n}\n.stack-house {\n    margin-bottom: 10px;\n    width: 100%;\n}\n.stack-slice {\n    display: block;\n}\n.stack-top {\n    display: flex;\n    height: 40px;\n    background-color: rgb(62, 59, 105);\n}\n.stack-bottom {\n    /* margin-left: 200px; */\n    height: 40px;\n    background-color: rgb(79, 56, 114);\n}\n.canv {\n    float: left;\n    width: 100%;\n    height: 40px !important;\n}\n.wb-top {\n    position: absolute;\n    z-index: 20;\n    text-align: center;\n    border-radius: 50%;\n}\n.wb-header {\n    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);\n    border-width: 10px;\n    border-style: double;\n    border-radius: 50%;\n    width: 70px;\n    height: 70px;\n    cursor: move;\n    z-index: 50;\n    background-color: #2196F3;\n    color: #fff;\n}\n", ""]);
 
 // exports
 
@@ -40649,15 +39950,15 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Ctx2.vue?vue&type=style&index=0&lang=css&":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Ctx2.vue?vue&type=style&index=0&lang=css& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Ctx.vue?vue&type=style&index=0&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Ctx.vue?vue&type=style&index=0&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Ctx2.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Ctx2.vue?vue&type=style&index=0&lang=css&");
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Ctx.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Ctx.vue?vue&type=style&index=0&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -40688,36 +39989,6 @@ if(false) {}
 
 
 var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./TuneCrop.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TuneCrop.vue?vue&type=style&index=0&lang=css&");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TuneStack.vue?vue&type=style&index=0&lang=css&":
-/*!*******************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TuneStack.vue?vue&type=style&index=0&lang=css& ***!
-  \*******************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./TuneStack.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TuneStack.vue?vue&type=style&index=0&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -41340,54 +40611,13 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.tunesFormatted, function(tune, index) {
-      return _c(
-        "div",
-        { key: tune, staticClass: "slither" },
-        [
-          tune !== ""
-            ? _c("tune-stack", {
-                attrs: { ctx: _vm.ctx, para: _vm.para, name: tune, pos: index }
-              })
-            : _vm._e()
-        ],
-        1
-      )
-    }),
-    0
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Ctx2.vue?vue&type=template&id=d0966754&":
-/*!*******************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Ctx2.vue?vue&type=template&id=d0966754& ***!
-  \*******************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
     [
       _vm._l(_vm.tunesFormatted, function(tune, index) {
         return _c(
           "div",
           { key: tune, staticClass: "slither" },
           [
-            _c("volve", {
+            _c("tune", {
               attrs: {
                 playable: _vm.playable,
                 ctx: _vm.ctx,
@@ -41605,11 +40835,48 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("button", { on: { click: _vm.play } }, [_vm._v("play")]),
-    _vm._v(" "),
-    _c("button", { on: { click: _vm.pause } }, [_vm._v("pause")]),
-    _vm._v(" "),
-    _c("small", [_vm._v(_vm._s(_vm.name))])
+    _c("div", { staticClass: "stack-house to-blur" }, [
+      _c(
+        "div",
+        {
+          staticClass: "stack-slice stack-bottom",
+          attrs: { id: "stack-" + _vm.pos }
+        },
+        [
+          _c("div", { staticClass: "inln-btn" }, [
+            _c("h3", [_vm._v(_vm._s(_vm.nameTrimmed))])
+          ]),
+          _vm._v(" "),
+          _c("tune-crop", {
+            attrs: { id: "tc-" + _vm.pos, setting: _vm.pos, name: _vm.name },
+            on: {
+              value: _vm.cropVal,
+              setStart: _vm.playSelection,
+              setEnd: _vm.playSelection
+            }
+          }),
+          _vm._v(" "),
+          _c("canvas", {
+            staticClass: "canv",
+            attrs: {
+              id: "canvas-" + _vm.pos,
+              width: _vm.canvasWidth(),
+              height: "40"
+            }
+          }),
+          _vm._v(" "),
+          _c("a", { attrs: { href: _vm.dlref } }, [
+            _c("button", { staticClass: "dld", on: { click: _vm.dl } }, [
+              _c("img", {
+                staticClass: "crack-icon dl-icon",
+                attrs: { src: "images/dld.png" }
+              })
+            ])
+          ])
+        ],
+        1
+      )
+    ])
   ])
 }
 var staticRenderFns = []
@@ -41677,176 +40944,6 @@ var render = function() {
       )
     ]
   )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TuneStack.vue?vue&type=template&id=020e00d6&":
-/*!************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TuneStack.vue?vue&type=template&id=020e00d6& ***!
-  \************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return !_vm.deleted
-    ? _c("div", { staticClass: "stack-house" }, [
-        !_vm.nonMob
-          ? _c(
-              "div",
-              {
-                staticClass: "wb-top",
-                staticStyle: { visibility: "hidden" },
-                attrs: { id: "mydiv-ball-" + _vm.pos }
-              },
-              [
-                _c("div", {
-                  staticClass: "wb-header",
-                  attrs: { id: "mydiv-ball-" + _vm.pos + "-header" }
-                })
-              ]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _c("div", { staticClass: "delhide", on: { click: _vm.del } }, [
-          _c("h1", [_vm._v("DEL")])
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "stack-slice stack-bottom",
-            class: _vm.playClass(),
-            on: {
-              click: function($event) {
-                return _vm.songClick()
-              }
-            }
-          },
-          [
-            _c("div", { staticClass: "inln-btn" }, [
-              _c("h3", [_vm._v(_vm._s(_vm.nameTrim(_vm.name)))])
-            ]),
-            _vm._v(" "),
-            _c("tune-crop", {
-              attrs: {
-                id: "tc-" + _vm.pos,
-                setting: _vm.pos,
-                canvasWidth: _vm.canvasWidth,
-                canvasLeft: _vm.canvasLeft,
-                name: _vm.name
-              },
-              on: { clicked: _vm.cropClick }
-            }),
-            _vm._v(" "),
-            _c("canvas", {
-              staticClass: "canv",
-              attrs: {
-                id: "canvas-" + _vm.pos,
-                width: _vm.canvasWidth,
-                height: "40"
-              }
-            }),
-            _vm._v(" "),
-            _vm.nonMob
-              ? _c(
-                  "a",
-                  {
-                    staticClass: "dld",
-                    attrs: { href: _vm.dlref },
-                    on: { click: _vm.dl }
-                  },
-                  [
-                    _c("img", {
-                      staticClass: "crack-icon dl-icon",
-                      attrs: { src: "images/dld.png" }
-                    })
-                  ]
-                )
-              : _vm._e()
-          ],
-          1
-        )
-      ])
-    : _vm._e()
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Volve.vue?vue&type=template&id=54b83667&":
-/*!********************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Volve.vue?vue&type=template&id=54b83667& ***!
-  \********************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "stack-house to-blur" }, [
-      _c(
-        "div",
-        {
-          staticClass: "stack-slice stack-bottom",
-          attrs: { id: "stack-" + _vm.pos }
-        },
-        [
-          _c("div", { staticClass: "inln-btn" }, [
-            _c("h3", [_vm._v(_vm._s(_vm.nameTrimmed))])
-          ]),
-          _vm._v(" "),
-          _c("tune-crop", {
-            attrs: { id: "tc-" + _vm.pos, setting: _vm.pos, name: _vm.name },
-            on: {
-              value: _vm.cropVal,
-              setStart: _vm.playSelection,
-              setEnd: _vm.playSelection
-            }
-          }),
-          _vm._v(" "),
-          _c("canvas", {
-            staticClass: "canv",
-            attrs: {
-              id: "canvas-" + _vm.pos,
-              width: _vm.canvasWidth(),
-              height: "40"
-            }
-          }),
-          _vm._v(" "),
-          _c("a", { attrs: { href: _vm.dlref } }, [
-            _c("button", { staticClass: "dld", on: { click: _vm.dl } }, [
-              _c("img", {
-                staticClass: "crack-icon dl-icon",
-                attrs: { src: "images/dld.png" }
-              })
-            ])
-          ])
-        ],
-        1
-      )
-    ])
-  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -53896,11 +52993,8 @@ Vue.config.devtools = true;
 
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue").default);
 Vue.component('tune-crop', __webpack_require__(/*! ./components/TuneCrop.vue */ "./resources/js/components/TuneCrop.vue").default);
-Vue.component('tune-stack', __webpack_require__(/*! ./components/TuneStack.vue */ "./resources/js/components/TuneStack.vue").default);
-Vue.component('ctx', __webpack_require__(/*! ./components/Ctx.vue */ "./resources/js/components/Ctx.vue").default);
-Vue.component('ctx2', __webpack_require__(/*! ./components/Ctx2.vue */ "./resources/js/components/Ctx2.vue").default);
-Vue.component('volve', __webpack_require__(/*! ./components/Volve.vue */ "./resources/js/components/Volve.vue").default);
 Vue.component('tune', __webpack_require__(/*! ./components/Tune.vue */ "./resources/js/components/Tune.vue").default);
+Vue.component('ctx', __webpack_require__(/*! ./components/Ctx.vue */ "./resources/js/components/Ctx.vue").default);
 Vue.component('slider', __webpack_require__(/*! ./components/Slider.vue */ "./resources/js/components/Slider.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -53985,7 +53079,9 @@ if (token) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Ctx_vue_vue_type_template_id_5778ae8c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Ctx.vue?vue&type=template&id=5778ae8c& */ "./resources/js/components/Ctx.vue?vue&type=template&id=5778ae8c&");
 /* harmony import */ var _Ctx_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Ctx.vue?vue&type=script&lang=js& */ "./resources/js/components/Ctx.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _Ctx_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Ctx.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/Ctx.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -53993,7 +53089,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _Ctx_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Ctx_vue_vue_type_template_id_5778ae8c___WEBPACK_IMPORTED_MODULE_0__["render"],
   _Ctx_vue_vue_type_template_id_5778ae8c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -54025,6 +53121,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Ctx.vue?vue&type=style&index=0&lang=css&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/Ctx.vue?vue&type=style&index=0&lang=css& ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Ctx_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Ctx.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Ctx.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Ctx_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Ctx_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Ctx_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Ctx_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Ctx_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Ctx.vue?vue&type=template&id=5778ae8c&":
 /*!************************************************************************!*\
   !*** ./resources/js/components/Ctx.vue?vue&type=template&id=5778ae8c& ***!
@@ -54038,93 +53150,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Ctx_vue_vue_type_template_id_5778ae8c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Ctx_vue_vue_type_template_id_5778ae8c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/Ctx2.vue":
-/*!******************************************!*\
-  !*** ./resources/js/components/Ctx2.vue ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Ctx2_vue_vue_type_template_id_d0966754___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Ctx2.vue?vue&type=template&id=d0966754& */ "./resources/js/components/Ctx2.vue?vue&type=template&id=d0966754&");
-/* harmony import */ var _Ctx2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Ctx2.vue?vue&type=script&lang=js& */ "./resources/js/components/Ctx2.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _Ctx2_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Ctx2.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/Ctx2.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _Ctx2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Ctx2_vue_vue_type_template_id_d0966754___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Ctx2_vue_vue_type_template_id_d0966754___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/Ctx2.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/Ctx2.vue?vue&type=script&lang=js&":
-/*!*******************************************************************!*\
-  !*** ./resources/js/components/Ctx2.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Ctx2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Ctx2.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Ctx2.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Ctx2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/Ctx2.vue?vue&type=style&index=0&lang=css&":
-/*!***************************************************************************!*\
-  !*** ./resources/js/components/Ctx2.vue?vue&type=style&index=0&lang=css& ***!
-  \***************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Ctx2_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Ctx2.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Ctx2.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Ctx2_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Ctx2_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Ctx2_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Ctx2_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Ctx2_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
-/***/ "./resources/js/components/Ctx2.vue?vue&type=template&id=d0966754&":
-/*!*************************************************************************!*\
-  !*** ./resources/js/components/Ctx2.vue?vue&type=template&id=d0966754& ***!
-  \*************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Ctx2_vue_vue_type_template_id_d0966754___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Ctx2.vue?vue&type=template&id=d0966754& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Ctx2.vue?vue&type=template&id=d0966754&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Ctx2_vue_vue_type_template_id_d0966754___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Ctx2_vue_vue_type_template_id_d0966754___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -54421,199 +53446,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TuneCrop_vue_vue_type_template_id_c81917da___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
-
-/***/ }),
-
-/***/ "./resources/js/components/TuneStack.vue":
-/*!***********************************************!*\
-  !*** ./resources/js/components/TuneStack.vue ***!
-  \***********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _TuneStack_vue_vue_type_template_id_020e00d6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TuneStack.vue?vue&type=template&id=020e00d6& */ "./resources/js/components/TuneStack.vue?vue&type=template&id=020e00d6&");
-/* harmony import */ var _TuneStack_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TuneStack.vue?vue&type=script&lang=js& */ "./resources/js/components/TuneStack.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _TuneStack_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TuneStack.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/TuneStack.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _TuneStack_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _TuneStack_vue_vue_type_template_id_020e00d6___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _TuneStack_vue_vue_type_template_id_020e00d6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/TuneStack.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/TuneStack.vue?vue&type=script&lang=js&":
-/*!************************************************************************!*\
-  !*** ./resources/js/components/TuneStack.vue?vue&type=script&lang=js& ***!
-  \************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TuneStack_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./TuneStack.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TuneStack.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TuneStack_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/TuneStack.vue?vue&type=style&index=0&lang=css&":
-/*!********************************************************************************!*\
-  !*** ./resources/js/components/TuneStack.vue?vue&type=style&index=0&lang=css& ***!
-  \********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TuneStack_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./TuneStack.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TuneStack.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TuneStack_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TuneStack_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TuneStack_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TuneStack_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TuneStack_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
-/***/ "./resources/js/components/TuneStack.vue?vue&type=template&id=020e00d6&":
-/*!******************************************************************************!*\
-  !*** ./resources/js/components/TuneStack.vue?vue&type=template&id=020e00d6& ***!
-  \******************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TuneStack_vue_vue_type_template_id_020e00d6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./TuneStack.vue?vue&type=template&id=020e00d6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TuneStack.vue?vue&type=template&id=020e00d6&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TuneStack_vue_vue_type_template_id_020e00d6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TuneStack_vue_vue_type_template_id_020e00d6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/Volve.vue":
-/*!*******************************************!*\
-  !*** ./resources/js/components/Volve.vue ***!
-  \*******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Volve_vue_vue_type_template_id_54b83667___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Volve.vue?vue&type=template&id=54b83667& */ "./resources/js/components/Volve.vue?vue&type=template&id=54b83667&");
-/* harmony import */ var _Volve_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Volve.vue?vue&type=script&lang=js& */ "./resources/js/components/Volve.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Volve_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Volve_vue_vue_type_template_id_54b83667___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Volve_vue_vue_type_template_id_54b83667___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/Volve.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/Volve.vue?vue&type=script&lang=js&":
-/*!********************************************************************!*\
-  !*** ./resources/js/components/Volve.vue?vue&type=script&lang=js& ***!
-  \********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Volve_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Volve.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Volve.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Volve_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/Volve.vue?vue&type=template&id=54b83667&":
-/*!**************************************************************************!*\
-  !*** ./resources/js/components/Volve.vue?vue&type=template&id=54b83667& ***!
-  \**************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Volve_vue_vue_type_template_id_54b83667___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Volve.vue?vue&type=template&id=54b83667& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Volve.vue?vue&type=template&id=54b83667&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Volve_vue_vue_type_template_id_54b83667___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Volve_vue_vue_type_template_id_54b83667___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/keys.js":
-/*!******************************!*\
-  !*** ./resources/js/keys.js ***!
-  \******************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var keyMap = __webpack_require__(/*! ../js/keys.json */ "./resources/js/keys.json"); // const productItems = require("@/assets/products.json");
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  //returns path
-  //deals with env and possible subdirs
-  handle: function handle(code, pos) {
-    if (keyMap[code] === pos) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/keys.json":
-/*!********************************!*\
-  !*** ./resources/js/keys.json ***!
-  \********************************/
-/*! exports provided: Digit1, Digit2, Digit3, Digit4, Digit5, Digit6, Digit7, Digit8, Digit9, Digit0, KeyQ, KeyE, KeyR, KeyT, KeyY, KeyU, KeyI, KeyO, KeyP, default */
-/***/ (function(module) {
-
-module.exports = {"Digit1":0,"Digit2":1,"Digit3":2,"Digit4":3,"Digit5":4,"Digit6":5,"Digit7":6,"Digit8":7,"Digit9":8,"Digit0":9,"KeyQ":10,"KeyE":12,"KeyR":13,"KeyT":14,"KeyY":15,"KeyU":16,"KeyI":17,"KeyO":18,"KeyP":19};
 
 /***/ }),
 

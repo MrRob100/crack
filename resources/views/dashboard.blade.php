@@ -12,10 +12,10 @@
     </div>
 </div>
 
-<Ctx2
+<Ctx
 tunes="{{ $t_string }}"
 para="{{ $para }}"
-></Ctx2>
+></Ctx>
 
 @endsection
 
@@ -57,10 +57,6 @@ body {
 
 .upl {
     float: left;
-}
-
-.dbld {
-    /* background-color: aqua !important; */
 }
 
 .dl-icon {
