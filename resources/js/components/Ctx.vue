@@ -82,6 +82,56 @@ export default {
 </script>
 <style>
 
+.playback {
+    clear: left;
+}
+
+.playback-item {
+    display: inline;
+    font-size: 18px;
+}
+
+.playback-phase {
+    margin-left: 15px;
+}
+
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+    touch-action: none;
+    background-color: rgb(50, 2, 95) !important;
+    font-family: 'Courier New', Courier, monospace !important;
+}
+body {
+    width: 100%;
+    position: relative;
+    color: #B27FFF !important;
+}
+
+.navbar {
+    height: 20px;
+}
+
+.stack-del button {
+    display: none;
+}
+
+.upl {
+    float: left;
+}
+
+.dl-icon {
+    filter: brightness(30%);
+    position: absolute;
+    right: 0;
+    width: 40px;
+    top: 0px;
+}
+
+.dld {
+    position: absolute;
+}
+
 .stack-house {
     width: 100%;
     margin-bottom: 10px;
@@ -129,10 +179,6 @@ export default {
     .control-box {
         width: 400px;
     }
-}
-
-.crow {
-
 }
 
 .bottom-container {
