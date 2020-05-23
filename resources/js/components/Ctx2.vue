@@ -10,7 +10,6 @@
         :pos="index"
         ></volve>
       </div>
-      <!-- <div id="screen"></div> -->
 
       <div class="control-box">
 
@@ -25,7 +24,6 @@
                 <input class="fx filter-control" type="range" min="0" max="20000" step="10" value="20000">
             </div>
             <div class="fx-container phaser-container">
-                <!-- <input class="fx phaser-control" type="range" min="20000" max="0" step="10" value="0"> -->
                 <input class="fx phaser-control" type="range" min="0" max="1" step="0.01" value="0">
             </div>
         </div>

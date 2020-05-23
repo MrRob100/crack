@@ -21,8 +21,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!-- icons -->
-    <link rel='shortcut icon' href='/images/cricon.png' type='image/x-icon'>
-    <link rel='icon' href='/images/cricon.png' type='image/x-icon'>
+    <link rel='shortcut icon' href='images/cricon.png' type='image/x-icon'>
+    <link rel='icon' href='images/cricon.png' type='image/x-icon'>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     {{-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164034058-1"></script>
