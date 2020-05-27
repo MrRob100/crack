@@ -1927,6 +1927,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["playable", "ctx", "para", "name", "pos"],
   data: function data() {
@@ -1981,6 +1984,7 @@ __webpack_require__.r(__webpack_exports__);
     var stop = document.getElementById("stbutton-" + isso.pos);
 
     function getSource() {
+      isso.loading = true;
       request = new XMLHttpRequest();
       request.open("GET", sourceUrl, true);
       request.responseType = "arraybuffer";
@@ -2442,6 +2446,7 @@ __webpack_require__.r(__webpack_exports__);
             var startPoint = JSON.parse(request.response)[which];
           }
 
+          console.log('sp', startPoint);
           isso.start = startPoint * 100;
           isso.$emit('setStart', which, startPoint);
         }
@@ -2459,7 +2464,6 @@ __webpack_require__.r(__webpack_exports__);
       };
     },
     setMarkers: function setMarkers(which, value) {
-      console.log('which', which);
       var scaledValue = value / window.innerWidth;
       var request = new XMLHttpRequest();
       var path = _meths_js__WEBPACK_IMPORTED_MODULE_0__["default"].setMarkersPath(this.para, this.name, which, scaledValue);
@@ -40865,7 +40869,11 @@ var render = function() {
         },
         [
           _c("div", { staticClass: "inln-btn" }, [
-            _c("h3", [_vm._v(_vm._s(_vm.nameTrimmed))])
+            !_vm.loading
+              ? _c("h3", [_vm._v(_vm._s(_vm.nameTrimmed))])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.loading ? _c("h3", [_vm._v("Loading...")]) : _vm._e()
           ]),
           _vm._v(" "),
           _c("tune-crop", {

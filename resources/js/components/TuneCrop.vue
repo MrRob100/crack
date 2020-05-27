@@ -177,6 +177,9 @@ export default {
           } else {
             var startPoint = JSON.parse(request.response)[which]; 
           }
+
+          console.log('sp', startPoint);
+
           isso.start = startPoint * 100;
           isso.$emit('setStart', which, startPoint);
         }
@@ -195,9 +198,6 @@ export default {
     },
 
     setMarkers: function(which, value) {
-
-      console.log('which', which);
-
       var scaledValue = value / window.innerWidth;
       var request = new XMLHttpRequest();
       var path = Meths.setMarkersPath(this.para, this.name, which, scaledValue);

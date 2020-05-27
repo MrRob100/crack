@@ -6,8 +6,11 @@
       class="stack-slice stack-bottom"
       >
         <div class="inln-btn">
-            <h3>{{ nameTrimmed }}</h3>
+            <h3 v-if="!loading">{{ nameTrimmed }}</h3>
+            <h3 v-if="loading">Loading...</h3>
         </div>
+
+
         <tune-crop
         @value="cropVal"
         @setStart="playSelection"
@@ -57,6 +60,7 @@ export default {
   },
 
   mounted() {
+ 
     var isso = this;
     var body = document.querySelector("body");
     var toBlur = document.getElementsByClassName("to-blur");
@@ -98,6 +102,8 @@ export default {
 
     function getSource() {
       
+      isso.loading = true;
+
       request = new XMLHttpRequest();
       request.open("GET", sourceUrl, true);
       request.responseType = "arraybuffer";
