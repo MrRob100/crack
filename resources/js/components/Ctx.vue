@@ -231,6 +231,7 @@ body {
 
 .cstop button{
     border: none;
+    height: 40px;
     background-color: #fff;
 }
 /* sliders */

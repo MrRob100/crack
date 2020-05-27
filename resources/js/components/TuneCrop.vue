@@ -178,9 +178,6 @@ export default {
             var startPoint = JSON.parse(request.response)[which] ? JSON.parse(request.response)[which] : 0; 
           }
 
-          console.log('sp', startPoint);
-          console.log('resp', JSON.parse(request.response));
-
           isso.start = startPoint * 100;
           isso.$emit('setStart', which, startPoint);
         }
