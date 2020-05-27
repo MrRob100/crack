@@ -169,7 +169,7 @@ export default {
         }
         
         if (which === "startScale") {
-          var startPoint;
+          var startPoint = 0;
           var endPoint;
 
           if (request.response === "") {

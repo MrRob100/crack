@@ -2437,7 +2437,7 @@ __webpack_require__.r(__webpack_exports__);
         if (request.response === "") {}
 
         if (which === "startScale") {
-          var startPoint;
+          var startPoint = 0;
           var endPoint;
 
           if (request.response === "") {
