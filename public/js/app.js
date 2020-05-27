@@ -2434,8 +2434,6 @@ __webpack_require__.r(__webpack_exports__);
       request.send();
 
       request.onload = function () {
-        if (request.response === "") {}
-
         if (which === "startScale") {
           var startPoint;
           var endPoint;

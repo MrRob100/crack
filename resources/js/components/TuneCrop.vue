@@ -163,10 +163,6 @@ export default {
       request.open('GET', path, true);
       request.send();
       request.onload = function() {
-
-        if (request.response === "") {
-
-        }
         
         if (which === "startScale") {
           var startPoint;
