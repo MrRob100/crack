@@ -2437,13 +2437,13 @@ __webpack_require__.r(__webpack_exports__);
         if (request.response === "") {}
 
         if (which === "startScale") {
-          var startPoint = 0;
+          var startPoint;
           var endPoint;
 
           if (request.response === "") {
             startPoint = 0;
           } else {
-            var startPoint = JSON.parse(request.response)[which];
+            var startPoint = JSON.parse(request.response)[which] ? JSON.parse(request.response)[which] : 0;
           }
 
           console.log('sp', startPoint);
