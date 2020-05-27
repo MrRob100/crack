@@ -2,6 +2,7 @@
   <div>
     <div class="stack-house to-blur">
       <div 
+      @click="play"
       :id='"stack-" + pos'
       class="stack-slice stack-bottom"
       >
@@ -9,7 +10,6 @@
             <h3 v-if="!loading">{{ nameTrimmed }}</h3>
             <h3 v-if="loading">Loading...</h3>
         </div>
-
 
         <tune-crop
         @value="cropVal"
@@ -20,7 +20,6 @@
         :name='name'
         ></tune-crop>
         <canvas class="canv" :id='"canvas-"+pos'></canvas>
-        <!-- <canvas class="canv" :id='"canvas-"+pos' :width="screenWidth" height="40"></canvas> -->
         <a :href="dlref"
         >
         <button 
@@ -51,10 +50,13 @@ export default {
       playing: false,
       loading: false,
       loaded: false,
-      src: {},
+      src: null,
+      convolver: {},
+      convolverGain: {},
       gain: {},
       filter: {},
       notch: {},
+      masterCompression: {},
       amt: 0
     };
   },
@@ -63,192 +65,37 @@ export default {
  
     var isso = this;
     var body = document.querySelector("body");
-    var toBlur = document.getElementsByClassName("to-blur");
+    var stop = document.getElementById("stbutton-" + isso.pos); 
 
     isso.dlref = window.location.origin + "/dl?song=" + isso.name;
 
     var source;
-    var request;
     var myBuffer;
     var myImpulseBuffer;
     var impulseRequest;
     var impulseConvolver = isso.ctx.createConvolver();
 
-    var convolver = isso.ctx.createConvolver();
-    var convolverGain = isso.ctx.createGain();
-    var masterGain = isso.ctx.createGain();
-    var filter = isso.ctx.createBiquadFilter();
-    var notch = isso.ctx.createBiquadFilter();
+    this.convolver = isso.ctx.createConvolver();
+    this.convolverGain = isso.ctx.createGain();
 
-    filter.type = "lowpass";
-    filter.frequency.value = 20000;
+    this.gain = isso.ctx.createGain();
+    this.filter = isso.ctx.createBiquadFilter();
+    this.notch = isso.ctx.createBiquadFilter();
 
-    notch.type = 'notch';
-    notch.frequency.value = 100;
-    filter.Q.value = 1.5;
+    this.filter.type = "lowpass";
+    this.filter.frequency.value = 20000;
 
-    var masterCompression = isso.ctx.createDynamicsCompressor();
-    masterCompression.threshold.value = -10;
+    this.notch.type = 'notch';
+    this.notch.frequency.value = 100;
+    this.filter.Q.value = 1.5;
 
-    //source and impulse
-    var subdir = isso.para !== "-" ? isso.para + "/" + isso.name : "" + isso.name;
-    var sourceUrl = "storage/data/" + subdir;
-
-    var impulseUrl = "storage/data/tenniscourt.wav";
-
-    var box = document.getElementsByClassName("control-box")[0];
-    var play = document.getElementById("stack-" + isso.pos);
-    var stop = document.getElementById("stbutton-" + isso.pos); 
-
-    function getSource() {
-      
-      isso.loading = true;
-
-      request = new XMLHttpRequest();
-      request.open("GET", sourceUrl, true);
-      request.responseType = "arraybuffer";
-
-      request.onload = function() {
-        var audioData = request.response;
-
-        isso.ctx.decodeAudioData(
-          audioData,
-          function(buffer) {
-
-            //canvas
-            var canvas = document.getElementById("canvas-" + isso.pos);
-            canvas.width = window.innerWidth;
-            isso.drawBuffer( canvas.width, canvas.height, canvas.getContext('2d'), buffer );
-
-            //audio
-            myBuffer = buffer;
-
-            isso.myBuffer = myBuffer;
-
-            connectandplay();
-
-          },
-
-          function(e) {
-            "Error with decoding audio data" + e.err;
-          }
-        );
-      };
-
-      request.send();
-
-      if (isso.first) {
-        getImpulse();
-        isso.first = false;
-      }
-
-    }
-
-    //connect and start
-    function connectandplay() {
-
-      source = isso.ctx.createBufferSource();
-
-      source.buffer = isso.myBuffer;
-      source.loop = true;
-
-      masterGain.gain.value = 0.5;
-
-      source.connect(convolverGain);
-      source.connect(masterGain);
-      masterGain.connect(filter).connect(notch).connect(masterCompression);
-      masterCompression.connect(isso.ctx.destination);
-      
-      isso.src = source;
-      isso.gain = masterGain;
-      isso.filter = filter; 
-      isso.notch = notch;
-
-      //start from
-      var duration = source.buffer.duration;
-      var offset = duration * isso.playFrom;
-      var endset = duration * isso.playTo;
-
-      try {
-        source.start(0, offset);
-        isso.loading = false;
-
-        for (let item of toBlur) {
-          item.style.filter = "blur(5px)";
-        }
-
-        body.style.position = "fixed";
-        body.style.overflowY = "hidden";
-
-        isso.playing = true;
-        isso.loaded = true;
-        stop.style.display = "block";
-        box.style.display = "block";
-
-        source.loopStart = offset;
-        source.loopEnd = endset;
-
-      } catch(err) {
-        isso.$emit('able', true);
-        console.log(err);
-      }
-
-    }
-
-    function getImpulse() {
-
-      impulseConvolver = isso.ctx.createConvolver();
-      impulseRequest = new XMLHttpRequest();
-      impulseRequest.open("GET", impulseUrl, true);
-      impulseRequest.responseType = "arraybuffer";
-
-      impulseRequest.onload = function() {
-        isso.loaded = true;
-        var impulseData = impulseRequest.response;
-
-        isso.ctx.decodeAudioData(
-          impulseData,
-          function(buffer) {
-            myImpulseBuffer = buffer;
-            impulseConvolver.buffer = myImpulseBuffer;
-            impulseConvolver.loop = true;
-            impulseConvolver.normalize = true;
-            convolverGain.gain.value = 0;
-            convolverGain.connect(impulseConvolver);
-            impulseConvolver.connect(masterGain);
-          },
-
-          function(e) {
-            "Error with decoding audio data" + e.err;
-          }
-        );
-      };
-
-      impulseRequest.send();
-    }
-
-    //can remove abletoplay
-    play.onclick = function() {
-
-      isso.$emit('able', false);
-
-      var prevent = document.getElementById('prevent-' + isso.pos);
-      if (!isso.playing && isso.ableToPlay && !prevent && isso.playable) {
-        isso.ableToPlay = false;
-        convolver.disconnect();
-
-        //if not cached
-
-        if (!source) {
-          getSource();
-        } else {
-          connectandplay();
-        }
-
-      }
-    };
+    this.masterCompression = isso.ctx.createDynamicsCompressor();
+    this.masterCompression.threshold.value = -10;
 
     stop.onclick = function() {
+      var toBlur = document.getElementsByClassName("to-blur");
+      var box = document.getElementsByClassName("control-box")[0];
+
       isso.$emit('able', true);
       isso.ableToPlay = true;
       body.style.position = "relative";
@@ -258,8 +105,8 @@ export default {
         item.style.filter = "none";
       }
 
-      source.stop(0);
-      convolver.disconnect();
+      isso.src.stop(0);
+      isso.convolver.disconnect();
       isso.playing = false;
       isso.loaded = false;
       stop.style.display = "none";
@@ -345,7 +192,153 @@ export default {
 
   methods: {
 
-    canvasWidth() {
+    play: function() {
+      this.$emit('able', false);
+      var prevent = document.getElementById('prevent-' + this.pos);
+      if (!this.playing && this.ableToPlay && !prevent && this.playable) {
+        this.ableToPlay = false;
+        this.convolver.disconnect();
+
+        //if not cached / loaded...
+
+        if (!this.src) {
+          this.getSource();
+        } else {
+          this.connectAndPlay();
+        }
+
+      }
+    },
+
+    getSource: function() {
+
+      //source and impulse
+      var subdir = this.para !== "-" ? this.para + "/" + this.name : "" + this.name;
+      var sourceUrl = "storage/data/" + subdir;
+
+      this.loading = true;
+
+      var request = new XMLHttpRequest();
+      request.open("GET", sourceUrl, true);
+      request.responseType = "arraybuffer";
+
+      var isso = this;
+      request.onload = function() {
+        var audioData = request.response;
+
+        isso.ctx.decodeAudioData(
+          audioData,
+          function(buffer) {
+
+            //canvas
+            var canvas = document.getElementById("canvas-" + isso.pos);
+            canvas.width = window.innerWidth;
+            isso.drawBuffer( canvas.width, canvas.height, canvas.getContext('2d'), buffer );
+
+            //audio
+            isso.myBuffer = buffer;
+
+            isso.connectAndPlay();
+
+          },
+
+          function(e) {
+            "Error with decoding audio data" + e.err;
+          }
+        );
+      };
+
+      request.send();
+
+      if (this.first) {
+        this.getImpulse();
+        this.first = false;
+      }
+    },
+
+    connectAndPlay: function() {
+      var body = document.querySelector("body");
+      var toBlur = document.getElementsByClassName("to-blur");
+
+      this.src = this.ctx.createBufferSource();
+      this.src.buffer = this.myBuffer;
+      this.src.loop = true;
+
+      this.gain.gain.value = 0.5;
+
+      this.src.connect(this.convolverGain);
+      this.src.connect(this.gain);
+      this.gain.connect(this.filter).connect(this.notch).connect(this.masterCompression);
+      this.masterCompression.connect(this.ctx.destination);
+      
+      //start from
+      var duration = this.src.buffer.duration;
+      var offset = duration * this.playFrom;
+      var endset = duration * this.playTo;
+
+      try {
+        this.src.start(0, offset);
+        this.loading = false;
+
+        //blur rest
+        for (let item of toBlur) {
+          item.style.filter = "blur(5px)";
+        }
+
+        //disable scroll (redo)
+        body.style.position = "fixed";
+        body.style.overflowY = "hidden";
+
+        this.playing = true;
+        this.loaded = true;
+
+        document.getElementsByClassName("control-box")[0].style.display = "block";
+        document.getElementById("stbutton-" + this.pos).style.display = "block"; 
+
+        this.src.loopStart = offset;
+        this.src.loopEnd = endset;
+
+      } catch(err) {
+        this.$emit('able', true);
+        console.log(err);
+      }
+    },
+
+    getImpulse: function() {
+      var impulseConvolver = this.ctx.createConvolver();
+      var impulseRequest = new XMLHttpRequest();
+      var impulseUrl = "storage/data/tenniscourt.wav";
+
+      impulseRequest.open("GET", impulseUrl, true);
+      impulseRequest.responseType = "arraybuffer";
+
+      var isso = this;
+      impulseRequest.onload = function() {
+        isso.loaded = true;
+        var impulseData = impulseRequest.response;
+
+        isso.ctx.decodeAudioData(
+          impulseData,
+          function(buffer) {
+            var myImpulseBuffer = buffer;
+            impulseConvolver.buffer = myImpulseBuffer;
+            impulseConvolver.loop = true;
+            impulseConvolver.normalize = true;
+            isso.convolverGain.gain.value = 0;
+            isso.convolverGain.connect(impulseConvolver);
+            impulseConvolver.connect(isso.gain);
+          },
+
+          function(e) {
+            "Error with decoding audio data" + e.err;
+          }
+        );
+      };
+
+      impulseRequest.send();
+    },
+
+    canvasWidth: function() {
       this.screenWidth = window.innerWidth;
     },
 

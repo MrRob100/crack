@@ -1929,7 +1929,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["playable", "ctx", "para", "name", "pos"],
   data: function data() {
@@ -1945,207 +1944,72 @@ __webpack_require__.r(__webpack_exports__);
       playing: false,
       loading: false,
       loaded: false,
-      src: {},
+      src: null,
+      convolver: {},
+      convolverGain: {},
       gain: {},
       filter: {},
       notch: {},
+      masterCompression: {},
       amt: 0
     };
   },
   mounted: function mounted() {
     var isso = this;
     var body = document.querySelector("body");
-    var toBlur = document.getElementsByClassName("to-blur");
+    var stop = document.getElementById("stbutton-" + isso.pos);
     isso.dlref = window.location.origin + "/dl?song=" + isso.name;
     var source;
-    var request;
     var myBuffer;
     var myImpulseBuffer;
     var impulseRequest;
     var impulseConvolver = isso.ctx.createConvolver();
-    var convolver = isso.ctx.createConvolver();
-    var convolverGain = isso.ctx.createGain();
-    var masterGain = isso.ctx.createGain();
-    var filter = isso.ctx.createBiquadFilter();
-    var notch = isso.ctx.createBiquadFilter();
-    filter.type = "lowpass";
-    filter.frequency.value = 20000;
-    notch.type = 'notch';
-    notch.frequency.value = 100;
-    filter.Q.value = 1.5;
-    var masterCompression = isso.ctx.createDynamicsCompressor();
-    masterCompression.threshold.value = -10; //source and impulse
-
-    var subdir = isso.para !== "-" ? isso.para + "/" + isso.name : "" + isso.name;
-    var sourceUrl = "storage/data/" + subdir;
-    var impulseUrl = "storage/data/tenniscourt.wav";
-    var box = document.getElementsByClassName("control-box")[0];
-    var play = document.getElementById("stack-" + isso.pos);
-    var stop = document.getElementById("stbutton-" + isso.pos);
-
-    function getSource() {
-      isso.loading = true;
-      request = new XMLHttpRequest();
-      request.open("GET", sourceUrl, true);
-      request.responseType = "arraybuffer";
-
-      request.onload = function () {
-        var audioData = request.response;
-        isso.ctx.decodeAudioData(audioData, function (buffer) {
-          //canvas
-          var canvas = document.getElementById("canvas-" + isso.pos);
-          canvas.width = window.innerWidth;
-          isso.drawBuffer(canvas.width, canvas.height, canvas.getContext('2d'), buffer); //audio
-
-          myBuffer = buffer;
-          isso.myBuffer = myBuffer;
-          connectandplay();
-        }, function (e) {
-          "Error with decoding audio data" + e.err;
-        });
-      };
-
-      request.send();
-
-      if (isso.first) {
-        getImpulse();
-        isso.first = false;
-      }
-    } //connect and start
-
-
-    function connectandplay() {
-      source = isso.ctx.createBufferSource();
-      source.buffer = isso.myBuffer;
-      source.loop = true;
-      masterGain.gain.value = 0.5;
-      source.connect(convolverGain);
-      source.connect(masterGain);
-      masterGain.connect(filter).connect(notch).connect(masterCompression);
-      masterCompression.connect(isso.ctx.destination);
-      isso.src = source;
-      isso.gain = masterGain;
-      isso.filter = filter;
-      isso.notch = notch; //start from
-
-      var duration = source.buffer.duration;
-      var offset = duration * isso.playFrom;
-      var endset = duration * isso.playTo;
-
-      try {
-        source.start(0, offset);
-        isso.loading = false;
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-          for (var _iterator = toBlur[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var item = _step.value;
-            item.style.filter = "blur(5px)";
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator.return != null) {
-              _iterator.return();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
-
-        body.style.position = "fixed";
-        body.style.overflowY = "hidden";
-        isso.playing = true;
-        isso.loaded = true;
-        stop.style.display = "block";
-        box.style.display = "block";
-        source.loopStart = offset;
-        source.loopEnd = endset;
-      } catch (err) {
-        isso.$emit('able', true);
-        console.log(err);
-      }
-    }
-
-    function getImpulse() {
-      impulseConvolver = isso.ctx.createConvolver();
-      impulseRequest = new XMLHttpRequest();
-      impulseRequest.open("GET", impulseUrl, true);
-      impulseRequest.responseType = "arraybuffer";
-
-      impulseRequest.onload = function () {
-        isso.loaded = true;
-        var impulseData = impulseRequest.response;
-        isso.ctx.decodeAudioData(impulseData, function (buffer) {
-          myImpulseBuffer = buffer;
-          impulseConvolver.buffer = myImpulseBuffer;
-          impulseConvolver.loop = true;
-          impulseConvolver.normalize = true;
-          convolverGain.gain.value = 0;
-          convolverGain.connect(impulseConvolver);
-          impulseConvolver.connect(masterGain);
-        }, function (e) {
-          "Error with decoding audio data" + e.err;
-        });
-      };
-
-      impulseRequest.send();
-    } //can remove abletoplay
-
-
-    play.onclick = function () {
-      isso.$emit('able', false);
-      var prevent = document.getElementById('prevent-' + isso.pos);
-
-      if (!isso.playing && isso.ableToPlay && !prevent && isso.playable) {
-        isso.ableToPlay = false;
-        convolver.disconnect(); //if not cached
-
-        if (!source) {
-          getSource();
-        } else {
-          connectandplay();
-        }
-      }
-    };
+    this.convolver = isso.ctx.createConvolver();
+    this.convolverGain = isso.ctx.createGain();
+    this.gain = isso.ctx.createGain();
+    this.filter = isso.ctx.createBiquadFilter();
+    this.notch = isso.ctx.createBiquadFilter();
+    this.filter.type = "lowpass";
+    this.filter.frequency.value = 20000;
+    this.notch.type = 'notch';
+    this.notch.frequency.value = 100;
+    this.filter.Q.value = 1.5;
+    this.masterCompression = isso.ctx.createDynamicsCompressor();
+    this.masterCompression.threshold.value = -10;
 
     stop.onclick = function () {
+      var toBlur = document.getElementsByClassName("to-blur");
+      var box = document.getElementsByClassName("control-box")[0];
       isso.$emit('able', true);
       isso.ableToPlay = true;
       body.style.position = "relative";
       body.style.overflowY = "scroll";
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
 
       try {
-        for (var _iterator2 = toBlur[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var item = _step2.value;
+        for (var _iterator = toBlur[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var item = _step.value;
           item.style.filter = "none";
         }
       } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
+        _didIteratorError = true;
+        _iteratorError = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
-            _iterator2.return();
+          if (!_iteratorNormalCompletion && _iterator.return != null) {
+            _iterator.return();
           }
         } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
+          if (_didIteratorError) {
+            throw _iteratorError;
           }
         }
       }
 
-      source.stop(0);
-      convolver.disconnect();
+      isso.src.stop(0);
+      isso.convolver.disconnect();
       isso.playing = false;
       isso.loaded = false;
       stop.style.display = "none";
@@ -2213,6 +2077,137 @@ __webpack_require__.r(__webpack_exports__);
     window.addEventListener("resize", this.canvasWidth);
   },
   methods: {
+    play: function play() {
+      this.$emit('able', false);
+      var prevent = document.getElementById('prevent-' + this.pos);
+
+      if (!this.playing && this.ableToPlay && !prevent && this.playable) {
+        this.ableToPlay = false;
+        this.convolver.disconnect(); //if not cached / loaded...
+
+        if (!this.src) {
+          this.getSource();
+        } else {
+          this.connectAndPlay();
+        }
+      }
+    },
+    getSource: function getSource() {
+      //source and impulse
+      var subdir = this.para !== "-" ? this.para + "/" + this.name : "" + this.name;
+      var sourceUrl = "storage/data/" + subdir;
+      this.loading = true;
+      var request = new XMLHttpRequest();
+      request.open("GET", sourceUrl, true);
+      request.responseType = "arraybuffer";
+      var isso = this;
+
+      request.onload = function () {
+        var audioData = request.response;
+        isso.ctx.decodeAudioData(audioData, function (buffer) {
+          //canvas
+          var canvas = document.getElementById("canvas-" + isso.pos);
+          canvas.width = window.innerWidth;
+          isso.drawBuffer(canvas.width, canvas.height, canvas.getContext('2d'), buffer); //audio
+
+          isso.myBuffer = buffer;
+          isso.connectAndPlay();
+        }, function (e) {
+          "Error with decoding audio data" + e.err;
+        });
+      };
+
+      request.send();
+
+      if (this.first) {
+        this.getImpulse();
+        this.first = false;
+      }
+    },
+    connectAndPlay: function connectAndPlay() {
+      var body = document.querySelector("body");
+      var toBlur = document.getElementsByClassName("to-blur");
+      this.src = this.ctx.createBufferSource();
+      this.src.buffer = this.myBuffer;
+      this.src.loop = true;
+      this.gain.gain.value = 0.5;
+      this.src.connect(this.convolverGain);
+      this.src.connect(this.gain);
+      this.gain.connect(this.filter).connect(this.notch).connect(this.masterCompression);
+      this.masterCompression.connect(this.ctx.destination); //start from
+
+      var duration = this.src.buffer.duration;
+      var offset = duration * this.playFrom;
+      var endset = duration * this.playTo;
+
+      try {
+        this.src.start(0, offset);
+        this.loading = false; //blur rest
+
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
+
+        try {
+          for (var _iterator2 = toBlur[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var item = _step2.value;
+            item.style.filter = "blur(5px)";
+          } //disable scroll (redo)
+
+        } catch (err) {
+          _didIteratorError2 = true;
+          _iteratorError2 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+              _iterator2.return();
+            }
+          } finally {
+            if (_didIteratorError2) {
+              throw _iteratorError2;
+            }
+          }
+        }
+
+        body.style.position = "fixed";
+        body.style.overflowY = "hidden";
+        this.playing = true;
+        this.loaded = true;
+        document.getElementsByClassName("control-box")[0].style.display = "block";
+        document.getElementById("stbutton-" + this.pos).style.display = "block";
+        this.src.loopStart = offset;
+        this.src.loopEnd = endset;
+      } catch (err) {
+        this.$emit('able', true);
+        console.log(err);
+      }
+    },
+    getImpulse: function getImpulse() {
+      var impulseConvolver = this.ctx.createConvolver();
+      var impulseRequest = new XMLHttpRequest();
+      var impulseUrl = "storage/data/tenniscourt.wav";
+      impulseRequest.open("GET", impulseUrl, true);
+      impulseRequest.responseType = "arraybuffer";
+      var isso = this;
+
+      impulseRequest.onload = function () {
+        isso.loaded = true;
+        var impulseData = impulseRequest.response;
+        isso.ctx.decodeAudioData(impulseData, function (buffer) {
+          var myImpulseBuffer = buffer;
+          impulseConvolver.buffer = myImpulseBuffer;
+          impulseConvolver.loop = true;
+          impulseConvolver.normalize = true;
+          isso.convolverGain.gain.value = 0;
+          isso.convolverGain.connect(impulseConvolver);
+          impulseConvolver.connect(isso.gain);
+        }, function (e) {
+          "Error with decoding audio data" + e.err;
+        });
+      };
+
+      impulseRequest.send();
+    },
     canvasWidth: function canvasWidth() {
       this.screenWidth = window.innerWidth;
     },
@@ -40862,7 +40857,8 @@ var render = function() {
         "div",
         {
           staticClass: "stack-slice stack-bottom",
-          attrs: { id: "stack-" + _vm.pos }
+          attrs: { id: "stack-" + _vm.pos },
+          on: { click: _vm.play }
         },
         [
           _c("div", { staticClass: "inln-btn" }, [
