@@ -2447,6 +2447,7 @@ __webpack_require__.r(__webpack_exports__);
           }
 
           console.log('sp', startPoint);
+          console.log('resp', JSON.parse(request.response));
           isso.start = startPoint * 100;
           isso.$emit('setStart', which, startPoint);
         }
