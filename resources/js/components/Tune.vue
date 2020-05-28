@@ -35,7 +35,13 @@
 
 <script>
 export default {
-  props: ["playable", "ctx", "para", "name", "pos"],
+  props: [
+    "playable", 
+    "ctx", 
+    "para", 
+    "name", 
+    "pos"
+    ],
 
   data: function() {
     return {
@@ -111,42 +117,37 @@ export default {
       isso.loaded = false;
       stop.style.display = "none";
       box.style.display = "none";
+            
+      isso.fx();
+
     };
 
     //get effect readings
-    var speedControl = document.getElementsByClassName("speed-control")[0];
-    var reverbControl = document.getElementsByClassName("reverb-control")[0];
-    var filterControl = document.getElementsByClassName("filter-control")[0];
-    var phaserControl = document.getElementsByClassName("phaser-control")[0];
 
-    var speedValue = document.getElementsByClassName("speed-value")[0];
-    var reverbValue = document.getElementsByClassName("reverb-value")[0];
-    var filterValue = document.getElementsByClassName("filter-value")[0];
-    var phaserValue = document.getElementsByClassName("phaser-value")[0];
 
     //if playing
-    setInterval(function() {
-      if (isso.playing) {
-          //try catcher
-          try {
-            isso.src.playbackRate.value = speedControl.value;
-            speedValue.innerHTML = Math.floor(speedControl.value * 100) + "%";
+    // if (isso.playing) {
+    //   setInterval(function() {
+    //       //try catcher
+    //       try {
+    //         isso.src.playbackRate.value = speedControl.value;
+    //         speedValue.innerHTML = Math.floor(speedControl.value * 100) + "%";
 
-            convolverGain.gain.value = reverbControl.value;
-            reverbValue.innerHTML = Math.floor(reverbControl.value * 100) + "%";
+    //         convolverGain.gain.value = reverbControl.value;
+    //         reverbValue.innerHTML = Math.floor(reverbControl.value * 100) + "%";
 
-            isso.filter.frequency.value = filterControl.value < 20000 ? filterControl.value / 4 : filterControl.value;
+    //         isso.filter.frequency.value = filterControl.value < 20000 ? filterControl.value / 4 : filterControl.value;
                         
-            filterValue.innerHTML = Math.floor(isso.filter.frequency.value) + " Hz";
+    //         filterValue.innerHTML = Math.floor(isso.filter.frequency.value) + " Hz";
 
-            isso.amt = phaserControl.value;
-            phaserValue.innerHTML = Math.floor(phaserControl.value * 100) + "%";
+    //         isso.amt = modControl.value;
+    //         modValue.innerHTML = Math.floor(modControl.value * 100) + "%";
 
-          } catch {
-            //
-          }
-      }
-    }, 10);
+    //       } catch {
+    //         //
+    //       }
+    //     }, 50);
+    //   }
 
     var i = 2;
     var up = true;
@@ -302,6 +303,8 @@ export default {
         this.$emit('able', true);
         console.log(err);
       }
+
+      this.fx();
     },
 
     getImpulse: function() {
@@ -336,6 +339,47 @@ export default {
       };
 
       impulseRequest.send();
+    },
+
+    fx: function() {
+      var isso = this;
+
+      var speedControl = document.getElementsByClassName("speed-control")[0];
+      var reverbControl = document.getElementsByClassName("reverb-control")[0];
+      var filterControl = document.getElementsByClassName("filter-control")[0];
+      var modControl = document.getElementsByClassName("mod-control")[0];
+
+      var speedValue = document.getElementsByClassName("speed-value")[0];
+      var reverbValue = document.getElementsByClassName("reverb-value")[0];
+      var filterValue = document.getElementsByClassName("filter-value")[0];
+      var modValue = document.getElementsByClassName("mod-value")[0];
+
+      var fxInterval = setInterval(function() {
+
+        //try catcher
+        try {
+          isso.src.playbackRate.value = speedControl.value;
+          speedValue.innerHTML = Math.floor(speedControl.value * 100) + "%";
+
+          isso.convolverGain.gain.value = reverbControl.value;
+          reverbValue.innerHTML = Math.floor(reverbControl.value * 100) + "%";
+
+          isso.filter.frequency.value = filterControl.value < 20000 ? filterControl.value / 4 : filterControl.value;
+                      
+          filterValue.innerHTML = Math.floor(isso.filter.frequency.value) + " Hz";
+
+          isso.amt = modControl.value;
+          modValue.innerHTML = Math.floor(modControl.value * 100) + "%";
+
+          } catch(err) {
+            console.log(err);
+        }
+      }, 100);
+
+      if (!this.playing) {
+        clearInterval(fxInterval);
+      }
+
     },
 
     canvasWidth: function() {

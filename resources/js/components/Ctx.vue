@@ -23,8 +23,8 @@
             <div class="fx-container filter-container">
                 <input class="fx filter-control" type="range" min="0" max="20000" step="10" value="20000">
             </div>
-            <div class="fx-container phaser-container">
-                <input class="fx phaser-control" type="range" min="0" max="1" step="0.01" value="0">
+            <div class="fx-container mod-container">
+                <input class="fx mod-control" type="range" min="0" max="1" step="0.01" value="0">
             </div>
         </div>
         <div class="bottom-container">
@@ -32,7 +32,7 @@
                     <span class="speed-value">0</span>
                     <span class="reverb-value">0</span>
                     <span class="filter-value">0</span>
-                    <span class="phaser-value">0</span>
+                    <span class="mod-value">0</span>
             </div>
             <div class="crow cbottom-row">
                     <span class="fx-label">Speed</span>
@@ -89,10 +89,6 @@ export default {
 .playback-item {
     display: inline;
     font-size: 18px;
-}
-
-.playback-phase {
-    margin-left: 15px;
 }
 
 html, body {
