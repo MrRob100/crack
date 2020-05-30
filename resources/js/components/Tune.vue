@@ -71,7 +71,6 @@ export default {
  
     var isso = this;
     var body = document.querySelector("body");
-    var stop = document.getElementById("stbutton-" + isso.pos); 
 
     isso.dlref = window.location.origin + "/dl?song=" + isso.name;
 
@@ -97,57 +96,6 @@ export default {
 
     this.masterCompression = isso.ctx.createDynamicsCompressor();
     this.masterCompression.threshold.value = -10;
-
-    stop.onclick = function() {
-      var toBlur = document.getElementsByClassName("to-blur");
-      var box = document.getElementsByClassName("control-box")[0];
-
-      isso.$emit('able', true);
-      isso.ableToPlay = true;
-      body.style.position = "relative";
-      body.style.overflowY = "scroll";
-
-      for (let item of toBlur) {
-        item.style.filter = "none";
-      }
-
-      isso.src.stop(0);
-      isso.convolver.disconnect();
-      isso.playing = false;
-      isso.loaded = false;
-      stop.style.display = "none";
-      box.style.display = "none";
-            
-      isso.fx();
-
-    };
-
-    //get effect readings
-
-
-    //if playing
-    // if (isso.playing) {
-    //   setInterval(function() {
-    //       //try catcher
-    //       try {
-    //         isso.src.playbackRate.value = speedControl.value;
-    //         speedValue.innerHTML = Math.floor(speedControl.value * 100) + "%";
-
-    //         convolverGain.gain.value = reverbControl.value;
-    //         reverbValue.innerHTML = Math.floor(reverbControl.value * 100) + "%";
-
-    //         isso.filter.frequency.value = filterControl.value < 20000 ? filterControl.value / 4 : filterControl.value;
-                        
-    //         filterValue.innerHTML = Math.floor(isso.filter.frequency.value) + " Hz";
-
-    //         isso.amt = modControl.value;
-    //         modValue.innerHTML = Math.floor(modControl.value * 100) + "%";
-
-    //       } catch {
-    //         //
-    //       }
-    //     }, 50);
-    //   }
 
     var i = 2;
     var up = true;
@@ -305,6 +253,7 @@ export default {
       }
 
       this.fx();
+
     },
 
     getImpulse: function() {
@@ -344,6 +293,8 @@ export default {
     fx: function() {
       var isso = this;
 
+
+
       var speedControl = document.getElementsByClassName("speed-control")[0];
       var reverbControl = document.getElementsByClassName("reverb-control")[0];
       var filterControl = document.getElementsByClassName("filter-control")[0];
@@ -374,10 +325,30 @@ export default {
           } catch(err) {
             console.log(err);
         }
-      }, 100);
+      }, 50);
 
-      if (!this.playing) {
+      var stop = document.getElementById("stbutton-" + isso.pos);
+      stop.onclick = function() {
         clearInterval(fxInterval);
+        var toBlur = document.getElementsByClassName("to-blur");
+        var box = document.getElementsByClassName("control-box")[0];
+        var body = document.querySelector("body");
+
+        isso.$emit('able', true);
+        isso.ableToPlay = true;
+        body.style.position = "relative";
+        body.style.overflowY = "scroll";
+
+        for (let item of toBlur) {
+          item.style.filter = "none";
+        }
+
+        isso.src.stop(0);
+        isso.convolver.disconnect();
+        isso.playing = false;
+        isso.loaded = false;
+        stop.style.display = "none";
+        box.style.display = "none";      
       }
 
     },

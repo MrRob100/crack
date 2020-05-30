@@ -1957,7 +1957,6 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var isso = this;
     var body = document.querySelector("body");
-    var stop = document.getElementById("stbutton-" + isso.pos);
     isso.dlref = window.location.origin + "/dl?song=" + isso.name;
     var source;
     var myBuffer;
@@ -1976,66 +1975,6 @@ __webpack_require__.r(__webpack_exports__);
     this.filter.Q.value = 1.5;
     this.masterCompression = isso.ctx.createDynamicsCompressor();
     this.masterCompression.threshold.value = -10;
-
-    stop.onclick = function () {
-      var toBlur = document.getElementsByClassName("to-blur");
-      var box = document.getElementsByClassName("control-box")[0];
-      isso.$emit('able', true);
-      isso.ableToPlay = true;
-      body.style.position = "relative";
-      body.style.overflowY = "scroll";
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        for (var _iterator = toBlur[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var item = _step.value;
-          item.style.filter = "none";
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return != null) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-
-      isso.src.stop(0);
-      isso.convolver.disconnect();
-      isso.playing = false;
-      isso.loaded = false;
-      stop.style.display = "none";
-      box.style.display = "none";
-      isso.fx();
-    }; //get effect readings
-    //if playing
-    // if (isso.playing) {
-    //   setInterval(function() {
-    //       //try catcher
-    //       try {
-    //         isso.src.playbackRate.value = speedControl.value;
-    //         speedValue.innerHTML = Math.floor(speedControl.value * 100) + "%";
-    //         convolverGain.gain.value = reverbControl.value;
-    //         reverbValue.innerHTML = Math.floor(reverbControl.value * 100) + "%";
-    //         isso.filter.frequency.value = filterControl.value < 20000 ? filterControl.value / 4 : filterControl.value;
-    //         filterValue.innerHTML = Math.floor(isso.filter.frequency.value) + " Hz";
-    //         isso.amt = modControl.value;
-    //         modValue.innerHTML = Math.floor(modControl.value * 100) + "%";
-    //       } catch {
-    //         //
-    //       }
-    //     }, 50);
-    //   }
-
-
     var i = 2;
     var up = true;
     isso.amt = 0;
@@ -2138,27 +2077,27 @@ __webpack_require__.r(__webpack_exports__);
         this.src.start(0, offset);
         this.loading = false; //blur rest
 
-        var _iteratorNormalCompletion2 = true;
-        var _didIteratorError2 = false;
-        var _iteratorError2 = undefined;
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
 
         try {
-          for (var _iterator2 = toBlur[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var item = _step2.value;
+          for (var _iterator = toBlur[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var item = _step.value;
             item.style.filter = "blur(5px)";
           } //disable scroll (redo)
 
         } catch (err) {
-          _didIteratorError2 = true;
-          _iteratorError2 = err;
+          _didIteratorError = true;
+          _iteratorError = err;
         } finally {
           try {
-            if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
-              _iterator2.return();
+            if (!_iteratorNormalCompletion && _iterator.return != null) {
+              _iterator.return();
             }
           } finally {
-            if (_didIteratorError2) {
-              throw _iteratorError2;
+            if (_didIteratorError) {
+              throw _iteratorError;
             }
           }
         }
@@ -2228,11 +2167,49 @@ __webpack_require__.r(__webpack_exports__);
         } catch (err) {
           console.log(err);
         }
-      }, 100);
+      }, 50);
+      var stop = document.getElementById("stbutton-" + isso.pos);
 
-      if (!this.playing) {
+      stop.onclick = function () {
         clearInterval(fxInterval);
-      }
+        var toBlur = document.getElementsByClassName("to-blur");
+        var box = document.getElementsByClassName("control-box")[0];
+        var body = document.querySelector("body");
+        isso.$emit('able', true);
+        isso.ableToPlay = true;
+        body.style.position = "relative";
+        body.style.overflowY = "scroll";
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
+
+        try {
+          for (var _iterator2 = toBlur[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var item = _step2.value;
+            item.style.filter = "none";
+          }
+        } catch (err) {
+          _didIteratorError2 = true;
+          _iteratorError2 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+              _iterator2.return();
+            }
+          } finally {
+            if (_didIteratorError2) {
+              throw _iteratorError2;
+            }
+          }
+        }
+
+        isso.src.stop(0);
+        isso.convolver.disconnect();
+        isso.playing = false;
+        isso.loaded = false;
+        stop.style.display = "none";
+        box.style.display = "none";
+      };
     },
     canvasWidth: function canvasWidth() {
       this.screenWidth = window.innerWidth;
