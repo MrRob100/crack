@@ -1974,36 +1974,35 @@ __webpack_require__.r(__webpack_exports__);
     this.notch.frequency.value = 100;
     this.filter.Q.value = 1.5;
     this.masterCompression = isso.ctx.createDynamicsCompressor();
-    this.masterCompression.threshold.value = -10;
-    var i = 2;
-    var up = true;
-    isso.amt = 0;
-    setInterval(function () {
-      if (i === 120) {
-        up = false;
-      }
+    this.masterCompression.threshold.value = -10; // var i = 2;
+    // var up = true;
+    // isso.amt = 0;
+    // setInterval(function() {
+    //   if (i === 120) {
+    //     up = false;
+    //   }
+    //   if (i === 2) {
+    //     up = true;
+    //   }
+    //   if (up) {
+    //       i++;
+    //   } else {
+    //       i--;
+    //   }
+    //     try {
+    //       if ((i * 100) - isso.amt > 50) {
+    //           var calc = (-isso.amt * 20000) + 20000;
+    //           var calcfull = (i * 100) + calc;
+    //           isso.notch.frequency.value = calcfull < 24000 ? calcfull : 24000;
+    //       } else {
+    //           isso.notch.frequency.value = 50;
+    //       }
+    //     } catch {
+    //       //
+    //     }
+    //   console.log('mod int');
+    // }, 500);
 
-      if (i === 2) {
-        up = true;
-      }
-
-      if (up) {
-        i++;
-      } else {
-        i--;
-      }
-
-      try {
-        if (i * 100 - isso.amt > 50) {
-          var calc = -isso.amt * 20000 + 20000;
-          var calcfull = i * 100 + calc;
-          isso.notch.frequency.value = calcfull < 24000 ? calcfull : 24000;
-        } else {
-          isso.notch.frequency.value = 50;
-        }
-      } catch (_unused) {//
-      }
-    }, 2);
     this.nameTrim();
     this.canvasWidth();
     window.addEventListener("resize", this.nameTrim);
@@ -2168,10 +2167,40 @@ __webpack_require__.r(__webpack_exports__);
           console.log(err);
         }
       }, 50);
+      var i = 2;
+      var up = true;
+      isso.amt = 0;
+      var modInt = setInterval(function () {
+        if (i === 120) {
+          up = false;
+        }
+
+        if (i === 2) {
+          up = true;
+        }
+
+        if (up) {
+          i++;
+        } else {
+          i--;
+        }
+
+        try {
+          if (i * 100 - isso.amt > 50) {
+            var calc = -isso.amt * 20000 + 20000;
+            var calcfull = i * 100 + calc;
+            isso.notch.frequency.value = calcfull < 24000 ? calcfull : 24000;
+          } else {
+            isso.notch.frequency.value = 50;
+          }
+        } catch (_unused) {//
+        }
+      }, 500);
       var stop = document.getElementById("stbutton-" + isso.pos);
 
       stop.onclick = function () {
         clearInterval(fxInterval);
+        clearInterval(modInt);
         var toBlur = document.getElementsByClassName("to-blur");
         var box = document.getElementsByClassName("control-box")[0];
         var body = document.querySelector("body");
