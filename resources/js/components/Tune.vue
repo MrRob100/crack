@@ -97,43 +97,6 @@ export default {
     this.masterCompression = isso.ctx.createDynamicsCompressor();
     this.masterCompression.threshold.value = -10;
 
-    // var i = 2;
-    // var up = true;
-    // isso.amt = 0;
-
-    // setInterval(function() {
-    //   if (i === 120) {
-    //     up = false;
-    //   }
-    //   if (i === 2) {
-    //     up = true;
-    //   }
-
-    //   if (up) {
-    //       i++;
-    //   } else {
-    //       i--;
-    //   }
-
-    //     try {
-    //       if ((i * 100) - isso.amt > 50) {
-
-    //           var calc = (-isso.amt * 20000) + 20000;
-    //           var calcfull = (i * 100) + calc;
-
-    //           isso.notch.frequency.value = calcfull < 24000 ? calcfull : 24000;
-
-    //       } else {
-    //           isso.notch.frequency.value = 50;
-    //       }
-    //     } catch {
-    //       //
-    //     }
-
-    //   console.log('mod int');
-
-    // }, 500);
-
     this.nameTrim();
     this.canvasWidth();
     window.addEventListener("resize", this.nameTrim);
