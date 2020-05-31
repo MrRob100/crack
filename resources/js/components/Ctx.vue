@@ -205,6 +205,7 @@ body {
 }
 
 .canv {
+    position: absolute;
     width: 100%;
     height: 40px;
 }
