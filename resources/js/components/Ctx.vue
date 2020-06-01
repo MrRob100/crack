@@ -201,6 +201,7 @@ body {
 }
 
 .inln-btn {
+    z-index: 1;
     position: absolute;
 }
 
