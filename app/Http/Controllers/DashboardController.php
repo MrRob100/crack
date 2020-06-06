@@ -34,16 +34,16 @@ class DashboardController extends Controller
             chmod('storage/data/'.$para, 0777);
         }
 
-        $items = scandir('storage/data/'.$para);
+        $para_a = $para == "" ? "" : $para."/";
 
-        array_shift($items);
-        array_shift($items);
+        $tunes_ordered = glob('storage/data/'.$para_a.'*.mp3');
+        usort($tunes_ordered, function($a, $b) {
+            return filemtime($a) < filemtime($b);
+        });
 
         $tunes = [];
-        foreach ($items as $item) {
-            if (strpos($item, '.mp3') !== false) {
-                $tunes[] = $item;
-            }
+        foreach ($tunes_ordered as $tune_ordered) {
+            $tunes[] = str_replace('storage/data/'.$para_a, '', $tune_ordered);
         }
 
         $para = $para == "" ? '-' : $para;
