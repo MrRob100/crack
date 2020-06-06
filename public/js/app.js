@@ -2167,7 +2167,7 @@ __webpack_require__.r(__webpack_exports__);
           }
         } catch (_unused) {//
         }
-      }, 500);
+      }, 10);
       var stop = document.getElementById("stbutton-" + isso.pos);
 
       stop.onclick = function () {

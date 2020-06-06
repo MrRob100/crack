@@ -322,7 +322,7 @@ export default {
         //
       }
 
-    }, 500);
+    }, 10);
 
       var stop = document.getElementById("stbutton-" + isso.pos);
       stop.onclick = function() {
