@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="tunes">
       <div class="slither" v-for="(tune, index) in tunesFormatted" :key="tune">
         <tune
         @able="setPlayable"

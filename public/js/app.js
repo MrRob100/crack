@@ -40640,50 +40640,52 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _vm._l(_vm.tunesFormatted, function(tune, index) {
-        return _c(
-          "div",
-          { key: tune, staticClass: "slither" },
-          [
-            _c("tune", {
-              attrs: {
-                playable: _vm.playable,
-                ctx: _vm.ctx,
-                para: _vm.para,
-                name: tune,
-                pos: index
-              },
-              on: { able: _vm.setPlayable }
-            })
-          ],
-          1
-        )
-      }),
-      _vm._v(" "),
-      _c(
+  return _vm.tunes
+    ? _c(
         "div",
-        { staticClass: "control-box" },
         [
-          _vm._m(0),
-          _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
           _vm._l(_vm.tunesFormatted, function(tune, index) {
-            return _c("div", { key: tune, staticClass: "crow cstop" }, [
-              _c("button", { attrs: { id: "stbutton-" + index } }, [
-                _vm._v("Stop")
-              ])
-            ])
-          })
+            return _c(
+              "div",
+              { key: tune, staticClass: "slither" },
+              [
+                _c("tune", {
+                  attrs: {
+                    playable: _vm.playable,
+                    ctx: _vm.ctx,
+                    para: _vm.para,
+                    name: tune,
+                    pos: index
+                  },
+                  on: { able: _vm.setPlayable }
+                })
+              ],
+              1
+            )
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "control-box" },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _vm._l(_vm.tunesFormatted, function(tune, index) {
+                return _c("div", { key: tune, staticClass: "crow cstop" }, [
+                  _c("button", { attrs: { id: "stbutton-" + index } }, [
+                    _vm._v("Stop")
+                  ])
+                ])
+              })
+            ],
+            2
+          )
         ],
         2
       )
-    ],
-    2
-  )
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {
