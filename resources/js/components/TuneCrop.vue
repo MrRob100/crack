@@ -3,7 +3,7 @@
     <div class="marker marker-start" :id='"div-start-"+setting' :style="'left: '+ start + '%'">
       <div class="markerheader" :id='"div-start-"+setting+"-header"'>S</div>
     </div>
-    <div class="marker marker-end" :id='"div-end-"+setting' :style="'left: '+ end + '%'">
+    <div class="marker marker-end" :id='"div-end-"+setting' :style="'left: '+ end">
       <div class="markerheader" :id='"div-end-"+setting+"-header"'>E</div>
     </div>
   </div>
@@ -21,7 +21,8 @@ export default {
       startString: "startScale",
       endString: "endScale",
       start: 0,
-      end: 0,
+      end: "calc(100% -  20px)",
+      settingEnd: false
     }
   },
 
@@ -92,7 +93,17 @@ export default {
         }
 
         if (endx > (window.innerWidth - 20) && elmnt.id == "div-end-" + isso.setting) {
-            elmnt.style.left = "calc(100% - 20px)";
+            elmnt.style.left = "calc(100% -  20px)";
+
+            if (!isso.settingEnd) {
+              isso.setMarkers('endScale', endx);
+              isso.settingEnd = true;
+
+              setTimeout(function() {
+                isso.settingEnd = false;
+              }, 2000);
+            }
+
         }
 
         if (endx >= startx) {
@@ -181,10 +192,12 @@ export default {
         if (which === "endScale") {
           if (request.response === "") {
             endPoint = 0.98;
+            isso.end = "calc(100% - 20px)";
           } else {
             endPoint = JSON.parse(request.response)[which];
+            isso.end = endPoint * 100 + "%";
+
           }
-          isso.end = endPoint * 100;
           isso.$emit('setEnd', which, endPoint);
         }
       }

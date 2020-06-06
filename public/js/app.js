@@ -2300,7 +2300,8 @@ __webpack_require__.r(__webpack_exports__);
       startString: "startScale",
       endString: "endScale",
       start: 0,
-      end: 0
+      end: "calc(100% -  20px)",
+      settingEnd: false
     };
   },
   //when component has mounted
@@ -2368,7 +2369,15 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         if (endx > window.innerWidth - 20 && elmnt.id == "div-end-" + isso.setting) {
-          elmnt.style.left = "calc(100% - 20px)";
+          elmnt.style.left = "calc(100% -  20px)";
+
+          if (!isso.settingEnd) {
+            isso.setMarkers('endScale', endx);
+            isso.settingEnd = true;
+            setTimeout(function () {
+              isso.settingEnd = false;
+            }, 2000);
+          }
         }
 
         if (endx >= startx) {
@@ -2450,11 +2459,12 @@ __webpack_require__.r(__webpack_exports__);
         if (which === "endScale") {
           if (request.response === "") {
             endPoint = 0.98;
+            isso.end = "calc(100% - 20px)";
           } else {
             endPoint = JSON.parse(request.response)[which];
+            isso.end = endPoint * 100 + "%";
           }
 
-          isso.end = endPoint * 100;
           isso.$emit('setEnd', which, endPoint);
         }
       };
@@ -40950,7 +40960,7 @@ var render = function() {
         "div",
         {
           staticClass: "marker marker-end",
-          style: "left: " + _vm.end + "%",
+          style: "left: " + _vm.end,
           attrs: { id: "div-end-" + _vm.setting }
         },
         [
