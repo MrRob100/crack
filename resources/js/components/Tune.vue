@@ -7,8 +7,12 @@
       class="stack-slice stack-bottom"
       >
         <div class="inln-btn">
-            <h3 v-if="!loading">{{ nameTrimmed }}</h3>
-            <h3 v-if="loading">Loading...</h3>
+            <h3 
+              class="delete-button"
+              @click=""
+              >DEL</h3>
+            <h3 class="false-shift" v-if="!loading">{{ nameTrimmed }}</h3>
+            <h3 class="false-shift" v-if="loading">Loading...</h3>
         </div>
 
         <tune-crop
@@ -109,7 +113,7 @@ export default {
     play: function() {
       this.$emit('able', false);
       var prevent = document.getElementById('prevent-' + this.pos);
-      if (!this.playing && this.ableToPlay && !prevent && this.playable) {
+      if (!this.playing && this.ableToPlay && !prevent && this.playable && !this.dlding) {
         this.ableToPlay = false;
         this.convolver.disconnect();
 
@@ -381,17 +385,13 @@ export default {
     },
 
     dl: function() {
+        
         var isso = this;
 
-        if (window.location.hostname == 'localhost') { 
-            //deleting if local
-            // isso.del();
-        } else {
-            isso.dlding = true;
-            setTimeout(function() {
-                isso.dlding = false;
-            }, 500);
-        }
+        isso.dlding = true;
+        setTimeout(function() {
+            isso.dlding = false;
+        }, 500);
     },
 
     drawBuffer: function( width, height, context, buffer ) {

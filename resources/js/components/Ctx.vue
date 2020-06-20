@@ -82,6 +82,15 @@ export default {
 </script>
 <style>
 
+.delete-button {
+    position: absolute;
+    display: none;
+}
+
+.false-shift {
+    /* margin-left: 200px; */
+}
+
 .playback {
     clear: left;
 }
@@ -94,7 +103,7 @@ export default {
 html, body {
     height: 100%;
     overflow-x: hidden;
-    touch-action: none;
+    /* touch-action: none; */
     background-color: rgb(50, 2, 95) !important;
     font-family: 'Courier New', Courier, monospace !important;
 }
