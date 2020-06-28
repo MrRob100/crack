@@ -76,7 +76,11 @@ export default {
     var isso = this;
     var body = document.querySelector("body");
 
-    isso.dlref = window.location.origin + "/dl?song=" + isso.name;
+    if (this.para == "-") {
+      isso.dlref = window.location.origin + "/dl?song=" + isso.name;
+    } else {
+      isso.dlref = window.location.origin + "/dl?song=" + isso.para + "/" + isso.name;
+    }
 
     var source;
     var myBuffer;
