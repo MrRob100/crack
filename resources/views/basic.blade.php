@@ -3,8 +3,10 @@
 
 <script>
 
+console.log('ff');
+
 const context = new (window.AudioContext || window.webkitAudioContext)()
-const loopUrl = '/crack/public/storage/data/bunny.mp3'
+const loopUrl = '/crack/public/storage/data/yn.mp3'
 
 const source = context.createBufferSource();
 
@@ -32,3 +34,5 @@ var playpause = document.getElementById('playpause');
 playpause.onclick = function() {
     source.start(0);
 }
+
+</script>

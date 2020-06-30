@@ -19,6 +19,10 @@ Route::get('/del', 'DashboardController@delete');
 Route::get('/get', 'DashboardController@getMarker');
 Route::get('/set', 'DashboardController@setMarker');
 
+
+Route::view('/basic', 'basic');
+
+
 //index
 Route::get('/{para?}', 'DashboardController@index')->name('dashboard');
 
