@@ -37,6 +37,7 @@ request.send();
 
 var playpause = document.getElementById('playpause');
 playpause.onclick = function() {
+    console.log('starting');
     source.start(0);
 }
 
