@@ -1,6 +1,11 @@
 <button id="playpause">Play</button>
 <input class="phasecontrol" type="range" min="0" max="1" step="0.1" value="0">
-
+<style>
+    #playpause {
+        height:300px;
+        width:300px;
+    }
+</style>
 <script>
 
 console.log('ff');
