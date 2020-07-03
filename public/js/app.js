@@ -1794,22 +1794,22 @@ __webpack_require__.r(__webpack_exports__);
 
     playpause2.onclick = function () {
       source.start(0);
-    };
+    }; // const context = new (window.AudioContext || window.webkitAudioContext)()
 
-    var context = new (window.AudioContext || window.webkitAudioContext)();
+
     var loopUrl = 'storage/data/tenniscourt.wav';
-    var source = context.createBufferSource();
+    var source = audioCtx.createBufferSource();
     var request = new XMLHttpRequest();
     request.open('GET', loopUrl, true);
     request.responseType = 'arraybuffer';
 
     request.onload = function () {
       var audioData = request.response;
-      context.decodeAudioData(audioData, function (buffer) {
+      audioCtx.decodeAudioData(audioData, function (buffer) {
         var myBuffer = buffer;
         source.buffer = myBuffer; // source.loop = true;
 
-        source.connect(context.destination);
+        source.connect(audioCtx.destination);
       }, function (e) {
         "Error decoding audio data";
       });

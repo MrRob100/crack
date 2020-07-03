@@ -82,11 +82,10 @@ export default {
             source.start(0);
         }
 
-
-        const context = new (window.AudioContext || window.webkitAudioContext)()
+        // const context = new (window.AudioContext || window.webkitAudioContext)()
         const loopUrl = 'storage/data/tenniscourt.wav';
 
-        const source = context.createBufferSource();
+        const source = audioCtx.createBufferSource();
 
         var request = new XMLHttpRequest();
         request.open('GET', loopUrl, true);
@@ -95,11 +94,11 @@ export default {
         request.onload = function() {
             var audioData = request.response;
 
-            context.decodeAudioData(audioData, function(buffer) {
+            audioCtx.decodeAudioData(audioData, function(buffer) {
                 var myBuffer = buffer;
                 source.buffer = myBuffer;
                 // source.loop = true;
-                source.connect(context.destination);
+                source.connect(audioCtx.destination);
             },
             function (e) {
                 "Error decoding audio data"

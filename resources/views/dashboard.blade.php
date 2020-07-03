@@ -2,7 +2,7 @@
 
 @section('content')
 
-<button id="playpause">Play Outside Vue</button>
+{{-- <button id="playpause">Play Outside Vue</button> --}}
 
 <br>
 <br>
@@ -28,42 +28,42 @@ function ch() {
     $('#song-upload').submit();
 }
 
-setTimeout(function() {
+// setTimeout(function() {
 
-    var playpause = document.getElementById('playpause');
-
-
-    playpause.onclick = function() {
-        source.start(0);
-    }
+//     var playpause = document.getElementById('playpause');
 
 
-    const context = new (window.AudioContext || window.webkitAudioContext)()
-    const loopUrl = 'storage/data/_snakes.mp3'
+//     playpause.onclick = function() {
+//         source.start(0);
+//     }
 
-    const source = context.createBufferSource();
 
-    var request = new XMLHttpRequest();
-    request.open('GET', loopUrl, true);
-    request.responseType = 'arraybuffer';
+//     const context = new (window.AudioContext || window.webkitAudioContext)()
+//     const loopUrl = 'storage/data/_snakes.mp3'
 
-    request.onload = function() {
-        console.log('onload');
-        var audioData = request.response;
+//     const source = context.createBufferSource();
 
-        context.decodeAudioData(audioData, function(buffer) {
-            var myBuffer = buffer;
-            source.buffer = myBuffer;
-            source.loop = true;
-            source.connect(context.destination);
-        },
-        function (e) {
-            "Error decoding audio data"
-        });
-    }
+//     var request = new XMLHttpRequest();
+//     request.open('GET', loopUrl, true);
+//     request.responseType = 'arraybuffer';
 
-    request.send();
+//     request.onload = function() {
+//         console.log('onload');
+//         var audioData = request.response;
 
-}, 2000);
+//         context.decodeAudioData(audioData, function(buffer) {
+//             var myBuffer = buffer;
+//             source.buffer = myBuffer;
+//             // source.loop = true;
+//             source.connect(context.destination);
+//         },
+//         function (e) {
+//             "Error decoding audio data"
+//         });
+//     }
+
+//     request.send();
+
+// }, 2000);
 
 </script>
