@@ -123,6 +123,7 @@ export default {
 }
 
 .false-shift {
+    margin-top: 10px;
     /* margin-left: 200px; */
 }
 

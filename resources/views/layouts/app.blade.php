@@ -24,6 +24,8 @@
     <link rel='shortcut icon' href='images/cricon.png' type='image/x-icon'>
     <link rel='icon' href='images/cricon.png' type='image/x-icon'>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     {{-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164034058-1"></script>
     <script>

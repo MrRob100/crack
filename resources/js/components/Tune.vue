@@ -10,8 +10,8 @@
             <h3 
               class="delete-button"
               >DEL</h3>
-            <h3 class="false-shift" v-if="!loading">{{ nameTrimmed }}</h3>
-            <h3 class="false-shift" v-if="loading">Loading...</h3>
+            <h3 class="false-shift" v-if="!loading">{{ nameTrimmed }}<i class="fa fa-hand-pointer-o"></i></h3>
+            <h3 class="false-shift" v-else>Loading...</h3>
         </div>
 
         <tune-crop
@@ -384,7 +384,7 @@ export default {
 
     nameTrim: function() {
       var scale = window.innerWidth / 15.16;
-      this.nameTrimmed = this.name.length > scale - 5 ? this.name.substr(0, scale - 5) + "..." : this.name;
+      this.nameTrimmed = this.name.length > scale - 7 ? this.name.substr(0, scale - 7) + "..." : this.name;
     },
 
     dl: function() {
