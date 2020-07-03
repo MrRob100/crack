@@ -4,6 +4,9 @@
 
 <button id="playpause">Play</button>
 
+<br>
+<br>
+
 <div class="contr to-blur">
     <form class="upl" id="song-upload" action="{{ $para }}" method="post" enctype="multipart/form-data">
         {!! csrf_field() !!}
@@ -25,35 +28,44 @@ function ch() {
     $('#song-upload').submit();
 }
 
-const context = new (window.AudioContext || window.webkitAudioContext)()
-const loopUrl = 'storage/data/_snakes.mp3'
+setTimeout(function() {
 
-const source = context.createBufferSource();
+    var playpause = document.getElementById('playpause');
 
-var request = new XMLHttpRequest();
-request.open('GET', loopUrl, true);
-request.responseType = 'arraybuffer';
+    console.log(playpause);
 
-request.onload = function() {
-    var audioData = request.response;
+    playpause.onclick = function() {
+        console.log('starting');
+        source.start(0);
+    }
 
-    context.decodeAudioData(audioData, function(buffer) {
-        var myBuffer = buffer;
-        source.buffer = myBuffer;
-        source.loop = true;
-        source.connect(context.destination);
-    },
-    function (e) {
-        "Error decoding audio data"
-    });
-}
 
-request.send();
+    const context = new (window.AudioContext || window.webkitAudioContext)()
+    const loopUrl = 'storage/data/_snakes.mp3'
 
-var playpause = document.getElementById('playpause');
-playpause.onclick = function() {
-    console.log('starting');
-    source.start(0);
-}
+    const source = context.createBufferSource();
+
+    var request = new XMLHttpRequest();
+    request.open('GET', loopUrl, true);
+    request.responseType = 'arraybuffer';
+
+    request.onload = function() {
+        console.log('onload');
+        var audioData = request.response;
+
+        context.decodeAudioData(audioData, function(buffer) {
+            var myBuffer = buffer;
+            source.buffer = myBuffer;
+            source.loop = true;
+            source.connect(context.destination);
+        },
+        function (e) {
+            "Error decoding audio data"
+        });
+    }
+
+    request.send();
+
+}, 2000);
 
 </script>
