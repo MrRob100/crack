@@ -1,8 +1,9 @@
 <template>
     <div v-if="tunes">
-        <button @click="playFirstHack()">
-            CLICK
-        </button>
+
+    <button id="playpause2">Play Inside Vue</button>
+
+
       <div class="slither" v-for="(tune, index) in tunesFormatted" :key="tune">
         <tune
         @able="setPlayable"
@@ -61,7 +62,7 @@ export default {
 
     data: function() {
         return {
-            ctx: {},
+            // ctx: {},
             tunesFormatted: {},
             playable: true,
         }
@@ -73,11 +74,39 @@ export default {
         this.ctx = audioCtx;
         this.tunesFormatted = this.tunes.split(" ");
 
-        //get first play done hack
-        var isso = this;
-        setTimeout(function() {
-            isso.playFirstHack();
-        }, 2000);
+        //pp
+        var playpause2 = document.getElementById('playpause2');
+
+
+        playpause2.onclick = function() {
+            source.start(0);
+        }
+
+
+        const context = new (window.AudioContext || window.webkitAudioContext)()
+        const loopUrl = 'storage/data/kak_dela.mp3'
+
+        const source = context.createBufferSource();
+
+        var request = new XMLHttpRequest();
+        request.open('GET', loopUrl, true);
+        request.responseType = 'arraybuffer';
+
+        request.onload = function() {
+            var audioData = request.response;
+
+            context.decodeAudioData(audioData, function(buffer) {
+                var myBuffer = buffer;
+                source.buffer = myBuffer;
+                source.loop = true;
+                source.connect(context.destination);
+            },
+            function (e) {
+                "Error decoding audio data"
+            });
+        }
+
+        request.send();
 
     },
 
@@ -86,36 +115,6 @@ export default {
             this.playable = playable;
         },
 
-        playFirstHack() {
-            console.log('pling');
-            var initRequest = new XMLHttpRequest();
-            var initUrl = "storage/data/tenniscourt.wav";
-            initRequest.open("GET", initUrl, true);
-            initRequest.responseType = "arraybuffer";
-
-            var isso = this;
-            initRequest.onload = function() {
-                var initData = initRequest.response;
-
-                isso.ctx.decodeAudioData(
-                    initData,
-                    function(buffer) {
-                        var myInitBuffer = buffer;
-                        var src = isso.ctx.createBufferSource();
-                        src.buffer = myInitBuffer;
-                        src.connect(isso.ctx.destination);
-                        src.start();
-                        console.log(src);
-                    },
-
-                    function(e) {
-                        "Error with decoding audio data" + e.err;
-                    }
-                );
-            };
-
-            initRequest.send();
-        }
     }
 
 }

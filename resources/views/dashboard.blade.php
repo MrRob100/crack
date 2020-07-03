@@ -2,7 +2,7 @@
 
 @section('content')
 
-<button id="playpause">Play</button>
+<button id="playpause">Play Outside Vue</button>
 
 <br>
 <br>
@@ -32,10 +32,8 @@ setTimeout(function() {
 
     var playpause = document.getElementById('playpause');
 
-    console.log(playpause);
 
     playpause.onclick = function() {
-        console.log('starting');
         source.start(0);
     }
 

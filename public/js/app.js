@@ -1774,11 +1774,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['tunes', 'para'],
   data: function data() {
     return {
-      ctx: {},
+      // ctx: {},
       tunesFormatted: {},
       playable: true
     };
@@ -1787,40 +1788,38 @@ __webpack_require__.r(__webpack_exports__);
     var AudioContext = window.AudioContext || window.webkitAudioContext;
     var audioCtx = new AudioContext();
     this.ctx = audioCtx;
-    this.tunesFormatted = this.tunes.split(" "); //get first play done hack
+    this.tunesFormatted = this.tunes.split(" "); //pp
 
-    var isso = this;
-    setTimeout(function () {
-      isso.playFirstHack();
-    }, 2000);
+    var playpause2 = document.getElementById('playpause2');
+
+    playpause2.onclick = function () {
+      source.start(0);
+    };
+
+    var context = new (window.AudioContext || window.webkitAudioContext)();
+    var loopUrl = 'storage/data/kak_dela.mp3';
+    var source = context.createBufferSource();
+    var request = new XMLHttpRequest();
+    request.open('GET', loopUrl, true);
+    request.responseType = 'arraybuffer';
+
+    request.onload = function () {
+      var audioData = request.response;
+      context.decodeAudioData(audioData, function (buffer) {
+        var myBuffer = buffer;
+        source.buffer = myBuffer;
+        source.loop = true;
+        source.connect(context.destination);
+      }, function (e) {
+        "Error decoding audio data";
+      });
+    };
+
+    request.send();
   },
   methods: {
     setPlayable: function setPlayable(playable) {
       this.playable = playable;
-    },
-    playFirstHack: function playFirstHack() {
-      console.log('pling');
-      var initRequest = new XMLHttpRequest();
-      var initUrl = "storage/data/tenniscourt.wav";
-      initRequest.open("GET", initUrl, true);
-      initRequest.responseType = "arraybuffer";
-      var isso = this;
-
-      initRequest.onload = function () {
-        var initData = initRequest.response;
-        isso.ctx.decodeAudioData(initData, function (buffer) {
-          var myInitBuffer = buffer;
-          var src = isso.ctx.createBufferSource();
-          src.buffer = myInitBuffer;
-          src.connect(isso.ctx.destination);
-          src.start();
-          console.log(src);
-        }, function (e) {
-          "Error with decoding audio data" + e.err;
-        });
-      };
-
-      initRequest.send();
     }
   }
 });
@@ -40681,17 +40680,9 @@ var render = function() {
     ? _c(
         "div",
         [
-          _c(
-            "button",
-            {
-              on: {
-                click: function($event) {
-                  return _vm.playFirstHack()
-                }
-              }
-            },
-            [_vm._v("\n        CLICK\n    ")]
-          ),
+          _c("button", { attrs: { id: "playpause2" } }, [
+            _vm._v("Play Inside Vue")
+          ]),
           _vm._v(" "),
           _vm._l(_vm.tunesFormatted, function(tune, index) {
             return _c(
