@@ -1,9 +1,6 @@
 <template>
     <div v-if="tunes">
 
-    <!-- <button id="playpause2">Play Inside Vue</button> -->
-
-
       <div class="slither" v-for="(tune, index) in tunesFormatted" :key="tune">
         <tune
         @able="setPlayable"
@@ -62,7 +59,6 @@ export default {
 
     data: function() {
         return {
-            // ctx: {},
             init: true,
             initSource: {},
             tunesFormatted: {},
