@@ -1780,46 +1780,18 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       // ctx: {},
+      init: true,
+      initSource: {},
       tunesFormatted: {},
       playable: true
     };
   },
   mounted: function mounted() {
+    var isso = this;
     var AudioContext = window.AudioContext || window.webkitAudioContext;
     var audioCtx = new AudioContext();
     this.ctx = audioCtx;
-    this.tunesFormatted = this.tunes.split(" "); //pp
-
-    var playpause2 = document.getElementById('playpause2');
-    setTimeout(function () {
-      var list = document.getElementsByClassName("stack-slice");
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        for (var _iterator = list[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var item = _step.value;
-
-          item.onclick = function () {
-            source.start(0);
-          };
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return != null) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-    }, 2000);
+    this.tunesFormatted = this.tunes.split(" ");
     var loopUrl = 'storage/data/tenniscourt.wav';
     var source = audioCtx.createBufferSource();
     var request = new XMLHttpRequest();
@@ -1830,9 +1802,9 @@ __webpack_require__.r(__webpack_exports__);
       var audioData = request.response;
       audioCtx.decodeAudioData(audioData, function (buffer) {
         var myBuffer = buffer;
-        source.buffer = myBuffer; // source.loop = true;
-
+        source.buffer = myBuffer;
         source.connect(audioCtx.destination);
+        isso.initSource = source;
       }, function (e) {
         "Error decoding audio data";
       });
@@ -1843,6 +1815,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     setPlayable: function setPlayable(playable) {
       this.playable = playable;
+
+      if (!playable && this.init) {
+        this.init = false;
+        this.initSource.start(0, 0.5);
+      }
     }
   }
 });

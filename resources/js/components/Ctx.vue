@@ -63,29 +63,19 @@ export default {
     data: function() {
         return {
             // ctx: {},
+            init: true,
+            initSource: {},
             tunesFormatted: {},
             playable: true,
         }
     },
 
     mounted() {
+        var isso = this;
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         const audioCtx = new AudioContext();
         this.ctx = audioCtx;
         this.tunesFormatted = this.tunes.split(" ");
-
-        //pp
-        var playpause2 = document.getElementById('playpause2');
-
-        setTimeout(function() {
-            var list = document.getElementsByClassName("stack-slice");
-            for (let item of list) {
-                item.onclick = function() {
-                    source.start(0);
-                }
-            }
-
-        }, 2000)
 
         const loopUrl = 'storage/data/tenniscourt.wav';
 
@@ -101,8 +91,9 @@ export default {
             audioCtx.decodeAudioData(audioData, function(buffer) {
                 var myBuffer = buffer;
                 source.buffer = myBuffer;
-                // source.loop = true;
                 source.connect(audioCtx.destination);
+                isso.initSource = source;
+
             },
             function (e) {
                 "Error decoding audio data"
@@ -116,6 +107,11 @@ export default {
     methods: {
         setPlayable(playable) {
             this.playable = playable;
+
+            if (!playable && this.init) {
+                this.init = false;
+                this.initSource.start(0, 0.5);
+            }
         },
 
     }
