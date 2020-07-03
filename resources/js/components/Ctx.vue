@@ -110,7 +110,7 @@ export default {
 
             if (!playable && this.init) {
                 this.init = false;
-                this.initSource.start(0, 0.5);
+                this.initSource.start(0, 1);
             }
         },
 

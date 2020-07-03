@@ -1818,7 +1818,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (!playable && this.init) {
         this.init = false;
-        this.initSource.start(0, 0.5);
+        this.initSource.start(0, 1);
       }
     }
   }
