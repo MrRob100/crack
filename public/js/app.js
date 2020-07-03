@@ -1807,8 +1807,8 @@ __webpack_require__.r(__webpack_exports__);
       var audioData = request.response;
       context.decodeAudioData(audioData, function (buffer) {
         var myBuffer = buffer;
-        source.buffer = myBuffer;
-        source.loop = true;
+        source.buffer = myBuffer; // source.loop = true;
+
         source.connect(context.destination);
       }, function (e) {
         "Error decoding audio data";

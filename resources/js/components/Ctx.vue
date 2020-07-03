@@ -98,7 +98,7 @@ export default {
             context.decodeAudioData(audioData, function(buffer) {
                 var myBuffer = buffer;
                 source.buffer = myBuffer;
-                source.loop = true;
+                // source.loop = true;
                 source.connect(context.destination);
             },
             function (e) {
