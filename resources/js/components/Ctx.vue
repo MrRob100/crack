@@ -84,7 +84,7 @@ export default {
 
 
         const context = new (window.AudioContext || window.webkitAudioContext)()
-        const loopUrl = 'storage/data/kak_dela.mp3'
+        const loopUrl = 'storage/data/tenniscourt.wav';
 
         const source = context.createBufferSource();
 

@@ -1797,7 +1797,7 @@ __webpack_require__.r(__webpack_exports__);
     };
 
     var context = new (window.AudioContext || window.webkitAudioContext)();
-    var loopUrl = 'storage/data/kak_dela.mp3';
+    var loopUrl = 'storage/data/tenniscourt.wav';
     var source = context.createBufferSource();
     var request = new XMLHttpRequest();
     request.open('GET', loopUrl, true);
