@@ -1,7 +1,7 @@
 <template>
     <div v-if="tunes">
 
-    <button id="playpause2">Play Inside Vue</button>
+    <!-- <button id="playpause2">Play Inside Vue</button> -->
 
 
       <div class="slither" v-for="(tune, index) in tunesFormatted" :key="tune">
@@ -77,12 +77,16 @@ export default {
         //pp
         var playpause2 = document.getElementById('playpause2');
 
+        setTimeout(function() {
+            var list = document.getElementsByClassName("stack-slice");
+            for (let item of list) {
+                item.onclick = function() {
+                    source.start(0);
+                }
+            }
 
-        playpause2.onclick = function() {
-            source.start(0);
-        }
+        }, 2000)
 
-        // const context = new (window.AudioContext || window.webkitAudioContext)()
         const loopUrl = 'storage/data/tenniscourt.wav';
 
         const source = audioCtx.createBufferSource();

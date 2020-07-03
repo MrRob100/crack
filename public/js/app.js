@@ -1791,12 +1791,35 @@ __webpack_require__.r(__webpack_exports__);
     this.tunesFormatted = this.tunes.split(" "); //pp
 
     var playpause2 = document.getElementById('playpause2');
+    setTimeout(function () {
+      var list = document.getElementsByClassName("stack-slice");
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
 
-    playpause2.onclick = function () {
-      source.start(0);
-    }; // const context = new (window.AudioContext || window.webkitAudioContext)()
+      try {
+        for (var _iterator = list[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var item = _step.value;
 
-
+          item.onclick = function () {
+            source.start(0);
+          };
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return != null) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+    }, 2000);
     var loopUrl = 'storage/data/tenniscourt.wav';
     var source = audioCtx.createBufferSource();
     var request = new XMLHttpRequest();
@@ -1925,7 +1948,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
 //
 //
 //
@@ -40680,10 +40702,6 @@ var render = function() {
     ? _c(
         "div",
         [
-          _c("button", { attrs: { id: "playpause2" } }, [
-            _vm._v("Play Inside Vue")
-          ]),
-          _vm._v(" "),
           _vm._l(_vm.tunesFormatted, function(tune, index) {
             return _c(
               "div",
@@ -40918,14 +40936,7 @@ var render = function() {
         },
         [
           _c("div", { staticClass: "inln-btn" }, [
-            _c(
-              "h3",
-              {
-                staticClass: "delete-button",
-                on: { click: function($event) {} }
-              },
-              [_vm._v("DEL")]
-            ),
+            _c("h3", { staticClass: "delete-button" }, [_vm._v("DEL")]),
             _vm._v(" "),
             !_vm.loading
               ? _c("h3", { staticClass: "false-shift" }, [

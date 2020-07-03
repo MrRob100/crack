@@ -9,7 +9,6 @@
         <div class="inln-btn">
             <h3 
               class="delete-button"
-              @click=""
               >DEL</h3>
             <h3 class="false-shift" v-if="!loading">{{ nameTrimmed }}</h3>
             <h3 class="false-shift" v-if="loading">Loading...</h3>
