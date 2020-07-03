@@ -2246,8 +2246,8 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
 
-        isso.src.stop(0);
-        isso.convolver.disconnect();
+        isso.src.stop(0); // isso.convolver.disconnect();
+
         isso.playing = false;
         isso.loaded = false;
         stop.style.display = "none";

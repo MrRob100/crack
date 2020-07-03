@@ -350,7 +350,7 @@ export default {
         }
 
         isso.src.stop(0);
-        isso.convolver.disconnect();
+        // isso.convolver.disconnect();
         isso.playing = false;
         isso.loaded = false;
         stop.style.display = "none";
