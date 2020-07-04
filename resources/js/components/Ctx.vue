@@ -15,6 +15,7 @@
       <div class="control-box">
 
         <div class="crow ctop-row">
+            <i class="fa fa-close modal-close" aria-hidden="true"></i>
             <div class="fx-container speed-container">
                 <input class="fx speed-control" type="range" min="0.5" max="1.5" step="0.01" value="1">
             </div>
@@ -153,6 +154,12 @@ body {
     height: 20px;
 }
 
+.info-icon {
+    float: right;
+    font-size: 24px;
+    padding-right: 1%;
+}
+
 .stack-del button {
     display: none;
 }
@@ -188,6 +195,12 @@ body {
 
 .contr {
     height: 50px;
+}
+
+.modal-close {
+    font-size: 24px;
+    position: absolute;
+    right: 0;
 }
 
 .control-box {

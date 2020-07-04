@@ -7,6 +7,7 @@
         {!! csrf_field() !!}
         <input id="song-file-input" type="file" name="song" onchange="ch()">
     </form>
+    <i class="fa fa-info-circle info-icon" aria-hidden="true"></i>
 </div>
 
 <Ctx
