@@ -2198,7 +2198,7 @@ __webpack_require__.r(__webpack_exports__);
           if (i * 100 - isso.amt > 50) {
             var calc = -isso.amt * 20000 + 20000;
             var calcfull = i * 100 + calc;
-            isso.notch.frequency.value = calcfull < 24000 ? calcfull : 24000;
+            isso.notch.frequency.value = calcfull < 22000 ? calcfull : 22000;
           } else {
             isso.notch.frequency.value = 50;
           }
