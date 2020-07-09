@@ -74,6 +74,9 @@ export default {
  
     var isso = this;
     var body = document.querySelector("body");
+    var close = document.getElementById("modal-close-" + isso.pos);
+    var stop = document.getElementById("stbutton-" + isso.pos);
+
 
     if (this.para == "-") {
       isso.dlref = window.location.origin + "/dl?song=" + isso.name;
@@ -215,6 +218,7 @@ export default {
 
         document.getElementsByClassName("control-box")[0].style.display = "block";
         document.getElementById("stbutton-" + this.pos).style.display = "block"; 
+        document.getElementById("modal-close-" + this.pos).style.display = "block"; 
 
         this.src.loopStart = offset;
         this.src.loopEnd = endset;
@@ -264,8 +268,6 @@ export default {
 
     fx: function() {
       var isso = this;
-
-
 
       var speedControl = document.getElementsByClassName("speed-control")[0];
       var reverbControl = document.getElementsByClassName("reverb-control")[0];
@@ -353,6 +355,33 @@ export default {
         isso.playing = false;
         isso.loaded = false;
         stop.style.display = "none";
+        close.style.display = "none";
+        box.style.display = "none";      
+      }
+
+      var close = document.getElementById("modal-close-" + isso.pos);
+      close.onclick = function() {
+        clearInterval(fxInterval);
+        clearInterval(modInt);
+        var toBlur = document.getElementsByClassName("to-blur");
+        var box = document.getElementsByClassName("control-box")[0];
+        var body = document.querySelector("body");
+
+        isso.$emit('able', true);
+        isso.ableToPlay = true;
+        body.style.position = "relative";
+        body.style.overflowY = "scroll";
+
+        for (let item of toBlur) {
+          item.style.filter = "none";
+        }
+
+        isso.src.stop(0);
+        isso.convolver.disconnect();
+        isso.playing = false;
+        isso.loaded = false;
+        stop.style.display = "none";
+        close.style.display = "none";
         box.style.display = "none";      
       }
 

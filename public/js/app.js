@@ -1773,6 +1773,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['tunes', 'para'],
   data: function data() {
@@ -1988,6 +1991,8 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var isso = this;
     var body = document.querySelector("body");
+    var close = document.getElementById("modal-close-" + isso.pos);
+    var stop = document.getElementById("stbutton-" + isso.pos);
 
     if (this.para == "-") {
       isso.dlref = window.location.origin + "/dl?song=" + isso.name;
@@ -2116,6 +2121,7 @@ __webpack_require__.r(__webpack_exports__);
         this.loaded = true;
         document.getElementsByClassName("control-box")[0].style.display = "block";
         document.getElementById("stbutton-" + this.pos).style.display = "block";
+        document.getElementById("modal-close-" + this.pos).style.display = "block";
         this.src.loopStart = offset;
         this.src.loopEnd = endset;
       } catch (err) {
@@ -2246,6 +2252,52 @@ __webpack_require__.r(__webpack_exports__);
         isso.playing = false;
         isso.loaded = false;
         stop.style.display = "none";
+        close.style.display = "none";
+        box.style.display = "none";
+      };
+
+      var close = document.getElementById("modal-close-" + isso.pos);
+
+      close.onclick = function () {
+        clearInterval(fxInterval);
+        clearInterval(modInt);
+        var toBlur = document.getElementsByClassName("to-blur");
+        var box = document.getElementsByClassName("control-box")[0];
+        var body = document.querySelector("body");
+        isso.$emit('able', true);
+        isso.ableToPlay = true;
+        body.style.position = "relative";
+        body.style.overflowY = "scroll";
+        var _iteratorNormalCompletion3 = true;
+        var _didIteratorError3 = false;
+        var _iteratorError3 = undefined;
+
+        try {
+          for (var _iterator3 = toBlur[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+            var item = _step3.value;
+            item.style.filter = "none";
+          }
+        } catch (err) {
+          _didIteratorError3 = true;
+          _iteratorError3 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion3 && _iterator3.return != null) {
+              _iterator3.return();
+            }
+          } finally {
+            if (_didIteratorError3) {
+              throw _iteratorError3;
+            }
+          }
+        }
+
+        isso.src.stop(0);
+        isso.convolver.disconnect();
+        isso.playing = false;
+        isso.loaded = false;
+        stop.style.display = "none";
+        close.style.display = "none";
         box.style.display = "none";
       };
     },
@@ -7057,7 +7109,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.delete-button {\n    position: absolute;\n    display: none;\n}\n.false-shift {\n    margin-top: 10px;\n    /* margin-left: 200px; */\n}\n.playback {\n    clear: left;\n}\n.playback-item {\n    display: inline;\n    font-size: 18px;\n}\nhtml, body {\n    height: 100%;\n    overflow-x: hidden;\n    /* touch-action: none; */\n    background-color: rgb(50, 2, 95) !important;\n    font-family: 'Courier New', Courier, monospace !important;\n}\nbody {\n    width: 100%;\n    position: relative;\n    color: #B27FFF !important;\n}\n.navbar {\n    height: 20px;\n}\n.info-icon {\n    float: right;\n    font-size: 24px;\n    padding-right: 1%;\n}\n.stack-del button {\n    display: none;\n}\n.upl {\n    float: left;\n}\n.dl-icon {\n    -webkit-filter: brightness(30%);\n            filter: brightness(30%);\n    position: absolute;\n    right: 0;\n    width: 40px;\n    top: 0px;\n}\n.dld {\n    position: absolute;\n    right: 0;\n}\n.stack-house {\n    width: 100%;\n    margin-bottom: 10px;\n    cursor: pointer;\n    background-color: rgb(110, 78, 158);\n}\n.stack-slice:hover {\n    cursor: pointer;\n    -webkit-filter: brightness(110%);\n            filter: brightness(110%);\n}\n.contr {\n    height: 50px;\n}\n.modal-close {\n    font-size: 24px;\n    position: absolute;\n    right: 0;\n}\n.control-box {\n    z-index: 10;\n    display: none;\n    overflow: hidden;\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n}\n@media (max-width: 600px) {\n.control-box {\n        width: 100%;\n        -webkit-transform: translate(-50%, 0);\n                transform: translate(-50%, 0);\n        bottom: 48px;\n        top: initial;\n}\n}\n@media (min-width: 601px) {\n.control-box {\n        width: 400px;\n}\n}\n.bottom-container {\n    background-color: #111;\n}\n.crow button {\n    display: none;\n    width: 100%;\n}\n.ctop-row {\n    display: flex;\n    height: 300px;\n}\n.cbottom-row {\n    padding: 5px;\n    display: flex;\n}\n.stack-bottom {\n    height: 40px;\n    background-color: rgb(79, 56, 114);\n}\n.fx-container {\n    flex: 1;\n    padding-left: 13.5%;\n    padding-top: 270px;\n}\n.inln-btn {\n    z-index: 1;\n    position: absolute;\n}\n.canv {\n    position: absolute;\n    width: 100%;\n    height: 40px;\n}\n.fx {\n    width: 280px;\n    -webkit-transform: rotate(-90deg);\n            transform: rotate(-90deg);\n    -webkit-transform-origin: 0%;\n            transform-origin: 0%;\n    position: absolute;\n}\n.cbottom-row span {\n    text-align: center;\n    flex: 1;\n}\n.stbutton {\n    width: 100%;\n}\n.cstop button{\n    border: none;\n    height: 40px;\n    background-color: #fff;\n}\n/* sliders */\n\n/* Hides the slider so that custom slider can be made */\n/* Otherwise white in Chrome */\ninput[type=range] {\n  -webkit-appearance: none; \n  background: transparent;\n}\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n}\ninput[type=range]:focus {\n  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */\n}\ninput[type=range]::-ms-track {\n  width: 100%;\n  cursor: pointer;\n\n  /* Hides the slider so custom styles can be added */\n  background: transparent; \n  border-color: transparent;\n  color: transparent;\n}\n\n/* thumb */\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n  margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n}\n\n/* All the same stuff for Firefox */\ninput[type=range]::-moz-range-thumb {\n\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n}\n\n/* All the same stuff for IE */\ninput[type=range]::-ms-thumb {\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  cursor: pointer;\n}\n\n", ""]);
+exports.push([module.i, "\n.delete-button {\n    position: absolute;\n    display: none;\n}\n.false-shift {\n    margin-top: 10px;\n    /* margin-left: 200px; */\n}\n.playback {\n    clear: left;\n}\n.playback-item {\n    display: inline;\n    font-size: 18px;\n}\nhtml, body {\n    height: 100%;\n    overflow-x: hidden;\n    /* touch-action: none; */\n    background-color: rgb(50, 2, 95) !important;\n    font-family: 'Courier New', Courier, monospace !important;\n}\nbody {\n    width: 100%;\n    position: relative;\n    color: #B27FFF !important;\n}\n.navbar {\n    height: 20px;\n}\n.info-icon {\n    float: right;\n    font-size: 24px;\n    padding-right: 1%;\n}\n.stack-del button {\n    display: none;\n}\n.upl {\n    width: 200px;\n    float: left;\n}\n.dl-icon {\n    -webkit-filter: brightness(30%);\n            filter: brightness(30%);\n    position: absolute;\n    right: 0;\n    width: 40px;\n    top: 0px;\n}\n.dld {\n    position: absolute;\n    right: 0;\n}\n.stack-house {\n    width: 100%;\n    margin-bottom: 10px;\n    cursor: pointer;\n    background-color: rgb(110, 78, 158);\n}\n.stack-slice:hover {\n    cursor: pointer;\n    -webkit-filter: brightness(110%);\n            filter: brightness(110%);\n}\n.contr {\n    height: 50px;\n}\n.modal-close {\n    cursor: pointer;\n    font-size: 24px;\n    position: absolute;\n    right: 0;\n}\n.control-box {\n    z-index: 10;\n    display: none;\n    overflow: hidden;\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n}\n@media (max-width: 600px) {\n.control-box {\n        width: 100%;\n        -webkit-transform: translate(-50%, 0);\n                transform: translate(-50%, 0);\n        bottom: 48px;\n        top: initial;\n}\n}\n@media (min-width: 601px) {\n.control-box {\n        width: 400px;\n}\n}\n.bottom-container {\n    background-color: #111;\n}\n.close-container i {\n    display: none;\n}\n.crow button {\n    display: none;\n    width: 100%;\n}\n.ctop-row {\n    display: flex;\n    height: 300px;\n}\n.cbottom-row {\n    padding: 5px;\n    display: flex;\n}\n.stack-bottom {\n    height: 40px;\n    background-color: rgb(79, 56, 114);\n}\n.fx-container {\n    flex: 1;\n    padding-left: 13.5%;\n    padding-top: 270px;\n}\n.inln-btn {\n    z-index: 1;\n    position: absolute;\n}\n.canv {\n    position: absolute;\n    width: 100%;\n    height: 40px;\n}\n.fx {\n    width: 280px;\n    -webkit-transform: rotate(-90deg);\n            transform: rotate(-90deg);\n    -webkit-transform-origin: 0%;\n            transform-origin: 0%;\n    position: absolute;\n}\n.cbottom-row span {\n    text-align: center;\n    flex: 1;\n}\n.stbutton {\n    width: 100%;\n}\n.cstop button{\n    border: none;\n    height: 40px;\n    background-color: #fff;\n}\n/* sliders */\n\n/* Hides the slider so that custom slider can be made */\n/* Otherwise white in Chrome */\ninput[type=range] {\n  -webkit-appearance: none; \n  background: transparent;\n}\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n}\ninput[type=range]:focus {\n  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */\n}\ninput[type=range]::-ms-track {\n  width: 100%;\n  cursor: pointer;\n\n  /* Hides the slider so custom styles can be added */\n  background: transparent; \n  border-color: transparent;\n  color: transparent;\n}\n\n/* thumb */\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n  margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n}\n\n/* All the same stuff for Firefox */\ninput[type=range]::-moz-range-thumb {\n\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n}\n\n/* All the same stuff for IE */\ninput[type=range]::-ms-thumb {\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  cursor: pointer;\n}\n\n", ""]);
 
 // exports
 
@@ -40700,9 +40752,38 @@ var render = function() {
             "div",
             { staticClass: "control-box" },
             [
-              _vm._m(0),
+              _c(
+                "div",
+                { staticClass: "crow ctop-row" },
+                [
+                  _vm._l(_vm.tunesFormatted, function(tune, index) {
+                    return _c(
+                      "div",
+                      { key: tune, staticClass: "close-container" },
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-close modal-close",
+                          attrs: {
+                            id: "modal-close-" + index,
+                            "aria-hidden": "true"
+                          }
+                        })
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _vm._m(3)
+                ],
+                2
+              ),
               _vm._v(" "),
-              _vm._m(1),
+              _vm._m(4),
               _vm._v(" "),
               _vm._l(_vm.tunesFormatted, function(tune, index) {
                 return _c("div", { key: tune, staticClass: "crow cstop" }, [
@@ -40724,51 +40805,56 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "crow ctop-row" }, [
-      _c("i", {
-        staticClass: "fa fa-close modal-close",
-        attrs: { "aria-hidden": "true" }
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "fx-container speed-container" }, [
-        _c("input", {
-          staticClass: "fx speed-control",
-          attrs: {
-            type: "range",
-            min: "0.5",
-            max: "1.5",
-            step: "0.01",
-            value: "1"
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "fx-container reverb-container" }, [
-        _c("input", {
-          staticClass: "fx reverb-control",
-          attrs: { type: "range", min: "0", max: "1", step: "0.01", value: "0" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "fx-container filter-container" }, [
-        _c("input", {
-          staticClass: "fx filter-control",
-          attrs: {
-            type: "range",
-            min: "0",
-            max: "20000",
-            step: "10",
-            value: "20000"
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "fx-container mod-container" }, [
-        _c("input", {
-          staticClass: "fx mod-control",
-          attrs: { type: "range", min: "0", max: "1", step: "0.01", value: "0" }
-        })
-      ])
+    return _c("div", { staticClass: "fx-container speed-container" }, [
+      _c("input", {
+        staticClass: "fx speed-control",
+        attrs: {
+          type: "range",
+          min: "0.5",
+          max: "1.5",
+          step: "0.01",
+          value: "1"
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "fx-container reverb-container" }, [
+      _c("input", {
+        staticClass: "fx reverb-control",
+        attrs: { type: "range", min: "0", max: "1", step: "0.01", value: "0" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "fx-container filter-container" }, [
+      _c("input", {
+        staticClass: "fx filter-control",
+        attrs: {
+          type: "range",
+          min: "0",
+          max: "20000",
+          step: "10",
+          value: "20000"
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "fx-container mod-container" }, [
+      _c("input", {
+        staticClass: "fx mod-control",
+        attrs: { type: "range", min: "0", max: "1", step: "0.01", value: "0" }
+      })
     ])
   },
   function() {

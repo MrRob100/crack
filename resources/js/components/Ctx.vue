@@ -15,7 +15,10 @@
       <div class="control-box">
 
         <div class="crow ctop-row">
-            <i class="fa fa-close modal-close" aria-hidden="true"></i>
+            <div class="close-container" v-for="(tune, index) in tunesFormatted" :key="tune">
+                <i :id='"modal-close-"+index' class="fa fa-close modal-close" aria-hidden="true"></i>
+            </div>
+                
             <div class="fx-container speed-container">
                 <input class="fx speed-control" type="range" min="0.5" max="1.5" step="0.01" value="1">
             </div>
@@ -165,6 +168,7 @@ body {
 }
 
 .upl {
+    width: 200px;
     float: left;
 }
 
@@ -198,6 +202,7 @@ body {
 }
 
 .modal-close {
+    cursor: pointer;
     font-size: 24px;
     position: absolute;
     right: 0;
@@ -230,6 +235,10 @@ body {
 
 .bottom-container {
     background-color: #111;
+}
+
+.close-container i {
+    display: none;
 }
 
 .crow button {
