@@ -2216,44 +2216,7 @@ __webpack_require__.r(__webpack_exports__);
       stop.onclick = function () {
         clearInterval(fxInterval);
         clearInterval(modInt);
-        var toBlur = document.getElementsByClassName("to-blur");
-        var box = document.getElementsByClassName("control-box")[0];
-        var body = document.querySelector("body");
-        isso.$emit('able', true);
-        isso.ableToPlay = true;
-        body.style.position = "relative";
-        body.style.overflowY = "scroll";
-        var _iteratorNormalCompletion2 = true;
-        var _didIteratorError2 = false;
-        var _iteratorError2 = undefined;
-
-        try {
-          for (var _iterator2 = toBlur[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var item = _step2.value;
-            item.style.filter = "none";
-          }
-        } catch (err) {
-          _didIteratorError2 = true;
-          _iteratorError2 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
-              _iterator2.return();
-            }
-          } finally {
-            if (_didIteratorError2) {
-              throw _iteratorError2;
-            }
-          }
-        }
-
-        isso.src.stop(0);
-        isso.convolver.disconnect();
-        isso.playing = false;
-        isso.loaded = false;
-        stop.style.display = "none";
-        close.style.display = "none";
-        box.style.display = "none";
+        isso.stopProcess();
       };
 
       var close = document.getElementById("modal-close-" + isso.pos);
@@ -2261,44 +2224,7 @@ __webpack_require__.r(__webpack_exports__);
       close.onclick = function () {
         clearInterval(fxInterval);
         clearInterval(modInt);
-        var toBlur = document.getElementsByClassName("to-blur");
-        var box = document.getElementsByClassName("control-box")[0];
-        var body = document.querySelector("body");
-        isso.$emit('able', true);
-        isso.ableToPlay = true;
-        body.style.position = "relative";
-        body.style.overflowY = "scroll";
-        var _iteratorNormalCompletion3 = true;
-        var _didIteratorError3 = false;
-        var _iteratorError3 = undefined;
-
-        try {
-          for (var _iterator3 = toBlur[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-            var item = _step3.value;
-            item.style.filter = "none";
-          }
-        } catch (err) {
-          _didIteratorError3 = true;
-          _iteratorError3 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion3 && _iterator3.return != null) {
-              _iterator3.return();
-            }
-          } finally {
-            if (_didIteratorError3) {
-              throw _iteratorError3;
-            }
-          }
-        }
-
-        isso.src.stop(0);
-        isso.convolver.disconnect();
-        isso.playing = false;
-        isso.loaded = false;
-        stop.style.display = "none";
-        close.style.display = "none";
-        box.style.display = "none";
+        isso.stopProcess();
       };
     },
     canvasWidth: function canvasWidth() {
@@ -2312,6 +2238,49 @@ __webpack_require__.r(__webpack_exports__);
         isso.$emit('able', true);
       }, 500);
       this.playSelection(which, value);
+    },
+    stopProcess: function stopProcess() {
+      var isso = this;
+      var toBlur = document.getElementsByClassName("to-blur");
+      var box = document.getElementsByClassName("control-box")[0];
+      var stop = document.getElementById("stbutton-" + isso.pos);
+      var close = document.getElementById("modal-close-" + isso.pos);
+      var body = document.querySelector("body");
+      isso.$emit('able', true);
+      isso.ableToPlay = true;
+      body.style.position = "relative";
+      body.style.overflowY = "scroll";
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = toBlur[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var item = _step2.value;
+          item.style.filter = "none";
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+            _iterator2.return();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+
+      isso.src.stop(0);
+      isso.convolver.disconnect();
+      isso.playing = false;
+      isso.loaded = false;
+      stop.style.display = "none";
+      close.style.display = "none";
+      box.style.display = "none";
     },
     playSelection: function playSelection(which, value) {
       if (which === "startScale") {

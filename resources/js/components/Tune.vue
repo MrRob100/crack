@@ -337,52 +337,14 @@ export default {
       stop.onclick = function() {
         clearInterval(fxInterval);
         clearInterval(modInt);
-        var toBlur = document.getElementsByClassName("to-blur");
-        var box = document.getElementsByClassName("control-box")[0];
-        var body = document.querySelector("body");
-
-        isso.$emit('able', true);
-        isso.ableToPlay = true;
-        body.style.position = "relative";
-        body.style.overflowY = "scroll";
-
-        for (let item of toBlur) {
-          item.style.filter = "none";
-        }
-
-        isso.src.stop(0);
-        isso.convolver.disconnect();
-        isso.playing = false;
-        isso.loaded = false;
-        stop.style.display = "none";
-        close.style.display = "none";
-        box.style.display = "none";      
+        isso.stopProcess();   
       }
 
       var close = document.getElementById("modal-close-" + isso.pos);
       close.onclick = function() {
         clearInterval(fxInterval);
         clearInterval(modInt);
-        var toBlur = document.getElementsByClassName("to-blur");
-        var box = document.getElementsByClassName("control-box")[0];
-        var body = document.querySelector("body");
-
-        isso.$emit('able', true);
-        isso.ableToPlay = true;
-        body.style.position = "relative";
-        body.style.overflowY = "scroll";
-
-        for (let item of toBlur) {
-          item.style.filter = "none";
-        }
-
-        isso.src.stop(0);
-        isso.convolver.disconnect();
-        isso.playing = false;
-        isso.loaded = false;
-        stop.style.display = "none";
-        close.style.display = "none";
-        box.style.display = "none";      
+        isso.stopProcess();
       }
 
     },
@@ -399,6 +361,32 @@ export default {
           isso.$emit('able', true);
       }, 500);
       this.playSelection(which, value);
+    },
+
+    stopProcess: function() {
+      var isso = this;
+      var toBlur = document.getElementsByClassName("to-blur");
+      var box = document.getElementsByClassName("control-box")[0];
+      var stop = document.getElementById("stbutton-" + isso.pos);
+      var close = document.getElementById("modal-close-" + isso.pos);
+      var body = document.querySelector("body");
+
+      isso.$emit('able', true);
+      isso.ableToPlay = true;
+      body.style.position = "relative";
+      body.style.overflowY = "scroll";
+
+      for (let item of toBlur) {
+        item.style.filter = "none";
+      }
+
+      isso.src.stop(0);
+      isso.convolver.disconnect();
+      isso.playing = false;
+      isso.loaded = false;
+      stop.style.display = "none";
+      close.style.display = "none";
+      box.style.display = "none";   
     },
 
     playSelection: function(which, value) {
