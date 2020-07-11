@@ -1925,6 +1925,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _meths_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../meths.js */ "./resources/js/meths.js");
 //
 //
 //
@@ -1963,10 +1964,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["playable", "ctx", "para", "name", "pos"],
   data: function data() {
     return {
+      deleted: false,
       screenWidth: "",
       nameTrimmed: "",
       playFrom: "",
@@ -2301,6 +2305,13 @@ __webpack_require__.r(__webpack_exports__);
       setTimeout(function () {
         isso.dlding = false;
       }, 500);
+    },
+    deleteSong: function deleteSong() {
+      var request = new XMLHttpRequest();
+      var path = _meths_js__WEBPACK_IMPORTED_MODULE_0__["default"].deleteSongPath(this.para, this.name);
+      request.open('GET', path, true);
+      request.send();
+      this.deleted = true;
     },
     drawBuffer: function drawBuffer(width, height, context, buffer) {
       var data = buffer.getChannelData(0);
@@ -7078,7 +7089,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.delete-button {\n    position: absolute;\n    display: none;\n}\n.false-shift {\n    margin-top: 10px;\n    /* margin-left: 200px; */\n}\n.playback {\n    clear: left;\n}\n.playback-item {\n    display: inline;\n    font-size: 18px;\n}\nhtml, body {\n    height: 100%;\n    overflow-x: hidden;\n    /* touch-action: none; */\n    background-color: rgb(50, 2, 95) !important;\n    font-family: 'Courier New', Courier, monospace !important;\n}\nbody {\n    width: 100%;\n    position: relative;\n    color: #B27FFF !important;\n}\n.navbar {\n    height: 20px;\n}\n.info-icon {\n    float: right;\n    font-size: 24px;\n    padding-right: 1%;\n}\n.stack-del button {\n    display: none;\n}\n.upl {\n    width: 200px;\n    float: left;\n}\n.dl-icon {\n    -webkit-filter: brightness(30%);\n            filter: brightness(30%);\n    position: absolute;\n    right: 0;\n    width: 40px;\n    top: 0px;\n}\n.dld {\n    position: absolute;\n    right: 0;\n}\n.stack-house {\n    width: 100%;\n    margin-bottom: 10px;\n    cursor: pointer;\n    background-color: rgb(110, 78, 158);\n}\n.stack-slice:hover {\n    cursor: pointer;\n    -webkit-filter: brightness(110%);\n            filter: brightness(110%);\n}\n.contr {\n    height: 50px;\n}\n.modal-close {\n    cursor: pointer;\n    font-size: 24px;\n    position: absolute;\n    right: 0;\n}\n.control-box {\n    z-index: 10;\n    display: none;\n    overflow: hidden;\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n}\n@media (max-width: 600px) {\n.control-box {\n        width: 100%;\n        -webkit-transform: translate(-50%, 0);\n                transform: translate(-50%, 0);\n        bottom: 48px;\n        top: initial;\n}\n}\n@media (min-width: 601px) {\n.control-box {\n        width: 400px;\n}\n}\n.bottom-container {\n    background-color: #111;\n}\n.close-container i {\n    display: none;\n}\n.crow button {\n    display: none;\n    width: 100%;\n}\n.ctop-row {\n    display: flex;\n    height: 300px;\n}\n.cbottom-row {\n    padding: 5px;\n    display: flex;\n}\n.stack-bottom {\n    height: 40px;\n    background-color: rgb(79, 56, 114);\n}\n.fx-container {\n    flex: 1;\n    padding-left: 13.5%;\n    padding-top: 270px;\n}\n.inln-btn {\n    z-index: 1;\n    position: absolute;\n}\n.canv {\n    position: absolute;\n    width: 100%;\n    height: 40px;\n}\n.fx {\n    width: 280px;\n    -webkit-transform: rotate(-90deg);\n            transform: rotate(-90deg);\n    -webkit-transform-origin: 0%;\n            transform-origin: 0%;\n    position: absolute;\n}\n.cbottom-row span {\n    text-align: center;\n    flex: 1;\n}\n.stbutton {\n    width: 100%;\n}\n.cstop button{\n    border: none;\n    height: 40px;\n    background-color: #fff;\n}\n/* sliders */\n\n/* Hides the slider so that custom slider can be made */\n/* Otherwise white in Chrome */\ninput[type=range] {\n  -webkit-appearance: none; \n  background: transparent;\n}\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n}\ninput[type=range]:focus {\n  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */\n}\ninput[type=range]::-ms-track {\n  width: 100%;\n  cursor: pointer;\n\n  /* Hides the slider so custom styles can be added */\n  background: transparent; \n  border-color: transparent;\n  color: transparent;\n}\n\n/* thumb */\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n  margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n}\n\n/* All the same stuff for Firefox */\ninput[type=range]::-moz-range-thumb {\n\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n}\n\n/* All the same stuff for IE */\ninput[type=range]::-ms-thumb {\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  cursor: pointer;\n}\n\n", ""]);
+exports.push([module.i, "\n.delete-button {\n    cursor: pointer;\n    display: none;\n}\n.false-shift {\n    margin-top: 10px;\n    /* margin-left: 200px; */\n}\n.playback {\n    clear: left;\n}\n.playback-item {\n    display: inline;\n    font-size: 18px;\n}\nhtml, body {\n    height: 100%;\n    overflow-x: hidden;\n    /* touch-action: none; */\n    background-color: rgb(50, 2, 95) !important;\n    font-family: 'Courier New', Courier, monospace !important;\n}\nbody {\n    width: 100%;\n    position: relative;\n    color: #B27FFF !important;\n}\n.navbar {\n    height: 20px;\n}\n.info-icon {\n    float: right;\n    font-size: 24px;\n    padding-right: 1%;\n}\n.stack-del button {\n    display: none;\n}\n.upl {\n    width: 200px;\n    float: left;\n}\n.dl-icon {\n    -webkit-filter: brightness(30%);\n            filter: brightness(30%);\n    position: absolute;\n    right: 0;\n    width: 40px;\n    top: 0px;\n}\n.dld {\n    position: absolute;\n    right: 0;\n}\n.stack-house {\n    width: 100%;\n    margin-bottom: 10px;\n    cursor: pointer;\n    background-color: rgb(110, 78, 158);\n}\n.stack-slice:hover {\n    cursor: pointer;\n    -webkit-filter: brightness(110%);\n            filter: brightness(110%);\n}\n.contr {\n    height: 50px;\n}\n.modal-close {\n    cursor: pointer;\n    font-size: 24px;\n    position: absolute;\n    right: 0;\n}\n.control-box {\n    z-index: 10;\n    display: none;\n    overflow: hidden;\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n}\n@media (max-width: 600px) {\n.control-box {\n        width: 100%;\n        -webkit-transform: translate(-50%, 0);\n                transform: translate(-50%, 0);\n        bottom: 48px;\n        top: initial;\n}\n}\n@media (min-width: 601px) {\n.control-box {\n        width: 400px;\n}\n}\n.bottom-container {\n    background-color: #111;\n}\n.close-container i {\n    display: none;\n}\n.crow button {\n    display: none;\n    width: 100%;\n}\n.ctop-row {\n    display: flex;\n    height: 300px;\n}\n.cbottom-row {\n    padding: 5px;\n    display: flex;\n}\n.stack-bottom {\n    height: 40px;\n    background-color: rgb(79, 56, 114);\n}\n.fx-container {\n    flex: 1;\n    padding-left: 13.5%;\n    padding-top: 270px;\n}\n.inln-btn {\n    z-index: 1;\n    position: absolute;\n}\n.canv {\n    position: absolute;\n    width: 100%;\n    height: 40px;\n}\n.fx {\n    width: 280px;\n    -webkit-transform: rotate(-90deg);\n            transform: rotate(-90deg);\n    -webkit-transform-origin: 0%;\n            transform-origin: 0%;\n    position: absolute;\n}\n.cbottom-row span {\n    text-align: center;\n    flex: 1;\n}\n.stbutton {\n    width: 100%;\n}\n.cstop button{\n    border: none;\n    height: 40px;\n    background-color: #fff;\n}\n/* sliders */\n\n/* Hides the slider so that custom slider can be made */\n/* Otherwise white in Chrome */\ninput[type=range] {\n  -webkit-appearance: none; \n  background: transparent;\n}\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n}\ninput[type=range]:focus {\n  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */\n}\ninput[type=range]::-ms-track {\n  width: 100%;\n  cursor: pointer;\n\n  /* Hides the slider so custom styles can be added */\n  background: transparent; \n  border-color: transparent;\n  color: transparent;\n}\n\n/* thumb */\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n  margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n}\n\n/* All the same stuff for Firefox */\ninput[type=range]::-moz-range-thumb {\n\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  /* background: rgb(110, 78, 158); */\n  cursor: pointer;\n}\n\n/* All the same stuff for IE */\ninput[type=range]::-ms-thumb {\n  box-shadow: -9px 12px 23px -3px rgba(0,0,0,0.59);\n\n  height: 70px;\n  width: 70px;\n  border-radius: 50%;\n  background: #ffffff;\n  cursor: pointer;\n}\n\n", ""]);
 
 // exports
 
@@ -40959,54 +40970,66 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "stack-house to-blur" }, [
-      _c(
-        "div",
-        {
-          staticClass: "stack-slice stack-bottom",
-          attrs: { id: "stack-" + _vm.pos },
-          on: { click: _vm.play }
-        },
-        [
-          _c("div", { staticClass: "inln-btn" }, [
-            _c("h3", { staticClass: "delete-button" }, [_vm._v("DEL")]),
-            _vm._v(" "),
-            !_vm.loading
-              ? _c("h3", { staticClass: "false-shift" }, [
-                  _vm._v(_vm._s(_vm.nameTrimmed)),
-                  _c("i", { staticClass: "fa fa-hand-pointer-o" })
+  return !_vm.deleted
+    ? _c("div", [
+        _c(
+          "h3",
+          { staticClass: "delete-button", on: { click: _vm.deleteSong } },
+          [_vm._v("DELETE")]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "stack-house to-blur" }, [
+          _c(
+            "div",
+            {
+              staticClass: "stack-slice stack-bottom",
+              attrs: { id: "stack-" + _vm.pos },
+              on: { click: _vm.play }
+            },
+            [
+              _c("div", { staticClass: "inln-btn" }, [
+                !_vm.loading
+                  ? _c("h3", { staticClass: "false-shift" }, [
+                      _vm._v(_vm._s(_vm.nameTrimmed)),
+                      _c("i", { staticClass: "fa fa-hand-pointer-o" })
+                    ])
+                  : _c("h3", { staticClass: "false-shift" }, [
+                      _vm._v("Loading...")
+                    ])
+              ]),
+              _vm._v(" "),
+              _c("tune-crop", {
+                attrs: {
+                  id: "tc-" + _vm.pos,
+                  setting: _vm.pos,
+                  name: _vm.name
+                },
+                on: {
+                  value: _vm.cropVal,
+                  setStart: _vm.playSelection,
+                  setEnd: _vm.playSelection
+                }
+              }),
+              _vm._v(" "),
+              _c("canvas", {
+                staticClass: "canv",
+                attrs: { id: "canvas-" + _vm.pos }
+              }),
+              _vm._v(" "),
+              _c("a", { attrs: { href: _vm.dlref } }, [
+                _c("button", { staticClass: "dld", on: { click: _vm.dl } }, [
+                  _c("img", {
+                    staticClass: "crack-icon dl-icon",
+                    attrs: { src: "images/dld.png" }
+                  })
                 ])
-              : _c("h3", { staticClass: "false-shift" }, [_vm._v("Loading...")])
-          ]),
-          _vm._v(" "),
-          _c("tune-crop", {
-            attrs: { id: "tc-" + _vm.pos, setting: _vm.pos, name: _vm.name },
-            on: {
-              value: _vm.cropVal,
-              setStart: _vm.playSelection,
-              setEnd: _vm.playSelection
-            }
-          }),
-          _vm._v(" "),
-          _c("canvas", {
-            staticClass: "canv",
-            attrs: { id: "canvas-" + _vm.pos }
-          }),
-          _vm._v(" "),
-          _c("a", { attrs: { href: _vm.dlref } }, [
-            _c("button", { staticClass: "dld", on: { click: _vm.dl } }, [
-              _c("img", {
-                staticClass: "crack-icon dl-icon",
-                attrs: { src: "images/dld.png" }
-              })
-            ])
-          ])
-        ],
-        1
-      )
-    ])
-  ])
+              ])
+            ],
+            1
+          )
+        ])
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true

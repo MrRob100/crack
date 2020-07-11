@@ -122,7 +122,7 @@ export default {
 <style>
 
 .delete-button {
-    position: absolute;
+    cursor: pointer;
     display: none;
 }
 

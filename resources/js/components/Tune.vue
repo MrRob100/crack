@@ -1,5 +1,9 @@
 <template>
-  <div>
+  <div v-if="!deleted">
+    <h3
+    @click="deleteSong"
+    class="delete-button"
+    >DELETE</h3>
     <div class="stack-house to-blur">
       <div 
       @click="play"
@@ -7,9 +11,6 @@
       class="stack-slice stack-bottom"
       >
         <div class="inln-btn">
-            <h3 
-              class="delete-button"
-              >DEL</h3>
             <h3 class="false-shift" v-if="!loading">{{ nameTrimmed }}<i class="fa fa-hand-pointer-o"></i></h3>
             <h3 class="false-shift" v-else>Loading...</h3>
         </div>
@@ -37,6 +38,9 @@
 </template>
 
 <script>
+
+import Meths from '../meths.js';
+
 export default {
   props: [
     "playable", 
@@ -48,6 +52,7 @@ export default {
 
   data: function() {
     return {
+      deleted: false,
       screenWidth: "",
       nameTrimmed: "",
       playFrom: "",
@@ -412,6 +417,17 @@ export default {
         setTimeout(function() {
             isso.dlding = false;
         }, 500);
+    },
+
+    deleteSong: function() {
+
+      var request = new XMLHttpRequest();
+
+      var path = Meths.deleteSongPath(this.para, this.name);
+
+      request.open('GET', path, true);
+      request.send();
+      this.deleted = true;
     },
 
     drawBuffer: function( width, height, context, buffer ) {
