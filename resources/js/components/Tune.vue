@@ -400,7 +400,8 @@ export default {
         this.playFrom = value;
       }
       if (which === "endScale") {
-        this.playTo = value;
+        console.log('v', value);
+        this.playTo = value > 0.98 ? 1 : value;
       }
     },
 
