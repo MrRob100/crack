@@ -27,14 +27,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    {{-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164034058-1"></script>
+
+
+
+    
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164034058-1"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'UA-164034058-1'); --}}
+    gtag('config', 'UA-164034058-1');
     </script>
+
+
+
 
 </head>
 <body>
