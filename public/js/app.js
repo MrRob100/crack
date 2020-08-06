@@ -2292,7 +2292,6 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (which === "endScale") {
-        console.log('v', value);
         this.playTo = value > 0.98 ? 1 : value;
       }
     },
