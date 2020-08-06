@@ -94,8 +94,9 @@ class DashboardController extends Controller
             if ($typ === 'audio/x-wav') {
                 // ffmpeg -i tenniscourt.wav -f mp2 tenniscourt.mp3
 
+                
                 //only works on server
-                exec('/usr/bin/ffmpeg -i '.$path.$subdir.$song_name.' -f mp2 '.$path.$subdir.'_'.$song_name.'.mp3', $o, $r);
+                exec('/usr/bin/ffmpeg -i '.$path.$subdir.str_replace($song_name, '.wav', '').' -f mp2 '.$path.$subdir.'_'.$song_name.'.mp3', $o, $r);
             }
 
                 // dump('2nd (convert');
