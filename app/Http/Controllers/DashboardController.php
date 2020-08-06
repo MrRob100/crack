@@ -97,7 +97,7 @@ class DashboardController extends Controller
                 
                 
                 //only works on server
-                exec('/usr/bin/ffmpeg -i '.$path.$subdir.$song_name.' -f mp2 '.$path.$subdir.'_'.str_replace($song_name, '.wav', '').'.mp3', $o, $r);
+                exec('/usr/bin/ffmpeg -i '.$path.$subdir.$song_name.' -f mp2 '.$path.$subdir.'_'.str_replace('.wav', '', $song_name).'.mp3', $o, $r);
             }
 
                 // dump('2nd (convert');
