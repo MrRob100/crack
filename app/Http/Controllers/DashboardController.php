@@ -63,7 +63,12 @@ class DashboardController extends Controller
 
         $file = $request->file('song');
         $typ = $file->getMimeType(); 
-        if ($typ === 'audio/mpeg') {
+
+        /*
+            .wav = 'audio/x-wav'
+            .mp3 = 'audio/mpeg'
+        */
+        if ($typ === 'audio/mpeg' || $typ === 'audio/x-wav') {
 
             //removes spaces in name
             $song_name = str_replace(" ", "_", $file->getClientOriginalName()); 
@@ -77,9 +82,25 @@ class DashboardController extends Controller
 
             $path = 'storage/data/';
 
-            //compresses file
-            exec('/usr/bin/ffmpeg -i '.$path.$subdir.$song_name.' -ab 110k '.$path.$subdir.'_'.$song_name, $o, $r);
-            // exec('/usr/local/bin/ffmpeg -i '.$path.'mass.mp3 -ab 64 '.$path.rand().'.mp3', $o, $r);
+            if ($typ === 'audio/mpeg') {
+                //only works on server
+                exec('/usr/bin/ffmpeg -i '.$path.$subdir.$song_name.' -ab 110k '.$path.$subdir.'_'.$song_name, $o, $r);
+                // exec('/usr/local/bin/ffmpeg -i '.$path.'mass.mp3 -ab 64 '.$path.rand().'.mp3', $o, $r);
+                // dump('1st (compress)');
+                // dump($o);
+                // dd($r);
+            }
+
+            if ($typ === 'audio/x-wav') {
+                // ffmpeg -i tenniscourt.wav -f mp2 tenniscourt.mp3
+
+                //only works on server
+                exec('/usr/bin/ffmpeg -i '.$path.$subdir.$song_name.' -f mp2 '.$path.$subdir.'_'.$song_name.'.mp3', $o, $r);
+            }
+
+                // dump('2nd (convert');
+                // dump($o);
+                // dd($r);
 
             //deletes raw if compression worked
             if ($r === 0) {
@@ -87,6 +108,7 @@ class DashboardController extends Controller
             }
 
         } else {
+
             return redirect($para);
         }
 
