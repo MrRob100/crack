@@ -69,8 +69,10 @@ class DashboardController extends Controller
         /*
             .wav = 'audio/x-wav'
             .mp3 = 'audio/mpeg'
+            .aif = 'audio/x-aiff'
         */
-        if ($typ === 'audio/mpeg' || $typ === 'audio/x-wav') {
+
+        if ($typ === 'audio/mpeg' || $typ === 'audio/x-wav' || $typ === 'audio/x-aiff') {
 
             //removes spaces in name
             $song_name = str_replace(" ", "_", $file->getClientOriginalName()); 
@@ -100,6 +102,14 @@ class DashboardController extends Controller
                 
                 //deletes raw if conversion worked
                 if ($rc === 0) {
+                    unlink($path.$subdir.$song_name);
+                }
+            } elseif ($typ === 'audio/x-aiff') {
+
+                // ffmpeg -i sauce.aif -f mp3 -acodec libmp3lame -ab 192000 -ar 44100 sauce.mp3
+                exec('/usr/'.$o_path.'bin/ffmpeg -i '.$path.$subdir.$song_name.' -f mp3 -acodec libmp3lame -ab 192000 -ar 44100 '.$path.$subdir.'_'.str_replace('.aif', '', $song_name).'.mp3', $ao, $ac);
+                //deletes raw if conversion worked
+                if ($ac === 0) {
                     unlink($path.$subdir.$song_name);
                 }
             }
