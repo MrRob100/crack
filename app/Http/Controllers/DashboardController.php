@@ -55,6 +55,8 @@ class DashboardController extends Controller
 
     public function upload(Request $request, $para) {
 
+        $o_path = $_SERVER['SERVER_NAME'] === 'localhost' ? 'local/' : '';
+
         if ($para === '-' || $para === '') {
             $subdir = '';
         } else {
@@ -82,30 +84,24 @@ class DashboardController extends Controller
 
             $path = 'storage/data/';
 
+
+            //mp3 compression
             if ($typ === 'audio/mpeg') {
-                //only works on server
-                exec('/usr/bin/ffmpeg -i '.$path.$subdir.$song_name.' -ab 110k '.$path.$subdir.'_'.$song_name, $o, $r);
-                // exec('/usr/local/bin/ffmpeg -i '.$path.'mass.mp3 -ab 64 '.$path.rand().'.mp3', $o, $r);
-                // dump('1st (compress)');
-                // dump($o);
-                // dd($r);
-            }
+                exec('/usr/'.$o_path.'bin/ffmpeg -i '.$path.$subdir.$song_name.' -ab 110k '.$path.$subdir.'_'.$song_name, $o, $r);
+                
+                //deletes raw if compression worked
+                if ($r === 0) {
+                    unlink($path.$subdir.$song_name);
+                }
 
-            if ($typ === 'audio/x-wav') {
-                // ffmpeg -i tenniscourt.wav -f mp2 tenniscourt.mp3
-
-            
-                //only works on server
-                exec('/usr/bin/ffmpeg -i '.$path.$subdir.$song_name.' -f mp3 '.$path.$subdir.'_'.str_replace('.wav', '', $song_name).'.mp3', $o, $r);
-            }
-
-                // dump('2nd (convert');
-                // dump($o);
-                // dd($r);
-
-            //deletes raw if compression worked
-            if ($r === 0) {
-                unlink($path.$subdir.$song_name);
+            //wav conversion    
+            } elseif ($typ === 'audio/x-wav') {
+                exec('/usr/'.$o_path.'bin/ffmpeg -i '.$path.$subdir.$song_name.' -f mp3 '.$path.$subdir.'_'.str_replace('.wav', '', $song_name).'.mp3', $oc, $rc);
+                
+                //deletes raw if conversion worked
+                if ($rc === 0) {
+                    unlink($path.$subdir.$song_name);
+                }
             }
 
         } else {
