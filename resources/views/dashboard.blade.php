@@ -11,11 +11,11 @@
 
 </div>
 
-<span>Pages:</span>
+{{-- <span>Pages:</span>
     <a href='{{ url('') }}'><p class="o-page">home</p></a>
     @foreach ($subdirs as $subdir)
         <a href='{{ $subdir[0] }}'><p class="o-page">{{ $subdir[0] }}</p></a>
-    @endforeach
+    @endforeach --}}
 <Ctx
 tunes="{{ $t_string }}"
 para="{{ $para }}"
