@@ -121,6 +121,12 @@ export default {
 </script>
 <style>
 
+.o-page {
+    display: inline !important;
+    color: #B27FFF;
+    text-decoration: underline;
+}
+
 .delete-button {
     cursor: pointer;
     display: none;
