@@ -2486,6 +2486,10 @@ __webpack_require__.r(__webpack_exports__);
           if (e.target.id == "div-end-" + isso.setting + "-header") {
             isso.setMarkers('endScale', e.pageX);
           }
+        }
+
+        if (pos3 < 10) {
+          isso.setMarkers('startScale', 0);
         } // stop moving when mouse button is released:
 
 

@@ -153,6 +153,10 @@ export default {
           }
         }
 
+        if (pos3 < 10) {
+            isso.setMarkers('startScale', 0);
+        }
+
         // stop moving when mouse button is released:
         document.onmouseup = null;
         document.onmousemove = null;
