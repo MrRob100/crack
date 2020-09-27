@@ -188,8 +188,8 @@ export default {
 
     connectAndPlay: function() {
       var isso = this;
-      var body = document.querySelector("body");
-      var toBlur = document.getElementsByClassName("to-blur");
+      // var body = document.querySelector("body");
+      // var toBlur = document.getElementsByClassName("to-blur");
 
       this.src = this.ctx.createBufferSource();
       this.src.buffer = this.myBuffer;
@@ -208,32 +208,21 @@ export default {
       var endset = duration * this.playTo;
 
       try {
+
+        Layout.playing(this.pos);
+
         this.src.start(0, offset);
         this.loading = false;
 
-        //blur rest
-        for (let item of toBlur) {
-          item.style.filter = "blur(5px)";
-          item.style.cursor = "initial";
-        }
-
-        //disable scroll (redo)
-        body.style.position = "fixed";
-        body.style.overflowY = "hidden";
-
         this.playing = true;
         this.loaded = true;
-
-        document.getElementsByClassName("control-box")[0].style.display = "block";
-        document.getElementById("stbutton-" + this.pos).style.display = "block"; 
-        document.getElementById("modal-close-" + this.pos).style.display = "block"; 
 
         this.src.loopStart = offset;
         this.src.loopEnd = endset;
 
       } catch(err) {
         this.$emit('able', true);
-        console.log(err);
+        console.error(err);
       }
 
       this.fx();
@@ -381,7 +370,7 @@ export default {
       this.convolver.disconnect();
       this.playing = false;
       this.loaded = false;
-      
+
     },
 
     playSelection: function(which, value) {

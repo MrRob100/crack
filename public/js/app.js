@@ -2077,9 +2077,9 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     connectAndPlay: function connectAndPlay() {
-      var isso = this;
-      var body = document.querySelector("body");
-      var toBlur = document.getElementsByClassName("to-blur");
+      var isso = this; // var body = document.querySelector("body");
+      // var toBlur = document.getElementsByClassName("to-blur");
+
       this.src = this.ctx.createBufferSource();
       this.src.buffer = this.myBuffer;
       this.src.loop = true;
@@ -2094,47 +2094,16 @@ __webpack_require__.r(__webpack_exports__);
       var endset = duration * this.playTo;
 
       try {
+        _layoutChanges_js__WEBPACK_IMPORTED_MODULE_1__["default"].playing(this.pos);
         this.src.start(0, offset);
-        this.loading = false; //blur rest
-
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-          for (var _iterator = toBlur[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var item = _step.value;
-            item.style.filter = "blur(5px)";
-            item.style.cursor = "initial";
-          } //disable scroll (redo)
-
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator.return != null) {
-              _iterator.return();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
-
-        body.style.position = "fixed";
-        body.style.overflowY = "hidden";
+        this.loading = false;
         this.playing = true;
         this.loaded = true;
-        document.getElementsByClassName("control-box")[0].style.display = "block";
-        document.getElementById("stbutton-" + this.pos).style.display = "block";
-        document.getElementById("modal-close-" + this.pos).style.display = "block";
         this.src.loopStart = offset;
         this.src.loopEnd = endset;
       } catch (err) {
         this.$emit('able', true);
-        console.log(err);
+        console.error(err);
       }
 
       this.fx();
@@ -53585,15 +53554,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  playing: function playing() {},
-  stopped: function stopped(pos) {
-    var toBlur = document.getElementsByClassName("to-blur");
-    var box = document.getElementsByClassName("control-box")[0];
-    var stop = document.getElementById("stbutton-" + pos);
-    var close = document.getElementById("modal-close-" + pos);
+  playing: function playing(pos) {
     var body = document.querySelector("body");
-    body.style.position = "relative";
-    body.style.overflowY = "scroll";
+    var toBlur = document.getElementsByClassName("to-blur");
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
     var _iteratorError = undefined;
@@ -53601,8 +53564,8 @@ __webpack_require__.r(__webpack_exports__);
     try {
       for (var _iterator = toBlur[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var item = _step.value;
-        item.style.filter = "none";
-        item.style.cursor = "pointer";
+        item.style.filter = "blur(5px)";
+        item.style.cursor = "initial";
       }
     } catch (err) {
       _didIteratorError = true;
@@ -53615,6 +53578,45 @@ __webpack_require__.r(__webpack_exports__);
       } finally {
         if (_didIteratorError) {
           throw _iteratorError;
+        }
+      }
+    }
+
+    body.style.position = "fixed";
+    body.style.overflowY = "hidden";
+    document.getElementsByClassName("control-box")[0].style.display = "block";
+    document.getElementById("stbutton-" + pos).style.display = "block";
+    document.getElementById("modal-close-" + pos).style.display = "block";
+  },
+  stopped: function stopped(pos) {
+    var toBlur = document.getElementsByClassName("to-blur");
+    var box = document.getElementsByClassName("control-box")[0];
+    var stop = document.getElementById("stbutton-" + pos);
+    var close = document.getElementById("modal-close-" + pos);
+    var body = document.querySelector("body");
+    body.style.position = "relative";
+    body.style.overflowY = "scroll";
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+      for (var _iterator2 = toBlur[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        var item = _step2.value;
+        item.style.filter = "none";
+        item.style.cursor = "pointer";
+      }
+    } catch (err) {
+      _didIteratorError2 = true;
+      _iteratorError2 = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+          _iterator2.return();
+        }
+      } finally {
+        if (_didIteratorError2) {
+          throw _iteratorError2;
         }
       }
     }

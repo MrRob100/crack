@@ -1,7 +1,22 @@
 export default {
 
-    playing() {
-        
+    playing(pos) {
+
+      var body = document.querySelector("body");
+      var toBlur = document.getElementsByClassName("to-blur");
+
+        for (let item of toBlur) {
+          item.style.filter = "blur(5px)";
+          item.style.cursor = "initial";
+        }
+
+        body.style.position = "fixed";
+        body.style.overflowY = "hidden";
+
+        document.getElementsByClassName("control-box")[0].style.display = "block";
+        document.getElementById("stbutton-" + pos).style.display = "block"; 
+        document.getElementById("modal-close-" + pos).style.display = "block"; 
+
     },
 
     stopped(pos) {
