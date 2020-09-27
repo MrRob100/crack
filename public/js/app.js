@@ -1926,6 +1926,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _meths_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../meths.js */ "./resources/js/meths.js");
+/* harmony import */ var _layoutChanges_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../layoutChanges.js */ "./resources/js/layoutChanges.js");
 //
 //
 //
@@ -1965,6 +1966,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["playable", "ctx", "para", "name", "pos"],
@@ -2075,6 +2077,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     connectAndPlay: function connectAndPlay() {
+      var isso = this;
       var body = document.querySelector("body");
       var toBlur = document.getElementsByClassName("to-blur");
       this.src = this.ctx.createBufferSource();
@@ -2245,48 +2248,13 @@ __webpack_require__.r(__webpack_exports__);
       this.playSelection(which, value);
     },
     stopProcess: function stopProcess() {
-      var isso = this;
-      var toBlur = document.getElementsByClassName("to-blur");
-      var box = document.getElementsByClassName("control-box")[0];
-      var stop = document.getElementById("stbutton-" + isso.pos);
-      var close = document.getElementById("modal-close-" + isso.pos);
-      var body = document.querySelector("body");
-      isso.$emit('able', true);
-      isso.ableToPlay = true;
-      body.style.position = "relative";
-      body.style.overflowY = "scroll";
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
-
-      try {
-        for (var _iterator2 = toBlur[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var item = _step2.value;
-          item.style.filter = "none";
-          item.style.cursor = "pointer";
-        }
-      } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
-            _iterator2.return();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
-        }
-      }
-
-      isso.src.stop(0);
-      isso.convolver.disconnect();
-      isso.playing = false;
-      isso.loaded = false;
-      stop.style.display = "none";
-      close.style.display = "none";
-      box.style.display = "none";
+      _layoutChanges_js__WEBPACK_IMPORTED_MODULE_1__["default"].stopped(this.pos);
+      this.$emit('able', true);
+      this.ableToPlay = true;
+      this.src.stop(0);
+      this.convolver.disconnect();
+      this.playing = false;
+      this.loaded = false;
     },
     playSelection: function playSelection(which, value) {
       if (which === "startScale") {
@@ -53604,6 +53572,58 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TuneCrop_vue_vue_type_template_id_c81917da___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/layoutChanges.js":
+/*!***************************************!*\
+  !*** ./resources/js/layoutChanges.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  playing: function playing() {},
+  stopped: function stopped(pos) {
+    var toBlur = document.getElementsByClassName("to-blur");
+    var box = document.getElementsByClassName("control-box")[0];
+    var stop = document.getElementById("stbutton-" + pos);
+    var close = document.getElementById("modal-close-" + pos);
+    var body = document.querySelector("body");
+    body.style.position = "relative";
+    body.style.overflowY = "scroll";
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = toBlur[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var item = _step.value;
+        item.style.filter = "none";
+        item.style.cursor = "pointer";
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator.return != null) {
+          _iterator.return();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+
+    stop.style.display = "none";
+    close.style.display = "none";
+    box.style.display = "none";
+  }
+});
 
 /***/ }),
 

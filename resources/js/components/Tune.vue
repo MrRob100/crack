@@ -40,6 +40,7 @@
 <script>
 
 import Meths from '../meths.js';
+import Layout from '../layoutChanges.js';
 
 export default {
   props: [
@@ -186,6 +187,7 @@ export default {
     },
 
     connectAndPlay: function() {
+      var isso = this;
       var body = document.querySelector("body");
       var toBlur = document.getElementsByClassName("to-blur");
 
@@ -370,30 +372,16 @@ export default {
     },
 
     stopProcess: function() {
-      var isso = this;
-      var toBlur = document.getElementsByClassName("to-blur");
-      var box = document.getElementsByClassName("control-box")[0];
-      var stop = document.getElementById("stbutton-" + isso.pos);
-      var close = document.getElementById("modal-close-" + isso.pos);
-      var body = document.querySelector("body");
 
-      isso.$emit('able', true);
-      isso.ableToPlay = true;
-      body.style.position = "relative";
-      body.style.overflowY = "scroll";
+      Layout.stopped(this.pos);
 
-      for (let item of toBlur) {
-        item.style.filter = "none";
-        item.style.cursor = "pointer";
-      }
-
-      isso.src.stop(0);
-      isso.convolver.disconnect();
-      isso.playing = false;
-      isso.loaded = false;
-      stop.style.display = "none";
-      close.style.display = "none";
-      box.style.display = "none";   
+      this.$emit('able', true);
+      this.ableToPlay = true;
+      this.src.stop(0);
+      this.convolver.disconnect();
+      this.playing = false;
+      this.loaded = false;
+      
     },
 
     playSelection: function(which, value) {

@@ -19,6 +19,5 @@ export default {
     getMarkersPath(para, name, which) {
         return 'get?which=' + which + "&position=" + name;
     }
-
     
 }
