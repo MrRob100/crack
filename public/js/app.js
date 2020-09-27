@@ -2102,6 +2102,7 @@ __webpack_require__.r(__webpack_exports__);
           for (var _iterator = toBlur[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var item = _step.value;
             item.style.filter = "blur(5px)";
+            item.style.cursor = "initial";
           } //disable scroll (redo)
 
         } catch (err) {
@@ -2262,6 +2263,7 @@ __webpack_require__.r(__webpack_exports__);
         for (var _iterator2 = toBlur[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var item = _step2.value;
           item.style.filter = "none";
+          item.style.cursor = "pointer";
         }
       } catch (err) {
         _didIteratorError2 = true;

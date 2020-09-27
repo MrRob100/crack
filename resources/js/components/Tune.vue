@@ -212,6 +212,7 @@ export default {
         //blur rest
         for (let item of toBlur) {
           item.style.filter = "blur(5px)";
+          item.style.cursor = "initial";
         }
 
         //disable scroll (redo)
@@ -383,6 +384,7 @@ export default {
 
       for (let item of toBlur) {
         item.style.filter = "none";
+        item.style.cursor = "pointer";
       }
 
       isso.src.stop(0);
